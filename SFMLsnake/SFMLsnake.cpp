@@ -3,38 +3,13 @@
 #include <vector>
 #include <ctime>
 
-//#include "Snake.h"
-//#include "Food.h"
-#include "GameScene.h"
-
-
-//bool intersectRectangleShape(RectangleShape f, RectangleShape s)
-//{
-////#define GB(param) f.getGlobalBounds().param
-//    if (f.getGlobalBounds().intersects(s.getGlobalBounds()) == 1)
-//    {
-//        return true;
-//    }
-//    return false;
-//}
-
+#include "src/scenes/GameScene.h"
 
 
 int main()
 {
     std::shared_ptr<RenderWindow>window =
         std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
-
-    ////head
-    //Snake snake(window);
-    //
-    ////food
-    //srand(time(0));
-    //FoodData data;
-    //data.size = SOC * 2 / 3;
-    //data.pos = { float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
-    //                float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3) };
-    //Food food(window, std::make_unique<FoodData>(data));
 
     GameScene game(window);
 
@@ -58,25 +33,11 @@ int main()
         //snake.event();
         game.processEvent();
 
-        //logic
-       // snake.logic(time);
-
-        //eating food
-      /*  if (intersectRectangleShape(snake[0]->getRectangleShape(), food.getRectangleShape()))
-        {
-            snake.addUnit(snake[snake.size() - 1]->getPos());            
-            food.setPos({ float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
-                          float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3) });
-        }*/
         game.processLogic(time);
 
         //draw
         window->clear();
-
         game.processDraw();
-        /*food.draw();
-        snake.draw();*/
-
         window->display();
     }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "Support.h"
+#include "../../Support.h"
 
 using namespace sf;
 
@@ -23,9 +23,9 @@ public:
 	Food(std::shared_ptr<RenderWindow>, std::unique_ptr<FoodData>);
 	~Food();
 
-	void event();
-	void logic(float time);
-	void draw();
+	void processEvent();
+	void processLogic(float time);
+	void processDraw();
 
 	void setPos(Vector2f);
 

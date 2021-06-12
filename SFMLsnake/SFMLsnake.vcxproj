@@ -139,23 +139,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="Food.cpp" />
-    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="SFMLsnake.cpp" />
-    <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="src\objects\Cell.cpp" />
+    <ClCompile Include="src\objects\Food.cpp" />
+    <ClCompile Include="src\objects\Snake.cpp" />
+    <ClCompile Include="src\scenes\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseScene.h" />
-    <ClInclude Include="Cell.h" />
+    <ClInclude Include="src\objects\BaseObject.h" />
+    <ClInclude Include="src\objects\Cell.h" />
+    <ClInclude Include="src\objects\Food.h" />
+    <ClInclude Include="src\objects\Snake.h" />
+    <ClInclude Include="src\scenes\BaseScene.h" />
+    <ClInclude Include="src\scenes\GameScene.h" />
     <ClInclude Include="Support.h" />
-    <ClInclude Include="Food.h" />
-    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Logger.hpp" />
-    <ClInclude Include="Snake.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\main.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

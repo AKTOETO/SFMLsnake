@@ -15,15 +15,15 @@ Food::~Food()
 {
 }
 
-void Food::event()
+void Food::processEvent()
 {
 }
 
-void Food::logic(float time)
+void Food::processLogic(float time)
 {
 }
 
-void Food::draw()
+void Food::processDraw()
 {
 	m_window->draw(m_rect);
 }

@@ -3,6 +3,7 @@
 GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	:m_window(window)
 {
+
 	//snake
 	snake = std::make_unique<Snake>(m_window);
 
@@ -27,21 +28,33 @@ void GameScene::activate()
 
 void GameScene::processEvent()
 {
-	snake->event();
-	food->event();
+	/*for (int i = 0; i < m_objectList.size(); i++)
+	{
+		m_objectList[i]->processEvent();
+	}*/
+	snake->processEvent();
+	food->processEvent();
 }
 
 void GameScene::processLogic(float time)
 {
-	snake->logic(time);
-	food->logic(time);
+	/*for (int i = 0; i < m_objectList.size(); i++)
+	{
+		m_objectList[i]->processLogic(time);
+	}*/
+	snake->processLogic(time);
+	food->processLogic(time);
 	eatingFood();
 }
 
 void GameScene::processDraw()
 {
-	snake->draw();
-	food->draw();
+	/*for (int i = 0; i < m_objectList.size(); i++)
+	{
+		m_objectList[i]->processDraw();
+	}*/
+	snake->processDraw();
+	food->processDraw();
 }
 
 void GameScene::eatingFood()
@@ -49,8 +62,10 @@ void GameScene::eatingFood()
 	if (SupportFunc::intersectRectangleShape((*snake)[0]->getRectangleShape(), food->getRectangleShape()))
 	{
 		snake->addUnit((*snake)[snake->size() - 1]->getPos());
-		food->setPos({ float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
-					  float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3) });
+		food->setPos({
+			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
+			float(rand() % (HEIGHT - SOC * 2 / 3)) + SOC / 3
+			});
 	}
 }
 

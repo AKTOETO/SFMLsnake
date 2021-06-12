@@ -14,11 +14,12 @@ public:
 	Snake(std::shared_ptr<RenderWindow>);
 	~Snake();
 
+
 	std::unique_ptr<Cell> &operator[](int);
 
-	void event();
-	void logic(float time);
-	void draw();
+	void processEvent();
+	void processLogic(float time);
+	void processDraw();
 
 	void addUnit(Vector2f);
 

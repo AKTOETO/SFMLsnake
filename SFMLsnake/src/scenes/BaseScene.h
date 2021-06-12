@@ -1,6 +1,9 @@
 #pragma once
+
 class BaseScene
 {
+protected:
+
 public:
 	BaseScene() {};
 	~BaseScene() {};

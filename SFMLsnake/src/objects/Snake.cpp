@@ -18,7 +18,7 @@ std::unique_ptr<Cell>& Snake::operator[](int i)
 }
 
 
-void Snake::event()
+void Snake::processEvent()
 {
 
 	for (int i = 0; i < m_units.size(); i++)
@@ -27,7 +27,7 @@ void Snake::event()
 	}
 }
 
-void Snake::logic(float time)
+void Snake::processLogic(float time)
 {
 	for (int i = m_units.size() - 1; i > 0; i--)
 	{
@@ -49,7 +49,7 @@ void Snake::logic(float time)
 
 }
 
-void Snake::draw()
+void Snake::processDraw()
 {
 	for (int i = m_units.size() - 1; i >= 0; i--)
 	{
