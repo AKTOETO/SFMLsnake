@@ -1,8 +1,10 @@
 ﻿#include <iostream>
 #include <vector>
-#include <memory>
+#include <ctime>
 
-#include "Player.h"
+//#include "Player.h"
+#include "Snake.h"
+#include "Food.h"
 
 
 
@@ -14,9 +16,20 @@ int main()
     std::shared_ptr<RenderWindow>window =
         std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "SFML works!");
 
+    //test
+    bool have = false;
 
     //head
-    Head hd(window);
+    Snake snake(window);
+    
+    for (int i = 0; i < 50; i++)
+        snake.addUnit();
+    //food
+    srand(time(0));
+    FoodData data;
+    data.pos = { float(rand() % WIDTH), float(rand() % HEIGHT) };
+    data.size = SOC * 2 / 3;
+    Food food(window, std::make_unique<FoodData>(data));
 
     Clock clock;
     while (window->isOpen())
@@ -32,15 +45,17 @@ int main()
             if (event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
                 window->close();
         }
-        hd.event();
+        snake.event();
 
         //logic
-        hd.logic(time);
+        snake.logic(time);
+        //пересечение еды со змеёй
 
         //draw
         window->clear();
 
-        hd.draw();
+        food.draw();
+        snake.draw();
 
         window->display();
     }

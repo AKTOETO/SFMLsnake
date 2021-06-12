@@ -140,8 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Food.cpp" />
     <ClCompile Include="SFMLsnake.cpp" />
+    <ClCompile Include="Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -149,8 +150,9 @@
   <ItemGroup>
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Constans.h" />
+    <ClInclude Include="Food.h" />
     <ClInclude Include="Logger.hpp" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Snake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
