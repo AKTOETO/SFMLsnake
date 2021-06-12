@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-#include "Constans.h"
+#include "Support.h"
 
 using namespace sf;
 
@@ -36,7 +36,7 @@ private:
 			m_canRemember = true,
 			m_head = false;
 	
-	public:
+public:
 	    Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
 		~Cell();
 

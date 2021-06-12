@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Food.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="SFMLsnake.cpp" />
     <ClCompile Include="Snake.cpp" />
   </ItemGroup>
@@ -148,9 +149,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Cell.h" />
-    <ClInclude Include="Constans.h" />
+    <ClInclude Include="Support.h" />
     <ClInclude Include="Food.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="Snake.h" />
   </ItemGroup>

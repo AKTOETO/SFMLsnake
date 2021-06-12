@@ -1,5 +1,4 @@
 #include "Snake.h"
-#include <iostream>
 
 Snake::Snake(std::shared_ptr<RenderWindow> window)
 {

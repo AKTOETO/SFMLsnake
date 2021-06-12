@@ -27,6 +27,9 @@
     <ClCompile Include="Food.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -38,13 +41,19 @@
     <ClInclude Include="Cell.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Constans.h">
+    <ClInclude Include="Support.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Food.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
