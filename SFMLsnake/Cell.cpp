@@ -20,10 +20,10 @@ Cell::~Cell()
 void Cell::event()
 {
 #define PRESS(par) Keyboard::isKeyPressed(Keyboard::par) 
-    if (m_data->head == true && PRESS(A) && m_dir != Direction::RIGHT)m_dir = Direction::LEFT;
-    else if (m_data->head == true && PRESS(W) && m_dir != Direction::DOWN)m_dir = Direction::UP;
-    else if (m_data->head == true && PRESS(D) && m_dir != Direction::LEFT)m_dir = Direction::RIGHT;
-    else if (m_data->head == true && PRESS(S) && m_dir != Direction::UP)m_dir = Direction::DOWN;
+    if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)m_dir = Direction::LEFT;
+    else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Direction::DOWN)m_dir = Direction::UP;
+    else if (m_data->head == true && (PRESS(D) || PRESS(Right)) && m_dir != Direction::LEFT)m_dir = Direction::RIGHT;
+    else if (m_data->head == true && (PRESS(S) || PRESS(Down)) && m_dir != Direction::UP)m_dir = Direction::DOWN;
 }
 
 void Cell::logic(float time)
@@ -33,11 +33,6 @@ void Cell::logic(float time)
 #define POSG(para) m_rect.getPosition().para
 #define BOUND(para) m_rect.getLocalBounds().para
 
-        //if (POSG(x) == m_newPos.x && POSG(y) == m_newPos.y)
-        //{
-        //    m_dir = m_newDir;
-        //    m_canRemember = true;
-        //}
 
         if (m_dir == Direction::LEFT)
         {
@@ -47,7 +42,7 @@ void Cell::logic(float time)
             }
             else
             {
-                m_rect.setPosition(BOUND(width) / 2, POSG(y));
+                //m_rect.setPosition(BOUND(width) / 2, POSG(y));
             }
         }
         else if (m_dir == Direction::RIGHT)
@@ -58,7 +53,7 @@ void Cell::logic(float time)
             }
             else
             {
-                m_rect.setPosition(WIDTH - BOUND(width) / 2, POSG(y));
+                //m_rect.setPosition(WIDTH - BOUND(width) / 2, POSG(y));
             }
         }
         else if (m_dir == Direction::UP)
@@ -69,7 +64,7 @@ void Cell::logic(float time)
             }
             else
             {
-                m_rect.setPosition(POSG(x), BOUND(width) / 2);
+                //m_rect.setPosition(POSG(x), BOUND(width) / 2);
             }
         }
         else if (m_dir == Direction::DOWN)
@@ -80,7 +75,7 @@ void Cell::logic(float time)
             }
             else
             {
-                m_rect.setPosition(POSG(x), HEIGHT - BOUND(width) / 2);
+                //m_rect.setPosition(POSG(x), HEIGHT - BOUND(width) / 2);
             }
         }
     }
@@ -93,6 +88,23 @@ void Cell::logic(float time)
         );
     }
 
+    if (POSG(x) + m_rect.getSize().x / 2 > WIDTH)
+    {
+        m_rect.setPosition(m_rect.getSize().x / 2, POSG(y));
+    }
+    else if (POSG(y) + m_rect.getSize().y / 2 > HEIGHT)
+    {
+        m_rect.setPosition(POSG(x), m_rect.getSize().y / 2);
+    }
+    else if (POSG(x) - m_rect.getSize().x / 2 < 0)
+    {
+        m_rect.setPosition(WIDTH - m_rect.getSize().x / 2, POSG(y));
+    }
+    else if (POSG(y) - m_rect.getSize().y / 2 < 0)
+    {
+        m_rect.setPosition(POSG(x), HEIGHT - m_rect.getSize().y / 2);
+    };
+
 }
 
 void Cell::draw()
@@ -102,15 +114,7 @@ void Cell::draw()
 
 void Cell::setDirection(Direction dir, Vector2f new_pos)
 {
-    //if (m_canRemember == true)
-    //{
-    //    m_newDir = dir;
-    //    m_newPos = new_pos;
-    //    m_canRemember = false;
-    //
-    //    std::cout << "m_newDir: " << int(m_newDir) << " m_dir: " << int(m_dir) << " m_newPos:" <<
-    //        m_newPos.x << " " << m_newPos.y << std::endl;
-    //}
+
 }
 
 Direction Cell::getDirection()

@@ -19,7 +19,9 @@ public:
 	void logic(float time);
 	void draw();
 
-	void addUnit();
+	void addUnit(Vector2f);
+
+	int size();
 
 };
 

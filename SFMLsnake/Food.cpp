@@ -32,3 +32,8 @@ void Food::setPos(Vector2f pos)
 {
 	m_rect.setPosition(pos);
 }
+
+RectangleShape& Food::getRectangleShape()
+{
+	return m_rect;
+}

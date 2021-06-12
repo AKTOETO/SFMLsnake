@@ -28,5 +28,7 @@ public:
 	void draw();
 
 	void setPos(Vector2f);
+
+	RectangleShape& getRectangleShape();
 };
 

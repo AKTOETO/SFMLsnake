@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 #include <vector>
 #include <ctime>
 
@@ -7,28 +8,32 @@
 #include "Food.h"
 
 
-
+bool intersectRectangleShape(RectangleShape f, RectangleShape s)
+{
+//#define GB(param) f.getGlobalBounds().param
+    if (f.getGlobalBounds().intersects(s.getGlobalBounds()) == 1)
+    {
+        return true;
+    }
+    return false;
+}
 
 
 
 int main()
 {
     std::shared_ptr<RenderWindow>window =
-        std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "SFML works!");
-
-    //test
-    bool have = false;
+        std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
 
     //head
     Snake snake(window);
     
-    for (int i = 0; i < 50; i++)
-        snake.addUnit();
     //food
     srand(time(0));
     FoodData data;
-    data.pos = { float(rand() % WIDTH), float(rand() % HEIGHT) };
     data.size = SOC * 2 / 3;
+    data.pos = { float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
+                 float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3) };
     Food food(window, std::make_unique<FoodData>(data));
 
     Clock clock;
@@ -43,13 +48,23 @@ int main()
         while (window->pollEvent(event))
         {
             if (event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
+            {
                 window->close();
+                std::cout << "Bye bye!\n";
+            }
         }
         snake.event();
 
         //logic
         snake.logic(time);
-        //пересечение еды со змеёй
+
+        //eating food
+        if (intersectRectangleShape(snake[0]->getRectangleShape(), food.getRectangleShape()))
+        {
+            snake.addUnit(snake[snake.size() - 1]->getPos());            
+            food.setPos({ float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
+                          float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3) });
+        }
 
         //draw
         window->clear();
