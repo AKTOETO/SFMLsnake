@@ -23,7 +23,7 @@ public:
 
 	void addUnit(Vector2f);
 
-	int size();
+	int getSize();
 
 };
 

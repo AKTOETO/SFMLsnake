@@ -144,12 +144,12 @@
     <ClCompile Include="src\objects\Food.cpp" />
     <ClCompile Include="src\objects\Snake.cpp" />
     <ClCompile Include="src\scenes\GameScene.cpp" />
+    <ClCompile Include="src\objects\TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\objects\BaseObject.h" />
     <ClInclude Include="src\objects\Cell.h" />
     <ClInclude Include="src\objects\Food.h" />
     <ClInclude Include="src\objects\Snake.h" />
@@ -157,6 +157,7 @@
     <ClInclude Include="src\scenes\GameScene.h" />
     <ClInclude Include="Support.h" />
     <ClInclude Include="Logger.hpp" />
+    <ClInclude Include="src\objects\TextObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\main.ttf" />

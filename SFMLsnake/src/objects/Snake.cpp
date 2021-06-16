@@ -70,7 +70,7 @@ void Snake::addUnit(Vector2f pos)
 	std::cout << "size: " << m_units.size() << std::endl;
 }
 
-int Snake::size()
+int Snake::getSize()
 {
 	return m_units.size();
 }

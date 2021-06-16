@@ -5,17 +5,26 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 {
 
 	//snake
-	snake = std::make_unique<Snake>(m_window);
+	m_snake = std::make_unique<Snake>(m_window);
 
 	//food
 	srand(time(0));
-	FoodData data;
-	data.size = SOC * 2 / 3;
-	data.pos = { 
+	FoodData f_data;
+	f_data.size = SOC * 2 / 3;
+	f_data.pos = { 
 		float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
 		float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3)
 	};
-	food = std::make_unique<Food>(window, std::make_unique<FoodData>(data));
+	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(f_data));
+
+	//text
+	TextData t_data;
+	t_data.pos = { 10, 0 };
+	t_data.size = 50;
+	t_data.originInCeneter = false;
+	t_data.text = "score:";
+
+	m_text = std::make_unique<TextObject>(m_window, t_data);
 }
 
 GameScene::~GameScene()
@@ -28,41 +37,33 @@ void GameScene::activate()
 
 void GameScene::processEvent()
 {
-	/*for (int i = 0; i < m_objectList.size(); i++)
-	{
-		m_objectList[i]->processEvent();
-	}*/
-	snake->processEvent();
-	food->processEvent();
+	m_snake->processEvent();
+	m_food->processEvent();
+	m_text->processEvent();
 }
 
 void GameScene::processLogic(float time)
 {
-	/*for (int i = 0; i < m_objectList.size(); i++)
-	{
-		m_objectList[i]->processLogic(time);
-	}*/
-	snake->processLogic(time);
-	food->processLogic(time);
+	m_snake->processLogic(time);
+	m_food->processLogic(time);
+	m_text->processLogic(time);
+	m_text->setString("score: " + std::to_string(m_snake->getSize()));
 	eatingFood();
 }
 
 void GameScene::processDraw()
 {
-	/*for (int i = 0; i < m_objectList.size(); i++)
-	{
-		m_objectList[i]->processDraw();
-	}*/
-	snake->processDraw();
-	food->processDraw();
+	m_snake->processDraw();
+	m_food->processDraw();
+	m_text->processDraw();
 }
 
 void GameScene::eatingFood()
 {
-	if (SupportFunc::intersectRectangleShape((*snake)[0]->getRectangleShape(), food->getRectangleShape()))
+	if (SupportFunc::intersectRectangleShape((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
-		snake->addUnit((*snake)[snake->size() - 1]->getPos());
-		food->setPos({
+		m_snake->addUnit((*m_snake)[m_snake->getSize() - 1]->getPos());
+		m_food->setPos({
 			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
 			float(rand() % (HEIGHT - SOC * 2 / 3)) + SOC / 3
 			});
