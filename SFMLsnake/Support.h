@@ -9,6 +9,8 @@ using namespace sf;
 #define SOC 20 // 20 size of cell (px)
 #define OBC SOC / 2 // offset between cells
 
+#define PI 3.14159265
+
 namespace SupportFunc
 {
 	static bool intersectRectangleShape(RectangleShape f, RectangleShape s)

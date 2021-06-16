@@ -41,6 +41,8 @@ void Snake::processLogic(float time)
 
 	}
 
+
+
 	for (int i = m_units.size() - 1; i > 0; i--)
 	{
 		m_units[i]->logic(time);

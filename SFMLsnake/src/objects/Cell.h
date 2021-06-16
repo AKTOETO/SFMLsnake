@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
+#include <cmath>
 
 #include "../../Support.h"
 
@@ -44,7 +46,6 @@ public:
 		void logic(float time);
 		void draw();
 
-		void setDirection(Direction, Vector2f);
 		Direction getDirection();
 
 		Vector2f getSize();

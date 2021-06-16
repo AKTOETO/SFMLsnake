@@ -1,5 +1,4 @@
 #include "Cell.h"
-#include <iostream>
 
 Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
     :m_window(window)
@@ -86,6 +85,10 @@ void Cell::logic(float time)
             ((m_newPos.x - POSG(x)) * SPEED * time * k),
             ((m_newPos.y - POSG(y)) * SPEED * time * k)
         );
+        m_rect.setRotation(
+            -std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
+            * 180 / PI
+        );
     }
 
     if (POSG(x) + m_rect.getSize().x / 2 > WIDTH)
@@ -110,11 +113,6 @@ void Cell::logic(float time)
 void Cell::draw()
 {
     m_window->draw(m_rect);
-}
-
-void Cell::setDirection(Direction dir, Vector2f new_pos)
-{
-
 }
 
 Direction Cell::getDirection()
