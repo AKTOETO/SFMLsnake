@@ -37,8 +37,15 @@ void Snake::processLogic(float time)
 				pow(m_units[i]->getPos().y - m_units[i - 1]->getPos().y, 2)
 				) > (m_units[i]->getSize().x / 2 + m_units[i - 1]->getSize().x) - OBC
 			)
-		m_units[i]->setNewPos(m_units[i - 1]->getPos());
-
+		m_units[i]->setPos(m_units[i - 1]->getPos());
+		if (SupportFunc::intersectRectangleShape(
+			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
+		)
+		{
+			//std::cout << "head intersected with body\n";
+			m_units.erase(m_units.begin() + i, m_units.end());
+			//std::cout << m_units.end() - m_units.begin() + i << " pieces were eaten\n";
+		}
 	}
 
 
@@ -67,9 +74,13 @@ void Snake::addUnit(Vector2f pos)
 	data.size = SOC * 2 / 3;
 	data.head = false;
 	data.pos = pos;
-
+	//m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	//test
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
-	std::cout << "size: " << m_units.size() << std::endl;
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 }
 
 int Snake::getSize()

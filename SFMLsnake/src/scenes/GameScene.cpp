@@ -56,8 +56,8 @@ SceneData GameScene::processLogic(float time)
 
 void GameScene::processDraw()
 {
-	m_snake->processDraw();
 	m_food->processDraw();
+	m_snake->processDraw();
 	m_text->processDraw();
 }
 
