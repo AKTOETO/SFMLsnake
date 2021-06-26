@@ -34,9 +34,8 @@ private:
 	    RectangleShape m_rect;
 		std::shared_ptr<RenderWindow> m_window;
 		std::unique_ptr<CellData> m_data;
-		bool m_canRotate = false,
-			m_canRemember = true,
-			m_head = false;
+		std::unique_ptr<RectangleShape> m_collisionRectangle;
+		bool m_head = false;
 	
 public:
 	    Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
@@ -46,14 +45,12 @@ public:
 		void logic(float time);
 		void draw();
 
-		Direction getDirection();
+		RectangleShape& getCollisionShape();
 
 		Vector2f getSize();
 		Vector2f getPos();
 
-		void setNewPos(Vector2f);
-
-		void canRotate();
+		void setPos(Vector2f);
 
 		RectangleShape& getRectangleShape();
 };

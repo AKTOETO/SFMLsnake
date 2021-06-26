@@ -3,6 +3,7 @@
 Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
     :m_window(window)
 {
+    m_collisionRectangle = nullptr;
     m_data = move(data);
 	m_rect.setSize({ m_data->size, m_data->size });
     m_rect.setOrigin(m_rect.getLocalBounds().width / 2,
@@ -10,6 +11,20 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
     m_rect.setPosition(Vector2f{ m_data->pos });
     m_rect.setFillColor(m_data->color);
     m_head = m_data->head;
+
+    //collision shape
+    if (m_head == true)
+    {
+        m_collisionRectangle = std::make_unique<RectangleShape>(
+            Vector2f( m_rect.getSize().x / 2, 2 )
+            );
+        m_collisionRectangle->setOrigin(
+            m_collisionRectangle->getLocalBounds().width / 2,
+            m_collisionRectangle->getLocalBounds().height / 2
+        );
+        m_collisionRectangle->setPosition(m_data->pos);
+        m_collisionRectangle->setFillColor(Color::Magenta);
+    }
 }
 
 Cell::~Cell()
@@ -18,19 +33,23 @@ Cell::~Cell()
 
 void Cell::event()
 {
-#define PRESS(par) Keyboard::isKeyPressed(Keyboard::par) 
-    if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)m_dir = Direction::LEFT;
-    else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Direction::DOWN)m_dir = Direction::UP;
-    else if (m_data->head == true && (PRESS(D) || PRESS(Right)) && m_dir != Direction::LEFT)m_dir = Direction::RIGHT;
-    else if (m_data->head == true && (PRESS(S) || PRESS(Down)) && m_dir != Direction::UP)m_dir = Direction::DOWN;
+#define PRESS(param) Keyboard::isKeyPressed(Keyboard::param) 
+    if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)
+        m_dir = Direction::LEFT;
+    else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Direction::DOWN)
+        m_dir = Direction::UP;
+    else if (m_data->head == true && (PRESS(D) || PRESS(Right)) && m_dir != Direction::LEFT)
+        m_dir = Direction::RIGHT;
+    else if (m_data->head == true && (PRESS(S) || PRESS(Down)) && m_dir != Direction::UP)
+        m_dir = Direction::DOWN;
 }
 
 void Cell::logic(float time)
 {
     if (m_head == true)
     {
-#define POSG(para) m_rect.getPosition().para
-#define BOUND(para) m_rect.getLocalBounds().para
+#define POSG(param) m_rect.getPosition().param
+#define BOUND(param) m_rect.getLocalBounds().param
 
 
         if (m_dir == Direction::LEFT)
@@ -41,7 +60,7 @@ void Cell::logic(float time)
             }
             else
             {
-                //m_rect.setPosition(BOUND(width) / 2, POSG(y));
+                m_rect.setPosition(BOUND(width) / 2, POSG(y));
             }
         }
         else if (m_dir == Direction::RIGHT)
@@ -52,7 +71,7 @@ void Cell::logic(float time)
             }
             else
             {
-                //m_rect.setPosition(WIDTH - BOUND(width) / 2, POSG(y));
+                m_rect.setPosition(WIDTH - BOUND(width) / 2, POSG(y));
             }
         }
         else if (m_dir == Direction::UP)
@@ -63,7 +82,7 @@ void Cell::logic(float time)
             }
             else
             {
-                //m_rect.setPosition(POSG(x), BOUND(width) / 2);
+                m_rect.setPosition(POSG(x), BOUND(width) / 2);
             }
         }
         else if (m_dir == Direction::DOWN)
@@ -74,9 +93,39 @@ void Cell::logic(float time)
             }
             else
             {
-                //m_rect.setPosition(POSG(x), HEIGHT - BOUND(width) / 2);
+                m_rect.setPosition(POSG(x), HEIGHT - BOUND(width) / 2);
             }
         }
+
+        //collision rectangle logic
+        switch (m_dir)
+        {
+        case Direction::UP:
+            m_collisionRectangle->setPosition(
+                POSG(x), POSG(y) - m_rect.getSize().x / 2
+            );
+            m_collisionRectangle->setRotation(180);
+            break;
+        case Direction::DOWN:
+            m_collisionRectangle->setPosition(
+                POSG(x), POSG(y) + m_rect.getSize().x / 2
+            );
+            m_collisionRectangle->setRotation(180);
+            break;
+        case Direction::LEFT:
+            m_collisionRectangle->setPosition(
+                POSG(x) - m_rect.getSize().x / 2, POSG(y)
+            );
+            m_collisionRectangle->setRotation(270);
+            break;
+        case Direction::RIGHT:
+            m_collisionRectangle->setPosition(
+                POSG(x) + m_rect.getSize().x / 2, POSG(y)
+            );
+            m_collisionRectangle->setRotation(270);
+            break;
+        }
+
     }
     else
     {
@@ -91,7 +140,7 @@ void Cell::logic(float time)
         );
     }
 
-    if (POSG(x) + m_rect.getSize().x / 2 > WIDTH)
+    /*if (POSG(x) + m_rect.getSize().x / 2 > WIDTH)
     {
         m_rect.setPosition(m_rect.getSize().x / 2, POSG(y));
     }
@@ -106,18 +155,20 @@ void Cell::logic(float time)
     else if (POSG(y) - m_rect.getSize().y / 2 < 0)
     {
         m_rect.setPosition(POSG(x), HEIGHT - m_rect.getSize().y / 2);
-    };
+    };*/
 
 }
 
 void Cell::draw()
 {
     m_window->draw(m_rect);
+    if (m_head == true)
+        m_window->draw(*m_collisionRectangle);
 }
 
-Direction Cell::getDirection()
+RectangleShape& Cell::getCollisionShape()
 {
-    return m_dir;
+    return *m_collisionRectangle;
 }
 
 Vector2f Cell::getSize()
@@ -130,14 +181,9 @@ Vector2f Cell::getPos()
     return m_rect.getPosition();
 }
 
-void Cell::setNewPos(Vector2f newPos)
+void Cell::setPos(Vector2f newPos)
 {
     m_newPos = newPos;
-}
-
-void Cell::canRotate()
-{
-    m_dir = m_newDir;
 }
 
 RectangleShape& Cell::getRectangleShape()
