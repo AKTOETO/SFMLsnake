@@ -29,7 +29,6 @@ class Cell
 {
 private:
 	    Direction m_dir;
-	    Direction m_newDir;
 		Vector2f m_newPos;
 	    RectangleShape m_rect;
 		std::shared_ptr<RenderWindow> m_window;
@@ -44,14 +43,16 @@ public:
 		void event();
 		void logic(float time);
 		void draw();
+		void setPos(Vector2f);
+		void setSize(Vector2f);
 
 		RectangleShape& getCollisionShape();
+		RectangleShape& getRectangleShape();
 
 		Vector2f getSize();
 		Vector2f getPos();
 
-		void setPos(Vector2f);
-
-		RectangleShape& getRectangleShape();
+		void setDirection(Direction);
+		Direction getDirection();
 };
 

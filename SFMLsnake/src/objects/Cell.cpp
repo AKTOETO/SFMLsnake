@@ -16,14 +16,18 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
     if (m_head == true)
     {
         m_collisionRectangle = std::make_unique<RectangleShape>(
-            Vector2f( m_rect.getSize().x / 2, 2 )
+            Vector2f( m_rect.getSize().x / 4, 2 )
             );
         m_collisionRectangle->setOrigin(
             m_collisionRectangle->getLocalBounds().width / 2,
             m_collisionRectangle->getLocalBounds().height / 2
         );
-        m_collisionRectangle->setPosition(m_data->pos);
+        //m_collisionRectangle->setPosition(m_data->pos);
         m_collisionRectangle->setFillColor(Color::Magenta);
+#define POSG(param) m_rect.getPosition().param
+        m_collisionRectangle->setPosition(
+            POSG(x), POSG(y) - m_rect.getSize().x / 2
+        );
     }
 }
 
@@ -51,7 +55,19 @@ void Cell::logic(float time)
 #define POSG(param) m_rect.getPosition().param
 #define BOUND(param) m_rect.getLocalBounds().param
 
+        //collision with wall
+        if (
+            POSG(x) + m_rect.getSize().x / 2 > WIDTH ||
+            POSG(y) + m_rect.getSize().y / 2 > HEIGHT ||
+            POSG(x) - m_rect.getSize().x / 2 < 0 ||
+            POSG(y) - m_rect.getSize().y / 2 < 0
+            )
+        {
+            m_dir = Direction::STOP;
+            std::cout << "game over (wall collision) <Cell.cpp>\n";
+        }
 
+        //head mooving
         if (m_dir == Direction::LEFT)
         {
             if (POSG(x) - BOUND(width) / 2 > 0)
@@ -129,33 +145,21 @@ void Cell::logic(float time)
     }
     else
     {
-        float k = 0.1; // smoothness of movement
-        m_rect.move(
-            ((m_newPos.x - POSG(x)) * SPEED * time * k),
-            ((m_newPos.y - POSG(y)) * SPEED * time * k)
-        );
-        m_rect.setRotation(
-            -std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
-            * 180 / PI
-        );
+        if (m_dir != Direction::STOP)
+        {
+            float k = 0.1; // smoothness of movement
+            m_rect.move(
+                ((m_newPos.x - POSG(x)) * SPEED * time * k),
+                ((m_newPos.y - POSG(y)) * SPEED * time * k)
+            );
+            m_rect.setRotation(
+                -std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
+                * 180 / PI
+            );
+        }
     }
 
-    /*if (POSG(x) + m_rect.getSize().x / 2 > WIDTH)
-    {
-        m_rect.setPosition(m_rect.getSize().x / 2, POSG(y));
-    }
-    else if (POSG(y) + m_rect.getSize().y / 2 > HEIGHT)
-    {
-        m_rect.setPosition(POSG(x), m_rect.getSize().y / 2);
-    }
-    else if (POSG(x) - m_rect.getSize().x / 2 < 0)
-    {
-        m_rect.setPosition(WIDTH - m_rect.getSize().x / 2, POSG(y));
-    }
-    else if (POSG(y) - m_rect.getSize().y / 2 < 0)
-    {
-        m_rect.setPosition(POSG(x), HEIGHT - m_rect.getSize().y / 2);
-    };*/
+   
 
 }
 
@@ -181,9 +185,25 @@ Vector2f Cell::getPos()
     return m_rect.getPosition();
 }
 
+void Cell::setDirection(Direction dir)
+{
+    m_dir = dir;
+}
+
+Direction Cell::getDirection()
+{
+    return m_dir;
+}
+
 void Cell::setPos(Vector2f newPos)
 {
     m_newPos = newPos;
+}
+
+void Cell::setSize(Vector2f newSize)
+{
+    m_data->size = newSize.x;
+    m_rect.setSize(newSize);
 }
 
 RectangleShape& Cell::getRectangleShape()
