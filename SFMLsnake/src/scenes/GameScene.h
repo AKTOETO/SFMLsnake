@@ -22,7 +22,7 @@ public:
 	void activate();
 
 	void processEvent();
-	void processLogic(float);
+	SceneData processLogic(float);
 	void processDraw();
 
 	void eatingFood();
