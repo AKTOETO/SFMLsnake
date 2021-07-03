@@ -35,8 +35,9 @@ void Snake::processEvent()
 	}
 }
 
-void Snake::processLogic(float time)
+RSnakeData Snake::processLogic(float time)
 {
+	RSnakeData rdata;
 	for (int i = m_units.size() - 1; i > 0; i--)
 	{
 		//should the tail move
@@ -66,8 +67,11 @@ void Snake::processLogic(float time)
 	{
 		m_units[i]->logic(time);
 	}
-	m_units[0]->logic(time);
-
+	if (m_units[0]->logic(time).wallCollision == true)
+	{
+		rdata.isAlive = false;
+	}
+	return rdata;
 }
 
 void Snake::processDraw()

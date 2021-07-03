@@ -42,15 +42,18 @@ void GameScene::processEvent()
 	m_text->processEvent();
 }
 
-SceneData GameScene::processLogic(float time)
+RSceneData GameScene::processLogic(float time)
 {
-	m_snake->processLogic(time);
+	RSceneData sdata;
+	RSnakeData rsnake = m_snake->processLogic(time);
+	if (rsnake.isAlive == false)
+	{
+		sdata.need_to_switch = true;
+	}
 	m_food->processLogic(time);
 	m_text->processLogic(time);
 	m_text->setString("score: " + std::to_string(m_snake->getSize()));
 	eatingFood();
-	SceneData sdata;
-	sdata.need_to_switch = false;
 	return sdata;
 }
 

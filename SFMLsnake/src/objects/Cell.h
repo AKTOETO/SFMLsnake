@@ -16,6 +16,11 @@ struct CellData
 	bool head = false;
 };
 
+struct RCellData
+{
+	bool wallCollision = false;
+};
+
 enum class Direction
 {
 	STOP = 0,
@@ -41,7 +46,7 @@ public:
 		~Cell();
 
 		void event();
-		void logic(float time);
+		RCellData logic(float time);
 		void draw();
 		void setPos(Vector2f);
 		void setSize(Vector2f);

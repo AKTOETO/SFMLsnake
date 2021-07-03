@@ -48,8 +48,9 @@ void Cell::event()
         m_dir = Direction::DOWN;
 }
 
-void Cell::logic(float time)
+RCellData Cell::logic(float time)
 {
+    RCellData rdata;
     if (m_head == true)
     {
 #define POSG(param) m_rect.getPosition().param
@@ -64,6 +65,7 @@ void Cell::logic(float time)
             )
         {
             m_dir = Direction::STOP;
+            rdata.wallCollision = true;
             std::cout << "game over (wall collision) <Cell.cpp>\n";
         }
 
@@ -160,7 +162,7 @@ void Cell::logic(float time)
     }
 
    
-
+    return rdata;
 }
 
 void Cell::draw()

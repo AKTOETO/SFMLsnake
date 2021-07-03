@@ -3,38 +3,58 @@
 SceneManager::SceneManager(std::shared_ptr<RenderWindow> window)
 	:m_window(window)
 {
-	m_cur_scene = nullptr;
+	m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::StartScene, nullptr);
 }
 
 SceneManager::~SceneManager()
 {
 }
 
-void SceneManager::setScene(std::unique_ptr<BaseScene> scene)
+void SceneManager::setScene(Scenes id_scene, std::unique_ptr<BaseScene> scene)
 {
-	m_cur_scene = std::move(scene);
+	//m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(id_scene, std::move(scene));
+	m_cur_scene.first = id_scene;
+	m_cur_scene.second = std::move(scene);
 }
 
 void SceneManager::processEvent()
 {
-	if (m_cur_scene != nullptr)
+	if (m_cur_scene.second != nullptr)
 	{
-		m_cur_scene->processEvent();
+		m_cur_scene.second->processEvent();
 	}
 }
 
 void SceneManager::processLogic(float time)
 {
-	if (m_cur_scene != nullptr)
+	if (m_cur_scene.second != nullptr)
 	{
-		m_cur_scene->processLogic(time);
+		RSceneData rscene = m_cur_scene.second->processLogic(time);
+		if (rscene.need_to_switch == true)
+		{
+			switch (m_cur_scene.first)
+			{
+			case Scenes::StartScene:
+				setScene(Scenes::GameScene, std::make_unique<GameScene>(m_window));
+
+				break;
+
+			case Scenes::GameScene:
+				setScene(Scenes::GameOver, nullptr);
+
+				break;
+
+			default:
+				break;
+			}
+		}
 	}
 }
 
 void SceneManager::processDraw()
 {
-	if (m_cur_scene != nullptr)
+	if (m_cur_scene.second != nullptr)
 	{
-		m_cur_scene->processDraw();
+		m_cur_scene.second->processDraw();
 	}
 }

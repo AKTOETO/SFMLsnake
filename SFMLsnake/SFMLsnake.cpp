@@ -3,7 +3,8 @@
 #include <vector>
 #include <ctime>
 
-#include "src/scenes/GameScene.h"
+//#include "src/scenes/GameScene.h"
+#include "src/objects/SceneManager/SceneManager.h"
 
 
 int main()
@@ -11,7 +12,9 @@ int main()
     std::shared_ptr<RenderWindow>window =
         std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
 
-    GameScene game(window);
+    //GameScene game(window);
+    SceneManager sceneManager(window);
+    sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 
     Clock clock;
     while (window->isOpen())
@@ -31,13 +34,13 @@ int main()
             }
         }
         //snake.event();
-        game.processEvent();
+        sceneManager.processEvent();
 
-        game.processLogic(time);
+        sceneManager.processLogic(time);
 
         //draw
         window->clear();
-        game.processDraw();
+        sceneManager.processDraw();
         window->display();
     }
 
