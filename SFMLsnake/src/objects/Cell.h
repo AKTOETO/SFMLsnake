@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
+#include <cmath>
 
 #include "../../Support.h"
 
@@ -27,14 +29,12 @@ class Cell
 {
 private:
 	    Direction m_dir;
-	    Direction m_newDir;
 		Vector2f m_newPos;
 	    RectangleShape m_rect;
 		std::shared_ptr<RenderWindow> m_window;
 		std::unique_ptr<CellData> m_data;
-		bool m_canRotate = false,
-			m_canRemember = true,
-			m_head = false;
+		std::unique_ptr<RectangleShape> m_collisionRectangle;
+		bool m_head = false;
 	
 public:
 	    Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
@@ -43,17 +43,16 @@ public:
 		void event();
 		void logic(float time);
 		void draw();
+		void setPos(Vector2f);
+		void setSize(Vector2f);
 
-		void setDirection(Direction, Vector2f);
-		Direction getDirection();
+		RectangleShape& getCollisionShape();
+		RectangleShape& getRectangleShape();
 
 		Vector2f getSize();
 		Vector2f getPos();
 
-		void setNewPos(Vector2f);
-
-		void canRotate();
-
-		RectangleShape& getRectangleShape();
+		void setDirection(Direction);
+		Direction getDirection();
 };
 

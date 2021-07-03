@@ -7,7 +7,9 @@ using namespace sf;
 
 #define SPEED 0.2 // 0.2
 #define SOC 20 // 20 size of cell (px)
-#define OBC SOC / 2 // offset between cells
+#define OBC SOC / 5 // offset between cells
+
+#define PI 3.14159265
 
 namespace SupportFunc
 {
