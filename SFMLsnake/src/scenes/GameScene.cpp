@@ -42,13 +42,16 @@ void GameScene::processEvent()
 	m_text->processEvent();
 }
 
-void GameScene::processLogic(float time)
+SceneData GameScene::processLogic(float time)
 {
 	m_snake->processLogic(time);
 	m_food->processLogic(time);
 	m_text->processLogic(time);
 	m_text->setString("score: " + std::to_string(m_snake->getSize()));
 	eatingFood();
+	SceneData sdata;
+	sdata.need_to_switch = false;
+	return sdata;
 }
 
 void GameScene::processDraw()
