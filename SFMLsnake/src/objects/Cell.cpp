@@ -12,6 +12,19 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
     m_rect.setFillColor(m_data->color);
     m_head = m_data->head;
 
+    //temp
+    // =====
+    //texture;
+    if (!m_texture.loadFromFile("assets/textures/snake.png"))
+        std::cout << "failed to load snake.png (wrong path) <Cell.cpp>\n";
+
+    //sprite
+    m_sprite.setTexture(m_texture);
+    m_sprite.setPosition(m_rect.getPosition());    
+    // =====
+
+
+
     //collision shape
     if (m_head == true)
     {
@@ -28,7 +41,25 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
         m_collisionRectangle->setPosition(
             POSG(x), POSG(y) - m_rect.getSize().x / 2
         );
+
+        //temp
+        // =====
+        //sprite
+        m_sprite.setTextureRect(IntRect(1, 1, 20, 20));
+        // =====
     }
+    else
+    {
+        //temp
+        // =====
+        //sprite
+        m_sprite.setTextureRect(IntRect(1, 22, 20, 20));
+        // =====
+    }
+    m_sprite.setOrigin(
+        m_sprite.getLocalBounds().width / 2,
+        m_sprite.getLocalBounds().height / 2
+    );
 }
 
 Cell::~Cell()
@@ -51,6 +82,8 @@ void Cell::event()
 RCellData Cell::logic(float time)
 {
     RCellData rdata;
+
+    //==========HEAD==========
     if (m_head == true)
     {
 #define POSG(param) m_rect.getPosition().param
@@ -80,6 +113,9 @@ RCellData Cell::logic(float time)
             {
                 m_rect.setPosition(BOUND(width) / 2, POSG(y));
             }
+
+            //temp
+            m_sprite.setRotation(270);
         }
         else if (m_dir == Direction::RIGHT)
         {
@@ -91,6 +127,9 @@ RCellData Cell::logic(float time)
             {
                 m_rect.setPosition(WIDTH - BOUND(width) / 2, POSG(y));
             }
+
+            //temp
+            m_sprite.setRotation(90);
         }
         else if (m_dir == Direction::UP)
         {
@@ -102,6 +141,9 @@ RCellData Cell::logic(float time)
             {
                 m_rect.setPosition(POSG(x), BOUND(width) / 2);
             }
+
+            //temp
+            m_sprite.setRotation(0);
         }
         else if (m_dir == Direction::DOWN)
         {
@@ -113,6 +155,9 @@ RCellData Cell::logic(float time)
             {
                 m_rect.setPosition(POSG(x), HEIGHT - BOUND(width) / 2);
             }
+
+            //temp
+            m_sprite.setRotation(180);
         }
 
         //collision rectangle logic
@@ -145,21 +190,28 @@ RCellData Cell::logic(float time)
         }
 
     }
+    //==========BODY==========
     else
     {
         if (m_dir != Direction::STOP)
         {
-            float k = 0.1; // smoothness of movement
+            float k = 0.06; // smoothness of movement //0.1
             m_rect.move(
                 ((m_newPos.x - POSG(x)) * SPEED * time * k),
                 ((m_newPos.y - POSG(y)) * SPEED * time * k)
             );
+
             m_rect.setRotation(
-                -std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
+                - std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
                 * 180 / PI
             );
         }
+        //temp
+        m_sprite.setRotation(m_rect.getRotation());
     }
+
+    //temp
+    m_sprite.setPosition(m_rect.getPosition());
 
    
     return rdata;
@@ -168,8 +220,9 @@ RCellData Cell::logic(float time)
 void Cell::draw()
 {
     m_window->draw(m_rect);
-    if (m_head == true)
-        m_window->draw(*m_collisionRectangle);
+    /*if (m_head == true)
+        m_window->draw(*m_collisionRectangle);*/
+    m_window->draw(m_sprite);
 }
 
 RectangleShape& Cell::getCollisionShape()

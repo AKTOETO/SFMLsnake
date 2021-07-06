@@ -30,7 +30,6 @@ int main()
             if (event.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
             {
                 window->close();
-                std::cout << "Bye bye!\n";
             }
         }
         //snake.event();
@@ -44,5 +43,6 @@ int main()
         window->display();
     }
 
+    std::cout << "Bye bye!\n";
     return 0;
 }

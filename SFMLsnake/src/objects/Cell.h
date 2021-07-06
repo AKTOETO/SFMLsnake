@@ -39,6 +39,11 @@ private:
 		std::shared_ptr<RenderWindow> m_window;
 		std::unique_ptr<CellData> m_data;
 		std::unique_ptr<RectangleShape> m_collisionRectangle;
+		//temp
+		//======
+		Texture m_texture;
+		Sprite m_sprite;
+		//======
 		bool m_head = false;
 	
 public:
