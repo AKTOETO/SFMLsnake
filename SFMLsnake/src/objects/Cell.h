@@ -10,15 +10,19 @@ using namespace sf;
 
 struct CellData
 {
-	Vector2f pos = { WIDTH / 2, HEIGHT / 2 };
+	Vector2f pos = { WIDTH / 2, HEIGHT / 2 },
+		size = { SOC, SOC };
 	Color color = Color::Green;
-	float size = SOC;
 	bool head = false;
 };
 
 struct RCellData
 {
 	bool wallCollision = false;
+	float 
+		rotation = 0,
+		deltaX = 0,
+		deltaY = 0;
 };
 
 enum class Direction
@@ -35,7 +39,7 @@ class Cell
 private:
 	    Direction m_dir;
 		Vector2f m_newPos;
-	    RectangleShape m_rect;
+	    RectangleShape m_rect, m_posBackPoint;
 		std::shared_ptr<RenderWindow> m_window;
 		std::unique_ptr<CellData> m_data;
 		std::unique_ptr<RectangleShape> m_collisionRectangle;

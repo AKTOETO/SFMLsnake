@@ -12,7 +12,6 @@ int main()
     std::shared_ptr<RenderWindow>window =
         std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
 
-    //GameScene game(window);
     SceneManager sceneManager(window);
     sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 

@@ -148,6 +148,7 @@
     <ClCompile Include="src\objects\TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.gitignore" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -69,7 +69,11 @@ void GameScene::eatingFood()
 	if (SupportFunc::intersectRectangleShape((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
 		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";
-		m_snake->addUnit((*m_snake)[m_snake->getSize() - 2]->getPos());
+		if (m_snake->getSize() > 1)
+			m_snake->addUnit((*m_snake)[m_snake->getSize() - 2]->getPos());
+		else
+			m_snake->addUnit((*m_snake)[m_snake->getSize() - 1]->getPos());
+
 		m_food->setPos({
 			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
 			float(rand() % (HEIGHT - SOC * 2 / 3)) + SOC / 3

@@ -5,9 +5,11 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 {
     m_collisionRectangle = nullptr;
     m_data = move(data);
-	m_rect.setSize({ m_data->size, m_data->size });
-    m_rect.setOrigin(m_rect.getLocalBounds().width / 2,
-        m_rect.getLocalBounds().height / 2);
+	m_rect.setSize(m_data->size);
+    m_rect.setOrigin(
+        m_rect.getLocalBounds().width / 2,
+        m_rect.getLocalBounds().height / 2
+    );
     m_rect.setPosition(Vector2f{ m_data->pos });
     m_rect.setFillColor(m_data->color);
     m_head = m_data->head;
@@ -37,6 +39,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
         );
         //m_collisionRectangle->setPosition(m_data->pos);
         m_collisionRectangle->setFillColor(Color::Magenta);
+
 #define POSG(param) m_rect.getPosition().param
         m_collisionRectangle->setPosition(
             POSG(x), POSG(y) - m_rect.getSize().x / 2
@@ -47,6 +50,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
         //sprite
         m_sprite.setTextureRect(IntRect(1, 1, 20, 20));
         // =====
+
     }
     else
     {
@@ -55,11 +59,24 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
         //sprite
         m_sprite.setTextureRect(IntRect(1, 22, 20, 20));
         // =====
+
+        
+        m_posBackPoint.setSize(Vector2f(5, 5));
+        m_posBackPoint.setOrigin(
+            m_posBackPoint.getLocalBounds().width / 2,
+            m_posBackPoint.getLocalBounds().height / 2
+        );
+        m_posBackPoint.setPosition(Vector2f(
+            sin(-m_rect.getRotation()) * 10 + m_rect.getPosition().x,
+            cos(-m_rect.getRotation()) * 10 + m_rect.getPosition().y
+        ));
+        m_posBackPoint.setFillColor(Color::Magenta);
     }
     m_sprite.setOrigin(
         m_sprite.getLocalBounds().width / 2,
         m_sprite.getLocalBounds().height / 2
     );
+    m_sprite.setScale(Vector2f(2, 2));
 }
 
 Cell::~Cell()
@@ -201,13 +218,32 @@ RCellData Cell::logic(float time)
                 ((m_newPos.y - POSG(y)) * SPEED * time * k)
             );
 
-            m_rect.setRotation(
-                - std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y)))
-                * 180 / PI
-            );
+            rdata.deltaX = (m_newPos.x - POSG(x));
+            rdata.deltaY = (m_newPos.y - POSG(y));
+
+            if ((rdata.deltaX <= 0 and rdata.deltaY >= 0) or (rdata.deltaX >= 0 and rdata.deltaY >= 0))
+            {
+                m_rect.setRotation(
+                    (- std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y))) + PI) * 180 / PI
+                );
+            }
+            else
+            {
+                m_rect.setRotation(
+                    -std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y))) * 180 / PI
+                );
+            }
+
+            rdata.rotation = m_rect.getRotation();
+
+            //temp
+            m_sprite.setRotation(m_rect.getRotation());
+
+            m_posBackPoint.setPosition(Vector2f(
+                sin(-m_rect.getRotation() * PI / 180) * 10 + m_rect.getPosition().x,
+                cos(-m_rect.getRotation() * PI / 180) * 10 + m_rect.getPosition().y
+            ));
         }
-        //temp
-        m_sprite.setRotation(m_rect.getRotation());
     }
 
     //temp
@@ -219,10 +255,18 @@ RCellData Cell::logic(float time)
 
 void Cell::draw()
 {
-    m_window->draw(m_rect);
-    /*if (m_head == true)
-        m_window->draw(*m_collisionRectangle);*/
+    //sprite
     m_window->draw(m_sprite);
+
+    //hit boxes
+    if (SHB == true)
+    {
+        m_window->draw(m_rect);
+        if (m_head == true)
+            m_window->draw(*m_collisionRectangle);
+        else
+            m_window->draw(m_posBackPoint);
+    }
 }
 
 RectangleShape& Cell::getCollisionShape()
@@ -240,6 +284,7 @@ Vector2f Cell::getPos()
     return m_rect.getPosition();
 }
 
+
 void Cell::setDirection(Direction dir)
 {
     m_dir = dir;
@@ -255,9 +300,10 @@ void Cell::setPos(Vector2f newPos)
     m_newPos = newPos;
 }
 
+
 void Cell::setSize(Vector2f newSize)
 {
-    m_data->size = newSize.x;
+    m_data->size = newSize;
     m_rect.setSize(newSize);
 }
 
