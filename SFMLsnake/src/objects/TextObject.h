@@ -33,6 +33,4 @@ public:
 
 	void setString(std::string);
 	void setPos(Vector2f);
-
 };
-

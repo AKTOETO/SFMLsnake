@@ -26,8 +26,6 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	m_sprite.setPosition(m_rect.getPosition());
 	// =====
 
-
-
 	//collision shape
 	if (m_head == true)
 	{
@@ -55,7 +53,6 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 			m_sprite.getLocalBounds().height / 2
 		);
 		// =====
-
 	}
 	else
 	{
@@ -68,7 +65,6 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 			m_sprite.getLocalBounds().height / 2
 		);
 		// =====
-
 
 		m_posBackPoint.setSize(Vector2f(5, 5));
 		m_posBackPoint.setOrigin(
@@ -90,7 +86,7 @@ Cell::~Cell()
 
 void Cell::event()
 {
-#define PRESS(param) Keyboard::isKeyPressed(Keyboard::param) 
+#define PRESS(param) Keyboard::isKeyPressed(Keyboard::param)
 	if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)
 		m_dir = Direction::LEFT;
 	else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Direction::DOWN)
@@ -210,7 +206,6 @@ RCellData Cell::logic(float time)
 			m_collisionRectangle->setRotation(270);
 			break;
 		}
-
 	}
 	//==========BODY==========
 	else
@@ -254,7 +249,6 @@ RCellData Cell::logic(float time)
 	//temp
 	m_sprite.setPosition(m_rect.getPosition());
 
-
 	return rdata;
 }
 
@@ -291,7 +285,6 @@ Vector2f Cell::getPos()
 	return m_posBackPoint.getPosition();
 }
 
-
 void Cell::setDirection(Direction dir)
 {
 	m_dir = dir;
@@ -317,7 +310,6 @@ void Cell::setPos(Vector2f newPos)
 	m_newPos = newPos;
 }
 
-
 void Cell::setSize(Vector2f newSize)
 {
 	m_data->size = newSize;
@@ -328,4 +320,3 @@ RectangleShape& Cell::getRectangleShape()
 {
 	return m_rect;
 }
-

@@ -6,7 +6,6 @@
 //#include "src/scenes/GameScene.h"
 #include "src/objects/SceneManager/SceneManager.h"
 
-
 int main()
 {
 	std::shared_ptr<RenderWindow>window =

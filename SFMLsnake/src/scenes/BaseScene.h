@@ -19,4 +19,3 @@ public:
 	virtual RSceneData processLogic(float) = 0;
 	virtual void processDraw() = 0;
 };
-

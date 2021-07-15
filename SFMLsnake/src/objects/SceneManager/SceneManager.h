@@ -12,7 +12,6 @@ enum class Scenes
 	GameOver,
 };
 
-
 class SceneManager
 {
 	std::shared_ptr<RenderWindow> m_window;
@@ -27,4 +26,3 @@ public:
 	void processLogic(float);
 	void processDraw();
 };
-

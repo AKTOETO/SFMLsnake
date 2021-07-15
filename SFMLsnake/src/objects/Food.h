@@ -31,4 +31,3 @@ public:
 
 	RectangleShape& getRectangleShape();
 };
-

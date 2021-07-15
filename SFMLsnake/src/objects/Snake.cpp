@@ -26,10 +26,8 @@ std::unique_ptr<Cell>& Snake::operator[](int i)
 	return m_units[i];
 }
 
-
 void Snake::processEvent()
 {
-
 	for (int i = 0; i < m_units.size(); i++)
 	{
 		m_units[i]->event();
@@ -53,7 +51,6 @@ RSnakeData Snake::processLogic(float time)
 			)
 			m_units[i]->setPos(m_units[i - 1]->getPos());
 
-
 		if (SupportFunc::intersectRectangleShape(
 			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
 			)
@@ -62,7 +59,6 @@ RSnakeData Snake::processLogic(float time)
 				" pieces were eaten (head and tail collision) <Snake.cpp>\n";
 			m_units.erase(m_units.begin() + i, m_units.end());
 		}
-
 	}
 
 	for (int i = m_units.size() - 1; i >= 0; i--)

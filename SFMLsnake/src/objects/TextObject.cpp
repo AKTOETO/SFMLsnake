@@ -14,7 +14,7 @@ TextObject::TextObject(std::shared_ptr<RenderWindow> window, TextData data)
 	m_text.setCharacterSize(m_data.size);
 	m_text.setFillColor(m_data.color);
 	m_text.setStyle(m_data.styles);
-	if(m_data.originInCeneter == true)
+	if (m_data.originInCeneter == true)
 		m_text.setOrigin(
 			m_text.getLocalBounds().width / 2,
 			m_text.getLocalBounds().height / 2

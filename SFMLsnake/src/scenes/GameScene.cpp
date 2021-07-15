@@ -3,7 +3,6 @@
 GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	:m_window(window)
 {
-
 	//snake
 	m_snake = std::make_unique<Snake>(m_window);
 
@@ -81,6 +80,3 @@ void GameScene::eatingFood()
 			});
 	}
 }
-
-
-

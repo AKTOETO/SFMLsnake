@@ -19,8 +19,7 @@ public:
 	Snake(std::shared_ptr<RenderWindow>);
 	~Snake();
 
-
-	std::unique_ptr<Cell> &operator[](int);
+	std::unique_ptr<Cell>& operator[](int);
 
 	void processEvent();
 	RSnakeData processLogic(float time);
@@ -29,6 +28,4 @@ public:
 	void addUnit(Vector2f, float);
 
 	int getSize();
-
 };
-

@@ -64,13 +64,10 @@ public:
 	void setDirection(Direction);
 	void setRotation(float);
 
-
 	RectangleShape& getCollisionShape();
 	RectangleShape& getRectangleShape();
 	Vector2f getSize();
 	Vector2f getPos();
 	Direction getDirection();
 	float getRotation();
-
 };
-
