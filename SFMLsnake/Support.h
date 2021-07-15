@@ -11,7 +11,7 @@ using namespace sf;
 
 #define PI 3.14159265
 
-#define SHB false //show hit boxes
+#define SHB true //show hit boxes
 
 namespace SupportFunc
 {

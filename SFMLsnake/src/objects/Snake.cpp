@@ -6,13 +6,14 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 	CellData data;
 	data.head = true;
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+
 	data.color = Color::Red;
 	data.size = { SOC * 2 / 3, SOC };
 	data.head = false;
-	data.pos = Vector2f( m_units[0]->getPos().x, m_units[0]->getPos().y + m_units[0]->getSize().x - 4 );
+	data.pos = Vector2f(m_units[0]->getPos().x, m_units[0]->getPos().y + m_units[0]->getSize().x - 4);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 
-	data.pos = Vector2f( m_units[1]->getPos().x, m_units[1]->getPos().y + m_units[1]->getSize().x );
+	data.pos = Vector2f(m_units[1]->getPos().x, m_units[1]->getPos().y + m_units[1]->getSize().x);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 }
 
@@ -44,20 +45,20 @@ RSnakeData Snake::processLogic(float time)
 		m_units[i]->setDirection(m_units[i - 1]->getDirection());
 
 		//calculate the logic at a sufficient distance
-		if(
+		if (
 			sqrt(
 				pow(m_units[i]->getPos().x - m_units[i - 1]->getPos().x, 2) +
 				pow(m_units[i]->getPos().y - m_units[i - 1]->getPos().y, 2)
-				) > (m_units[i]->getSize().y / 2 + m_units[i - 1]->getSize().y / 2) - OBC
+			) > (m_units[i]->getSize().y / 2 + m_units[i - 1]->getSize().y / 2) - OBC
 			)
-		m_units[i]->setPos(m_units[i - 1]->getPos());
+			m_units[i]->setPos(m_units[i - 1]->getPos());
 
 
 		if (SupportFunc::intersectRectangleShape(
 			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
-		)
+			)
 		{
-			std::cout << m_units.size() - i  <<
+			std::cout << m_units.size() - i <<
 				" pieces were eaten (head and tail collision) <Snake.cpp>\n";
 			m_units.erase(m_units.begin() + i, m_units.end());
 		}
@@ -72,16 +73,12 @@ RSnakeData Snake::processLogic(float time)
 		{
 			rSdata.isAlive = false;
 		}
-		if (i == 1)
+		/*if (i == 1)
 		{
 			std::cout << "rotation: " << rCdata.rotation << " delta X: " <<
 				rCdata.deltaX << " delta Y: " << rCdata.deltaY << std::endl;
-		}
+		}*/
 	}
-	/*if (m_units[0]->logic(time).wallCollision == true)
-	{
-		rSdata.isAlive = false;
-	}*/
 	return rSdata;
 }
 
@@ -94,13 +91,14 @@ void Snake::processDraw()
 	m_units[0]->draw();
 }
 
-void Snake::addUnit(Vector2f pos)
+void Snake::addUnit(Vector2f pos, float rotation)
 {
 	CellData data;
 	data.color = Color::Red;
 	data.size = { SOC * 2 / 3, SOC };
 	data.head = false;
 	data.pos = std::move(pos);
+	data.rotation = rotation;
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 }
 

@@ -26,7 +26,7 @@ public:
 	RSnakeData processLogic(float time);
 	void processDraw();
 
-	void addUnit(Vector2f);
+	void addUnit(Vector2f, float);
 
 	int getSize();
 

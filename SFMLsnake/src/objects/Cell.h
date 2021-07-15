@@ -14,12 +14,13 @@ struct CellData
 		size = { SOC, SOC };
 	Color color = Color::Green;
 	bool head = false;
+	float rotation = 0;
 };
 
 struct RCellData
 {
 	bool wallCollision = false;
-	float 
+	float
 		rotation = 0,
 		deltaX = 0,
 		deltaY = 0;
@@ -37,36 +38,39 @@ enum class Direction
 class Cell
 {
 private:
-	    Direction m_dir;
-		Vector2f m_newPos;
-	    RectangleShape m_rect, m_posBackPoint;
-		std::shared_ptr<RenderWindow> m_window;
-		std::unique_ptr<CellData> m_data;
-		std::unique_ptr<RectangleShape> m_collisionRectangle;
-		//temp
-		//======
-		Texture m_texture;
-		Sprite m_sprite;
-		//======
-		bool m_head = false;
-	
+	Direction m_dir;
+	Vector2f m_newPos;
+	RectangleShape m_rect, m_posBackPoint;
+	std::shared_ptr<RenderWindow> m_window;
+	std::unique_ptr<CellData> m_data;
+	std::unique_ptr<RectangleShape> m_collisionRectangle;
+	//temp
+	//======
+	Texture m_texture;
+	Sprite m_sprite;
+	//======
+	bool m_head = false;
+
 public:
-	    Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
-		~Cell();
+	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
+	~Cell();
 
-		void event();
-		RCellData logic(float time);
-		void draw();
-		void setPos(Vector2f);
-		void setSize(Vector2f);
+	void event();
+	RCellData logic(float time);
+	void draw();
 
-		RectangleShape& getCollisionShape();
-		RectangleShape& getRectangleShape();
+	void setPos(Vector2f);
+	void setSize(Vector2f);
+	void setDirection(Direction);
+	void setRotation(float);
 
-		Vector2f getSize();
-		Vector2f getPos();
 
-		void setDirection(Direction);
-		Direction getDirection();
+	RectangleShape& getCollisionShape();
+	RectangleShape& getRectangleShape();
+	Vector2f getSize();
+	Vector2f getPos();
+	Direction getDirection();
+	float getRotation();
+
 };
 

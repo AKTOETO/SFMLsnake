@@ -11,7 +11,7 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	srand(time(0));
 	FoodData f_data;
 	f_data.size = SOC * 2 / 3;
-	f_data.pos = { 
+	f_data.pos = {
 		float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
 		float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3)
 	};
@@ -68,11 +68,12 @@ void GameScene::eatingFood()
 {
 	if (SupportFunc::intersectRectangleShape((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
+#define CELL(param) (*m_snake)[m_snake->getSize() - param]
 		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";
 		if (m_snake->getSize() > 1)
-			m_snake->addUnit((*m_snake)[m_snake->getSize() - 2]->getPos());
+			m_snake->addUnit(CELL(2)->getPos(), CELL(2)->getRotation());
 		else
-			m_snake->addUnit((*m_snake)[m_snake->getSize() - 1]->getPos());
+			m_snake->addUnit(CELL(1)->getPos(), CELL(1)->getRotation());
 
 		m_food->setPos({
 			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
@@ -81,5 +82,5 @@ void GameScene::eatingFood()
 	}
 }
 
- 
+
 
