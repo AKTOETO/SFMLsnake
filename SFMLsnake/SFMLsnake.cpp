@@ -3,7 +3,6 @@
 #include <vector>
 #include <ctime>
 
-//#include "src/scenes/GameScene.h"
 #include "src/objects/SceneManager/SceneManager.h"
 
 int main()
@@ -20,7 +19,7 @@ int main()
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 		time /= 800;
-
+		
 		//events
 		Event event;
 		while (window->pollEvent(event))
@@ -30,7 +29,6 @@ int main()
 				window->close();
 			}
 		}
-		//snake.event();
 		sceneManager.processEvent();
 
 		sceneManager.processLogic(time);
