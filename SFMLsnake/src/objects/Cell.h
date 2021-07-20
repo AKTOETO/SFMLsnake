@@ -11,7 +11,7 @@ using namespace sf;
 struct CellData
 {
 	Vector2f pos = { WIDTH / 2, HEIGHT / 2 },
-		size = { SOC, SOC };
+		size = { SOCHX, SOCHY };
 	Color color = Color::Green;
 	bool head = false;
 	float rotation = 0;
@@ -40,7 +40,7 @@ class Cell
 private:
 	Direction m_dir;
 	Vector2f m_newPos;
-	RectangleShape m_rect, m_posBackPoint;
+	RectangleShape m_rect, m_posBackPoint, m_posFrontPoint;
 	std::shared_ptr<RenderWindow> m_window;
 	std::unique_ptr<CellData> m_data;
 	std::unique_ptr<RectangleShape> m_collisionRectangle;
@@ -49,7 +49,6 @@ private:
 	Texture m_texture;
 	Sprite m_sprite;
 	//======
-	bool m_head = false;
 
 public:
 	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
@@ -67,7 +66,9 @@ public:
 	RectangleShape& getCollisionShape();
 	RectangleShape& getRectangleShape();
 	Vector2f getSize();
-	Vector2f getPos();
+	Vector2f getBackPos();
+	Vector2f getCenterPos();
+	Vector2f getFrontPos();
 	Direction getDirection();
 	float getRotation();
 };

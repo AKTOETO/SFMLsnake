@@ -3,17 +3,20 @@
 Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	:m_window(window)
 {
-	m_collisionRectangle = nullptr;
 	m_data = move(data);
+
+	//front hitbox
+	m_collisionRectangle = nullptr;
+
+	//main hitbox
 	m_rect.setSize(m_data->size);
 	m_rect.setOrigin(
 		m_rect.getLocalBounds().width / 2,
 		m_rect.getLocalBounds().height / 2
 	);
-	m_rect.setPosition(Vector2f{ m_data->pos });
+	m_rect.setPosition(m_data->pos);
 	m_rect.setFillColor(m_data->color);
 	m_rect.setRotation(m_data->rotation);
-	m_head = m_data->head;
 
 	//temp
 	// =====
@@ -26,58 +29,67 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	m_sprite.setPosition(m_rect.getPosition());
 	// =====
 
-	//collision shape
-	if (m_head == true)
+	//front collision shape (hitbox)
+	//==========HEAD==========
+	if (m_data->head == true)
 	{
-		m_collisionRectangle = std::make_unique<RectangleShape>(
-			Vector2f(m_rect.getSize().x / 4, 2)
-			);
+		m_collisionRectangle =
+			std::make_unique<RectangleShape>(Vector2f(2, 2));
 		m_collisionRectangle->setOrigin(
 			m_collisionRectangle->getLocalBounds().width / 2,
 			m_collisionRectangle->getLocalBounds().height / 2
 		);
-		//m_collisionRectangle->setPosition(m_data->pos);
 		m_collisionRectangle->setFillColor(Color::Magenta);
 
 #define POSG(param) m_rect.getPosition().param
 		m_collisionRectangle->setPosition(
-			POSG(x), POSG(y) - m_rect.getSize().x / 2
+			POSG(x), POSG(y) - m_rect.getSize().y / 2
 		);
 
 		//temp
 		// =====
 		//sprite
-		m_sprite.setTextureRect(IntRect(1, 1, 20, 20));
-		m_sprite.setOrigin(
-			m_sprite.getLocalBounds().width / 2,
-			m_sprite.getLocalBounds().height / 2
-		);
+		m_sprite.setTextureRect(IntRect(1, 1, 40, 40));
 		// =====
 	}
 	else
 	{
+		//==========BODY==========
 		//temp
 		// =====
 		//sprite
-		m_sprite.setTextureRect(IntRect(1, 22, 20, 20));
-		m_sprite.setOrigin(
-			m_sprite.getLocalBounds().width / 2,
-			m_sprite.getLocalBounds().height / 2
-		);
+		m_sprite.setTextureRect(IntRect(1, 42, 40, 40));
 		// =====
 
-		m_posBackPoint.setSize(Vector2f(5, 5));
-		m_posBackPoint.setOrigin(
-			m_posBackPoint.getLocalBounds().width / 2,
-			m_posBackPoint.getLocalBounds().height / 2
-		);
-		m_posBackPoint.setPosition(Vector2f(
-			sin(-m_rect.getRotation()) * 10 + m_rect.getPosition().x,
-			cos(-m_rect.getRotation()) * 10 + m_rect.getPosition().y
-		));
-		m_posBackPoint.setFillColor(Color::Magenta);
 	}
-	m_sprite.setScale(Vector2f(2, 2));
+	//test =====
+	m_posBackPoint.setSize(Vector2f(5, 5));
+	m_posBackPoint.setOrigin(
+		m_posBackPoint.getLocalBounds().width / 2,
+		m_posBackPoint.getLocalBounds().height / 2
+	);
+	m_posBackPoint.setPosition(Vector2f(
+		sin(-m_rect.getRotation()) * m_rect.getSize().x / 2 + POSG(x),
+		cos(-m_rect.getRotation()) * m_rect.getSize().y / 2 + POSG(y)
+	));
+	m_posBackPoint.setFillColor(Color::Magenta);
+
+	m_posFrontPoint.setSize(Vector2f(5, 5));
+	m_posFrontPoint.setOrigin(
+		m_posFrontPoint.getLocalBounds().width / 2,
+		m_posFrontPoint.getLocalBounds().height / 2
+	);
+	m_posFrontPoint.setPosition(Vector2f(
+		-sin(-m_rect.getRotation()) * m_rect.getSize().x / 2 + POSG(x),
+		-cos(-m_rect.getRotation()) * m_rect.getSize().y / 2 + POSG(y)
+	));
+	m_posFrontPoint.setFillColor(Color::White);
+	// =====
+	//m_sprite.setScale(Vector2f(2, 2));
+	m_sprite.setOrigin(
+		m_sprite.getLocalBounds().width / 2,
+		m_sprite.getLocalBounds().height / 2
+	);
 }
 
 Cell::~Cell()
@@ -101,8 +113,9 @@ RCellData Cell::logic(float time)
 {
 	RCellData rdata;
 
+#define POSFG(param) m_posFrontPoint.getPosition().param
 	//==========HEAD==========
-	if (m_head == true)
+	if (m_data->head == true)
 	{
 #define POSG(param) m_rect.getPosition().param
 #define BOUND(param) m_rect.getLocalBounds().param
@@ -134,6 +147,7 @@ RCellData Cell::logic(float time)
 
 			//temp
 			m_sprite.setRotation(270);
+			m_rect.setRotation(270);
 		}
 		else if (m_dir == Direction::RIGHT)
 		{
@@ -148,6 +162,7 @@ RCellData Cell::logic(float time)
 
 			//temp
 			m_sprite.setRotation(90);
+			m_rect.setRotation(90);
 		}
 		else if (m_dir == Direction::UP)
 		{
@@ -162,6 +177,7 @@ RCellData Cell::logic(float time)
 
 			//temp
 			m_sprite.setRotation(0);
+			m_rect.setRotation(0);
 		}
 		else if (m_dir == Direction::DOWN)
 		{
@@ -176,6 +192,7 @@ RCellData Cell::logic(float time)
 
 			//temp
 			m_sprite.setRotation(180);
+			m_rect.setRotation(180);
 		}
 
 		//collision rectangle logic
@@ -183,25 +200,25 @@ RCellData Cell::logic(float time)
 		{
 		case Direction::UP:
 			m_collisionRectangle->setPosition(
-				POSG(x), POSG(y) - m_rect.getSize().x / 2
+				POSG(x), POSG(y) - m_rect.getSize().y / 2
 			);
 			m_collisionRectangle->setRotation(180);
 			break;
 		case Direction::DOWN:
 			m_collisionRectangle->setPosition(
-				POSG(x), POSG(y) + m_rect.getSize().x / 2
+				POSG(x), POSG(y) + m_rect.getSize().y / 2
 			);
 			m_collisionRectangle->setRotation(180);
 			break;
 		case Direction::LEFT:
 			m_collisionRectangle->setPosition(
-				POSG(x) - m_rect.getSize().x / 2, POSG(y)
+				POSG(x) - m_rect.getSize().y / 2, POSG(y)
 			);
 			m_collisionRectangle->setRotation(270);
 			break;
 		case Direction::RIGHT:
 			m_collisionRectangle->setPosition(
-				POSG(x) + m_rect.getSize().x / 2, POSG(y)
+				POSG(x) + m_rect.getSize().y / 2, POSG(y)
 			);
 			m_collisionRectangle->setRotation(270);
 			break;
@@ -213,9 +230,10 @@ RCellData Cell::logic(float time)
 		if (m_dir != Direction::STOP)
 		{
 			float k = 0.06; // smoothness of movement //0.1
+
 			m_rect.move(
-				((m_newPos.x - POSG(x)) * SPEED * time * k),
-				((m_newPos.y - POSG(y)) * SPEED * time * k)
+				((m_newPos.x - POSFG(x)) * SPEED * time * k),
+				((m_newPos.y - POSFG(y)) * SPEED * time * k)
 			);
 
 			rdata.deltaX = (m_newPos.x - POSG(x));
@@ -239,12 +257,16 @@ RCellData Cell::logic(float time)
 			//temp
 			m_sprite.setRotation(m_rect.getRotation());
 
-			m_posBackPoint.setPosition(Vector2f(
-				sin(-m_rect.getRotation() * PI / 180) * 10 + m_rect.getPosition().x,
-				cos(-m_rect.getRotation() * PI / 180) * 10 + m_rect.getPosition().y
-			));
 		}
 	}
+	m_posBackPoint.setPosition(Vector2f(
+		sin(-m_rect.getRotation() * PI / 180) * (m_rect.getSize().y / 2 - 10) + POSG(x),
+		cos(-m_rect.getRotation() * PI / 180) * (m_rect.getSize().y / 2 - 10) + POSG(y)
+	));
+	m_posFrontPoint.setPosition(Vector2f(
+		-sin(-m_rect.getRotation() * PI / 180) * (m_rect.getSize().y / 2 - 10) + POSG(x),
+		-cos(-m_rect.getRotation() * PI / 180) * (m_rect.getSize().y / 2 - 10) + POSG(y)
+	));
 
 	//temp
 	m_sprite.setPosition(m_rect.getPosition());
@@ -254,17 +276,22 @@ RCellData Cell::logic(float time)
 
 void Cell::draw()
 {
-	//sprite
-	m_window->draw(m_sprite);
-
 	//hit boxes
 	if (SHB == true)
 	{
 		m_window->draw(m_rect);
-		if (m_head == true)
+		if (m_data->head == true)
 			m_window->draw(*m_collisionRectangle);
 		else
+		{
 			m_window->draw(m_posBackPoint);
+			m_window->draw(m_posFrontPoint);
+		}
+	}
+	else
+	{
+		//sprite
+		m_window->draw(m_sprite);
 	}
 }
 
@@ -278,11 +305,19 @@ Vector2f Cell::getSize()
 	return m_rect.getSize();
 }
 
-Vector2f Cell::getPos()
+Vector2f Cell::getBackPos()
 {
-	if (m_head == true)
-		return m_rect.getPosition();
 	return m_posBackPoint.getPosition();
+}
+
+Vector2f Cell::getCenterPos()
+{
+	return m_rect.getPosition();
+}
+
+Vector2f Cell::getFrontPos()
+{
+	return m_posFrontPoint.getPosition();
 }
 
 void Cell::setDirection(Direction dir)

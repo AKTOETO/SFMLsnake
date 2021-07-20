@@ -8,12 +8,14 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 
 	data.color = Color::Red;
-	data.size = { SOC * 2 / 3, SOC };
+	data.size = { 12, 40 };
 	data.head = false;
-	data.pos = Vector2f(m_units[0]->getPos().x, m_units[0]->getPos().y + m_units[0]->getSize().x - 4);
+	data.pos = Vector2f(m_units[0]->getBackPos().x,
+		m_units[0]->getBackPos().y + m_units[0]->getSize().y / 2);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 
-	data.pos = Vector2f(m_units[1]->getPos().x, m_units[1]->getPos().y + m_units[1]->getSize().x);
+	data.pos = Vector2f(m_units[1]->getBackPos().x,
+		m_units[1]->getBackPos().y + m_units[1]->getSize().y / 2);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 }
 
@@ -45,15 +47,17 @@ RSnakeData Snake::processLogic(float time)
 		//calculate the logic at a sufficient distance
 		if (
 			sqrt(
-				pow(m_units[i]->getPos().x - m_units[i - 1]->getPos().x, 2) +
-				pow(m_units[i]->getPos().y - m_units[i - 1]->getPos().y, 2)
-			) > (m_units[i]->getSize().y / 2 + m_units[i - 1]->getSize().y / 2) - OBC
+					pow(m_units[i]->getBackPos().x - m_units[i - 1]->getFrontPos().x, 2) +
+					pow(m_units[i]->getBackPos().y - m_units[i - 1]->getFrontPos().y, 2)
+				) > OBC
 			)
-			m_units[i]->setPos(m_units[i - 1]->getPos());
+			m_units[i]->setPos(m_units[i - 1]->getBackPos());
 
-		if (SupportFunc::intersectRectangleShape(
+		if (
+			SupportFunc::intersectRectangleShape(
 			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
-			)
+			&& i != 1 && i != 2
+			) 
 		{
 			std::cout << m_units.size() - i <<
 				" pieces were eaten (head and tail collision) <Snake.cpp>\n";
@@ -91,7 +95,7 @@ void Snake::addUnit(Vector2f pos, float rotation)
 {
 	CellData data;
 	data.color = Color::Red;
-	data.size = { SOC * 2 / 3, SOC };
+	data.size = { 12, 40 };
 	data.head = false;
 	data.pos = std::move(pos);
 	data.rotation = rotation;

@@ -9,10 +9,10 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	//food
 	srand(time(0));
 	FoodData f_data;
-	f_data.size = SOC * 2 / 3;
+	f_data.size = Vector2f(20, 20);
 	f_data.pos = {
-		float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
-		float(rand() % (HEIGHT - SOC * 2 / 3) + SOC / 3)
+		float(rand() % (WIDTH - 20 * 2 / 3)) + 20 / 3,
+		float(rand() % (HEIGHT - 20 * 2 / 3) + 20 / 3)
 	};
 	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(f_data));
 
@@ -70,13 +70,13 @@ void GameScene::eatingFood()
 #define CELL(param) (*m_snake)[m_snake->getSize() - param]
 		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";
 		if (m_snake->getSize() > 1)
-			m_snake->addUnit(CELL(2)->getPos(), CELL(2)->getRotation());
+			m_snake->addUnit(CELL(2)->getBackPos(), CELL(2)->getRotation());
 		else
-			m_snake->addUnit(CELL(1)->getPos(), CELL(1)->getRotation());
+			m_snake->addUnit(CELL(1)->getBackPos(), CELL(1)->getRotation());
 
 		m_food->setPos({
-			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
-			float(rand() % (HEIGHT - SOC * 2 / 3)) + SOC / 3
+			float(rand() % (WIDTH - 20 * 2 / 3)) + 20 / 3,
+			float(rand() % (HEIGHT - 20 * 2 / 3)) + 20 / 3
 			});
 	}
 }

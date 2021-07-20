@@ -9,7 +9,7 @@ struct FoodData
 {
 	Color color = Color::Yellow;
 	Vector2f pos = { 50, 50 };
-	float size;
+	Vector2f size;
 };
 
 class Food

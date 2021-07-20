@@ -6,12 +6,16 @@ using namespace sf;
 #define HEIGHT 600 // 600 1080
 
 #define SPEED 0.2 // 0.2
-#define SOC 20 // 20 size of cell (px)
-#define OBC SOC / 2 // offset between cells
+#define SOCHX 28 
+#define SOCHY 33 
+
+#define SOCBX 12 
+#define SOCBY 40 
+#define OBC 10 // offset between cells
 
 #define PI 3.14159265
 
-#define SHB false //show hit boxes
+#define SHB true //show hit boxes
 
 namespace SupportFunc
 {
