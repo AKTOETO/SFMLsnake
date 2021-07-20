@@ -51,6 +51,8 @@ public:
 	Picture(std::unique_ptr<SpriteData>);
 	Picture(std::unique_ptr<ShapeData>);
 	~Picture();
+
+	template<typename T>
+	void addData(std::unique_ptr<T>) const;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
-

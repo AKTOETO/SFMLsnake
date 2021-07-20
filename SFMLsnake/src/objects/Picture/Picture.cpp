@@ -83,3 +83,16 @@ void Picture::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(*m_circle, states);
 	}
 }
+
+template<>
+inline void Picture::addData(std::unique_ptr<SpriteData> data) const
+{
+	//...
+}
+
+template<>
+inline void Picture::addData(std::unique_ptr<ShapeData> data) const
+{
+	//...
+}
+
