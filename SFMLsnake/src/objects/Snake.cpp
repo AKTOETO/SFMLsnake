@@ -6,6 +6,14 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 	CellData data;
 	data.head = true;
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	data.color = Color::Red;
+	data.size = SOC * 2 / 3;
+	data.head = false;
+	data.pos = Vector2f( m_units[0]->getPos().x, m_units[0]->getPos().y + m_units[0]->getSize().x - 4 );
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+
+	data.pos = Vector2f( m_units[1]->getPos().x, m_units[1]->getPos().y + m_units[1]->getSize().x );
+	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
 }
 
 Snake::~Snake()
@@ -27,17 +35,31 @@ void Snake::processEvent()
 	}
 }
 
-void Snake::processLogic(float time)
+RSnakeData Snake::processLogic(float time)
 {
+	RSnakeData rdata;
 	for (int i = m_units.size() - 1; i > 0; i--)
 	{
+		//should the tail move
+		m_units[i]->setDirection(m_units[i - 1]->getDirection());
+
+		//calculate the logic at a sufficient distance
 		if(
 			sqrt(
 				pow(m_units[i]->getPos().x - m_units[i - 1]->getPos().x, 2) +
 				pow(m_units[i]->getPos().y - m_units[i - 1]->getPos().y, 2)
-				) > (m_units[i]->getSize().x / 2 + m_units[i - 1]->getSize().x) - OBC
+				) > (m_units[i]->getSize().x / 2 + m_units[i - 1]->getSize().x / 2) - OBC
 			)
-		m_units[i]->setNewPos(m_units[i - 1]->getPos());
+		m_units[i]->setPos(m_units[i - 1]->getPos());
+
+		if (SupportFunc::intersectRectangleShape(
+			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
+		)
+		{
+			std::cout << m_units.size() - i  <<
+				" pieces were eaten (head and tail collision) <Snake.cpp>\n";
+			m_units.erase(m_units.begin() + i, m_units.end());
+		}
 
 	}
 
@@ -45,8 +67,11 @@ void Snake::processLogic(float time)
 	{
 		m_units[i]->logic(time);
 	}
-	m_units[0]->logic(time);
-
+	if (m_units[0]->logic(time).wallCollision == true)
+	{
+		rdata.isAlive = false;
+	}
+	return rdata;
 }
 
 void Snake::processDraw()
@@ -64,10 +89,8 @@ void Snake::addUnit(Vector2f pos)
 	data.color = Color::Red;
 	data.size = SOC * 2 / 3;
 	data.head = false;
-	data.pos = pos;
-
+	data.pos = std::move(pos);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
-	std::cout << "size: " << m_units.size() << std::endl;
 }
 
 int Snake::getSize()

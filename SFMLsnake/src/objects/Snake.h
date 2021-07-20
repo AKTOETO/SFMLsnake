@@ -4,6 +4,11 @@
 
 #include "Cell.h"
 
+struct RSnakeData
+{
+	bool isAlive = true;
+};
+
 class Snake
 {
 private:
@@ -18,7 +23,7 @@ public:
 	std::unique_ptr<Cell> &operator[](int);
 
 	void processEvent();
-	void processLogic(float time);
+	RSnakeData processLogic(float time);
 	void processDraw();
 
 	void addUnit(Vector2f);

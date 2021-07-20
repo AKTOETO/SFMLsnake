@@ -42,19 +42,25 @@ void GameScene::processEvent()
 	m_text->processEvent();
 }
 
-void GameScene::processLogic(float time)
+RSceneData GameScene::processLogic(float time)
 {
-	m_snake->processLogic(time);
+	RSceneData sdata;
+	RSnakeData rsnake = m_snake->processLogic(time);
+	if (rsnake.isAlive == false)
+	{
+		sdata.need_to_switch = true;
+	}
 	m_food->processLogic(time);
 	m_text->processLogic(time);
 	m_text->setString("score: " + std::to_string(m_snake->getSize()));
 	eatingFood();
+	return sdata;
 }
 
 void GameScene::processDraw()
 {
-	m_snake->processDraw();
 	m_food->processDraw();
+	m_snake->processDraw();
 	m_text->processDraw();
 }
 
@@ -62,7 +68,8 @@ void GameScene::eatingFood()
 {
 	if (SupportFunc::intersectRectangleShape((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
-		m_snake->addUnit((*m_snake)[m_snake->getSize() - 1]->getPos());
+		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";
+		m_snake->addUnit((*m_snake)[m_snake->getSize() - 2]->getPos());
 		m_food->setPos({
 			float(rand() % (WIDTH - SOC * 2 / 3)) + SOC / 3,
 			float(rand() % (HEIGHT - SOC * 2 / 3)) + SOC / 3
