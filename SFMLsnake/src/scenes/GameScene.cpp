@@ -65,7 +65,7 @@ void GameScene::processDraw()
 
 void GameScene::eatingFood()
 {
-	if (SupportFunc::intersectRectangleShape((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
+	if (SupportFunc::intersectRectShapes((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
 #define CELL(param) (*m_snake)[m_snake->getSize() - param]
 		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";

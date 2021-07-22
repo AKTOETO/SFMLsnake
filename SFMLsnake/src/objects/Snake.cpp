@@ -54,8 +54,9 @@ RSnakeData Snake::processLogic(float time)
 			m_units[i]->setPos(m_units[i - 1]->getBackPos());
 
 		if (
-			SupportFunc::intersectRectangleShape(
-			m_units[0]->getCollisionShape(), m_units[i]->getRectangleShape())
+			SupportFunc::intersectRectShapePoint(
+				m_units[0]->getCollisionPoint(), m_units[i]->getRectangleShape()
+			)
 			&& i != 1 && i != 2
 			) 
 		{

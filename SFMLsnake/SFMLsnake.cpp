@@ -4,26 +4,14 @@
 #include <ctime>
 
 #include "src/objects/SceneManager/SceneManager.h"
-#include "src/objects/Picture/Picture.h"
 
 int main()
 {
 	std::shared_ptr<RenderWindow>window =
 		std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
 
-	/*SceneManager sceneManager(window);
-	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));*/
-
-	Picture pic;
-	std::unique_ptr<SpriteData> data(new SpriteData);
-	data->angle = 0;
-	data->borders = IntRect(1, 1, 20, 20);
-	data->originInCenter = true;
-	data->position = Vector2f(100, 100);
-	data->scale = Vector2f(1000, 1000);
-	data->type = SpriteType::SNAKE;
-
-	pic.addData<SpriteData>(data);
+	SceneManager sceneManager(window);
+	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 
 	Clock clock;
 	long long counter = 0;
@@ -42,14 +30,13 @@ int main()
 				window->close();
 			}
 		}
-		//sceneManager.processEvent();
+		sceneManager.processEvent();
 
-		//sceneManager.processLogic(time);
+		sceneManager.processLogic(time);
 
 		//draw
 		window->clear();
-		//sceneManager.processDraw();
-		window->draw(pic);
+		sceneManager.processDraw();
 		window->display();
 	}
 

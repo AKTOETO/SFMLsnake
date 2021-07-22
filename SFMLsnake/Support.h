@@ -15,12 +15,16 @@ using namespace sf;
 
 #define PI 3.14159265
 
-#define SHB true //show hit boxes
+#define SHB false //show hit boxes
 
 namespace SupportFunc
 {
-	static bool intersectRectangleShape(RectangleShape f, RectangleShape s)
+	static bool intersectRectShapes(RectangleShape f, RectangleShape s)
 	{
 		return f.getGlobalBounds().intersects(s.getGlobalBounds());
+	}
+	static bool intersectRectShapePoint(Vector2f f, RectangleShape s)
+	{
+		return s.getGlobalBounds().contains(f);
 	}
 }
