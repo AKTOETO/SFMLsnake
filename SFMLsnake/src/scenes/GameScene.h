@@ -19,12 +19,11 @@ public:
 	GameScene(std::shared_ptr<RenderWindow>);
 	~GameScene();
 
-	void activate();
+	void activate() override;
 
-	void processEvent();
-	RSceneData processLogic(float);
-	void processDraw();
+	void processEvent() override;
+	RSceneData processLogic(float) override;
+	void processDraw() override;
 
 	void eatingFood();
 };
-

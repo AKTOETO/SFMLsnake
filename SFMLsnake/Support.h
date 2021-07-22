@@ -6,19 +6,25 @@ using namespace sf;
 #define HEIGHT 600 // 600 1080
 
 #define SPEED 0.2 // 0.2
-#define SOC 20 // 20 size of cell (px)
-#define OBC SOC / 5 // offset between cells
+#define SOCHX 28 
+#define SOCHY 33 
+
+#define SOCBX 12 
+#define SOCBY 40 
+#define OBC 10 // offset between cells
 
 #define PI 3.14159265
 
+#define SHB false //show hit boxes
+
 namespace SupportFunc
 {
-	static bool intersectRectangleShape(RectangleShape f, RectangleShape s)
+	static bool intersectRectShapes(RectangleShape f, RectangleShape s)
 	{
-		if (f.getGlobalBounds().intersects(s.getGlobalBounds()) == 1)
-		{
-			return true;
-		}
-		return false;
+		return f.getGlobalBounds().intersects(s.getGlobalBounds());
+	}
+	static bool intersectRectShapePoint(Vector2f f, RectangleShape s)
+	{
+		return s.getGlobalBounds().contains(f);
 	}
 }

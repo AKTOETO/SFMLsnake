@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\Picture\Picture.cpp" />
     <ClCompile Include="src\objects\SceneManager\SceneManager.cpp" />
     <ClCompile Include="SFMLsnake.cpp" />
     <ClCompile Include="src\objects\Cell.cpp" />
@@ -148,9 +149,11 @@
     <ClCompile Include="src\objects\TextObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.gitignore" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\Picture\Picture.h" />
     <ClInclude Include="src\objects\SceneManager\SceneManager.h" />
     <ClInclude Include="src\objects\Cell.h" />
     <ClInclude Include="src\objects\Food.h" />
