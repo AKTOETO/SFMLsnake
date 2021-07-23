@@ -29,7 +29,7 @@ inline void Picture::addData(std::unique_ptr<SpriteData>& data)
 	m_sprite->setTexture(*m_texture);
 	m_sprite->setPosition(m_spriteData->position);
 	m_sprite->setTextureRect(m_spriteData->borders);
-	m_sprite->setScale(m_spriteData->scale);
+	m_sprite->setScale(m_spriteData->size);
 	m_sprite->setRotation(m_spriteData->angle);
 
 	//origin in center
@@ -48,7 +48,8 @@ inline void Picture::addData(std::unique_ptr<ShapeData>& data)
 	switch (m_shapeData->type)
 	{
 	case RECTANGLE:
-		m_rectangle->setSize(m_shapeData->scale);
+		m_rectangle = std::make_unique<RectangleShape>();
+		m_rectangle->setSize(m_shapeData->size);
 		if (m_shapeData->originInCenter)
 			m_rectangle->setOrigin(
 				m_rectangle->getLocalBounds().width / 2,
@@ -141,3 +142,4 @@ void Picture::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	EIF_RECT target.draw(*m_rectangle, states);
 	EIF_CIRC target.draw(*m_circle, states);
 }
+

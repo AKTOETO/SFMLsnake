@@ -28,3 +28,34 @@ namespace SupportFunc
 		return s.getGlobalBounds().contains(f);
 	}
 }
+
+// ===== CELL =====
+
+struct CellData
+{
+	Vector2f pos = { WIDTH / 2, HEIGHT / 2 },
+		size = { SOCHX, SOCHY };
+	Color color = Color::Green;
+	bool head = false;
+	float rotation = 0;
+};
+
+struct RCellData
+{
+	bool wallCollision = false;
+	float
+		rotation = 0,
+		deltaX = 0,
+		deltaY = 0;
+};
+
+enum class Direction
+{
+	STOP = 0,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+};
+
+// ================
