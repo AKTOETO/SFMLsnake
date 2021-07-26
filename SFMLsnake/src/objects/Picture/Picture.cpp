@@ -122,6 +122,13 @@ void Picture::setRotation(float angle)
 	EIF_CIRC m_circle->setRotation(angle);
 }
 
+void Picture::setScale(Vector2f size)
+{
+	IF_SPRITE m_sprite->setScale(size);
+	EIF_RECT m_rectangle->setScale(size);
+	EIF_CIRC m_circle->setScale(size);
+}
+
 Vector2f Picture::getPosition() const
 {
 	IF_SPRITE return m_sprite->getPosition();
@@ -134,6 +141,18 @@ float Picture::getRotation() const
 	IF_SPRITE return m_sprite->getRotation();
 	EIF_RECT return m_rectangle->getRotation();
 	EIF_CIRC return m_circle->getRotation();
+}
+
+Vector2f Picture::getScale() const
+{
+	IF_SPRITE return m_sprite->getScale();
+	EIF_RECT return m_rectangle->getScale();
+	EIF_CIRC return m_circle->getScale();
+}
+
+RectangleShape& Picture::getRectangleShape() const
+{
+	return *m_rectangle;
 }
 
 void Picture::draw(sf::RenderTarget& target, sf::RenderStates states) const
