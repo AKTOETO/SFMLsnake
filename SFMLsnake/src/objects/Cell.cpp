@@ -15,31 +15,18 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	m_rect->addData<ShapeData>(shData);
 	// =====================
 
-
-	//main hitbox
-	/*m_rect.setSize(m_data->size);
-	m_rect.setOrigin(
-		m_rect.getLocalBounds().width / 2,
-		m_rect.getLocalBounds().height / 2
-	);
-	m_rect.setPosition(m_data->pos);
-	m_rect.setFillColor(m_data->color);
-	m_rect.setRotation(m_data->rotation);*/
-
 	// ===== SPRITE DATA =====
-	std::unique_ptr<SpriteData> sData(new SpriteData); //sprite Data
+	std::unique_ptr<SpriteData> sData(new SpriteData); //sData - sprite Data
 	sData->position = { m_rect->getPosition() };
 	// ===================
 
 	// ===== COLLISION RECT DATA =====
-	std::unique_ptr<ShapeData> crData(new ShapeData); //collision rectangle Data
+	std::unique_ptr<ShapeData> crData(new ShapeData); //crData - collision rectangle Data
 	// ===================
-
 
 	//==========HEAD==========
 	if (m_data->head == true)
 	{
-
 #define POSG(param) m_rect->getPosition().param
 
 		m_collisionPoint = std::make_unique<Vector2f>(POSG(x), POSG(y) - m_data->size.y / 2);
@@ -50,7 +37,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	{
 		//==========BODY==========
 		sData->borders = { 1, 42, 40, 40 };
-	}	
+	}
 	m_posBackPoint = std::make_unique<Vector2f>(
 		sin(-m_rect->getRotation()) * m_data->size.x / 2 + POSG(x),
 		cos(-m_rect->getRotation()) * m_data->size.y / 2 + POSG(y)
@@ -89,14 +76,14 @@ RCellData Cell::logic(float time)
 	if (m_data->head == true)
 	{
 #define POSG(param) m_rect->getPosition().param
-#define BOUND(param) float(m_data->size.param)//m_rect->getLocalBounds().param
+#define BOUND(param) float(m_rect->getScale().param)
 
 		//collision with wall
 		if (
-			POSG(x) + m_data->size.x / 2 > WIDTH ||
-			POSG(y) + m_data->size.y / 2 > HEIGHT ||
-			POSG(x) - m_data->size.x / 2 < 0 ||
-			POSG(y) - m_data->size.y / 2 < 0
+			POSG(x) + BOUND(x) / 2 > WIDTH ||
+			POSG(y) + BOUND(y) / 2 > HEIGHT ||
+			POSG(x) - BOUND(x) / 2 < 0 ||
+			POSG(y) - BOUND(y) / 2 < 0
 			)
 		{
 			m_dir = Direction::STOP;
@@ -107,10 +94,9 @@ RCellData Cell::logic(float time)
 		//head mooving
 		if (m_dir == Direction::LEFT)
 		{
-			//if (POSG(x) - BOUND(width) / 2 > 0)
 			if (POSG(x) - BOUND(x) / 2 > 0)
 			{
-				m_rect->setPosition(Vector2f( POSG(x) - SPEED * time, POSG(y) ));
+				m_rect->setPosition(Vector2f(POSG(x) - SPEED * time, POSG(y)));
 			}
 			else
 			{
@@ -125,7 +111,7 @@ RCellData Cell::logic(float time)
 		{
 			if (POSG(x) + BOUND(x) / 2 < WIDTH)
 			{
-				m_rect->setPosition(Vector2f( POSG(x) + SPEED * time, POSG(y) ));
+				m_rect->setPosition(Vector2f(POSG(x) + SPEED * time, POSG(y)));
 			}
 			else
 			{
@@ -140,7 +126,7 @@ RCellData Cell::logic(float time)
 		{
 			if (POSG(y) - BOUND(x) / 2 > 0)
 			{
-				m_rect->setPosition(Vector2f( POSG(x), POSG(y) - SPEED * time ));
+				m_rect->setPosition(Vector2f(POSG(x), POSG(y) - SPEED * time));
 			}
 			else
 			{
@@ -155,7 +141,7 @@ RCellData Cell::logic(float time)
 		{
 			if (POSG(y) + BOUND(x) / 2 < HEIGHT)
 			{
-				m_rect->setPosition(Vector2f( POSG(x), POSG(y) + SPEED * time ));
+				m_rect->setPosition(Vector2f(POSG(x), POSG(y) + SPEED * time));
 			}
 			else
 			{
@@ -171,16 +157,16 @@ RCellData Cell::logic(float time)
 		switch (m_dir)
 		{
 		case Direction::UP:
-			m_collisionPoint = std::make_unique<Vector2f>(Vector2f( POSG(x), POSG(y) - m_data->size.y / 2 ));
+			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x), POSG(y) - BOUND(y) / 2));
 			break;
 		case Direction::DOWN:
-			m_collisionPoint = std::make_unique<Vector2f>(Vector2f( POSG(x), POSG(y) + m_data->size.y / 2 ));
+			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x), POSG(y) + BOUND(y) / 2));
 			break;
 		case Direction::LEFT:
-			m_collisionPoint = std::make_unique<Vector2f>(Vector2f( POSG(x) - m_data->size.y / 2, POSG(y) ));
+			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x) - BOUND(y) / 2, POSG(y)));
 			break;
 		case Direction::RIGHT:
-			m_collisionPoint = std::make_unique<Vector2f>(Vector2f( POSG(x) + m_data->size.y / 2, POSG(y) ));
+			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x) + BOUND(y) / 2, POSG(y)));
 			break;
 		}
 	}
@@ -191,10 +177,6 @@ RCellData Cell::logic(float time)
 		{
 			float k = 0.06; // smoothness of movement //0.1
 
-			/*m_rect.move(
-				((m_newPos.x - POSFG(x)) * SPEED * time * k),
-				((m_newPos.y - POSFG(y)) * SPEED * time * k)
-			);*/
 			m_rect->setPosition(Vector2f(
 				POSG(x) + ((m_newPos.x - POSFG(x)) * SPEED * time * k),
 				POSG(y) + ((m_newPos.y - POSFG(y)) * SPEED * time * k)
@@ -220,17 +202,16 @@ RCellData Cell::logic(float time)
 
 			//temp
 			m_sprite->setRotation(m_rect->getRotation());
-
 		}
 	}
 	m_posBackPoint = std::make_unique<Vector2f>(
 		sin(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(x),
 		cos(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(y)
-	);
+		);
 	m_posFrontPoint = std::make_unique<Vector2f>(
 		-sin(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(x),
 		-cos(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(y)
-	);
+		);
 
 	//temp
 	m_sprite->setPosition(m_rect->getPosition());
@@ -302,11 +283,11 @@ void Cell::setPos(Vector2f newPos)
 	m_newPos = newPos;
 }
 
-//void Cell::setSize(Vector2f newSize)
-//{
-//	m_data->size = newSize;
-//	m_rect.setSize(newSize);
-//}
+void Cell::setSize(Vector2f newSize)
+{
+	m_data->size = newSize;
+	m_rect->setScale(newSize);
+}
 
 RectangleShape& Cell::getRectangleShape()
 {

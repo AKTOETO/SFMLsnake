@@ -30,7 +30,7 @@ public:
 	void draw();
 
 	void setPos(Vector2f);
-	//void setSize(Vector2f);
+	void setSize(Vector2f);
 	void setDirection(Direction);
 	void setRotation(float);
 
