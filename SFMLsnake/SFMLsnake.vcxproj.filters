@@ -39,6 +39,9 @@
     <ClCompile Include="src\objects\Picture\Picture.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\GameOverScene.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -73,6 +76,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\Picture\Picture.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\GameOverScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

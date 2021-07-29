@@ -4,6 +4,7 @@
 
 #include "../../../Support.h"
 #include "../../scenes/GameScene.h"
+#include "../../scenes/GameOverScene.h"
 
 enum class Scenes
 {

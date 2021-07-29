@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 
 struct RSceneData
 {
@@ -8,9 +9,11 @@ struct RSceneData
 class BaseScene
 {
 protected:
+	std::shared_ptr<sf::RenderWindow> m_window;
 
 public:
-	BaseScene() {};
+	BaseScene(std::shared_ptr<sf::RenderWindow> window)
+		:m_window(window) {};
 	virtual ~BaseScene() {};
 
 	virtual void activate() = 0;

@@ -1,7 +1,7 @@
 #include "GameScene.h"
 
 GameScene::GameScene(std::shared_ptr<RenderWindow> window)
-	:m_window(window)
+	:BaseScene(window)
 {
 	//snake
 	m_snake = std::make_unique<Snake>(m_window);
