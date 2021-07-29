@@ -21,6 +21,7 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 
 Snake::~Snake()
 {
+	m_units.clear();
 }
 
 std::unique_ptr<Cell>& Snake::operator[](int i)
