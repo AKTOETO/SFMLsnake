@@ -52,6 +52,14 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 
 Cell::~Cell()
 {
+	m_data.reset(nullptr);
+
+	m_collisionPoint.reset(nullptr);
+	m_posBackPoint.reset(nullptr);
+	m_posFrontPoint.reset(nullptr);
+
+	m_sprite.reset(nullptr);
+	m_rect.reset(nullptr);
 }
 
 void Cell::event()
