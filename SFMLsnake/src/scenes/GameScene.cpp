@@ -28,10 +28,18 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 
 GameScene::~GameScene()
 {
+	deactivate();
 }
 
 void GameScene::activate()
 {
+}
+
+void GameScene::deactivate()
+{
+	m_snake.reset(nullptr);
+	m_food.reset(nullptr);
+	m_text.reset(nullptr);
 }
 
 void GameScene::processEvent()

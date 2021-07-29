@@ -17,9 +17,10 @@ private:
 
 public:
 	GameScene(std::shared_ptr<RenderWindow>);
-	~GameScene();
+	~GameScene() override;
 
 	void activate() override;
+	void deactivate() override;
 
 	void processEvent() override;
 	RSceneData processLogic(float) override;

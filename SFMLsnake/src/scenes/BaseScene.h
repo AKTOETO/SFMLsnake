@@ -11,9 +11,10 @@ protected:
 
 public:
 	BaseScene() {};
-	~BaseScene() {};
+	virtual ~BaseScene() {};
 
 	virtual void activate() = 0;
+	virtual void deactivate() = 0;
 
 	virtual void processEvent() = 0;
 	virtual RSceneData processLogic(float) = 0;
