@@ -8,22 +8,22 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 
 	//food
 	srand(time(0));
-	FoodData f_data;
-	f_data.size = Vector2f(20, 20);
-	f_data.pos = {
+	FoodData fData;
+	fData.size = Vector2f(20, 20);
+	fData.pos = {
 		float(rand() % (WIDTH - 20 * 2 / 3)) + 20 / 3,
 		float(rand() % (HEIGHT - 20 * 2 / 3) + 20 / 3)
 	};
-	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(f_data));
+	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(fData));
 
 	//text
-	TextData t_data;
-	t_data.pos = { 10, 0 };
-	t_data.size = 50;
-	t_data.originInCeneter = false;
-	t_data.text = "score:";
+	TextData tData;
+	tData.pos = { 10, 0 };
+	tData.size = 50;
+	tData.originInCeneter = false;
+	tData.text = "score:";
 
-	m_text = std::make_unique<TextObject>(m_window, t_data);
+	m_text = std::make_unique<TextObject>(std::make_unique<TextData>(tData));
 }
 
 GameScene::~GameScene()
@@ -68,7 +68,7 @@ void GameScene::processDraw()
 {
 	m_food->processDraw();
 	m_snake->processDraw();
-	m_text->processDraw();
+	m_window->draw(*m_text);
 }
 
 void GameScene::eatingFood()

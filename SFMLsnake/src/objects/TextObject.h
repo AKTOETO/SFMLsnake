@@ -15,21 +15,20 @@ struct TextData
 	bool originInCeneter = false;
 };
 
-class TextObject
+class TextObject : public Drawable
 {
-private:
-	std::shared_ptr<RenderWindow> m_window;
-	Text m_text;
-	Font m_font;
-	TextData m_data;
+protected:
+	std::unique_ptr<Text> m_text;
+	std::shared_ptr<Font> m_font;
+	std::unique_ptr<TextData> m_data;
 
 public:
-	TextObject(std::shared_ptr<RenderWindow>, TextData data);
+	TextObject(std::unique_ptr<TextData> data);
 	~TextObject();
 
 	void processEvent();
 	void processLogic(float time);
-	void processDraw();
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setString(std::string);
 	void setPos(Vector2f);

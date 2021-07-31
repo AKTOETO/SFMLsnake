@@ -9,7 +9,7 @@ GameOverScene::GameOverScene(std::shared_ptr<RenderWindow> window)
 	tData.originInCeneter = true;
 	tData.color = Color::Yellow;
 	tData.text = "game over";
-	m_text = std::make_unique<TextObject>(m_window, tData);
+	m_text = std::make_unique<TextObject>(std::make_unique<TextData>(tData));
 }
 
 GameOverScene::~GameOverScene()
@@ -36,5 +36,5 @@ RSceneData GameOverScene::processLogic(float)
 
 void GameOverScene::processDraw()
 {
-	m_text->processDraw();
+	m_window->draw(*m_text);
 }
