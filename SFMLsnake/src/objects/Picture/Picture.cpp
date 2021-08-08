@@ -29,7 +29,7 @@ inline void Picture::addData(std::unique_ptr<SpriteData>& data)
 	m_sprite->setTexture(*m_texture);
 	m_sprite->setPosition(m_spriteData->position);
 	m_sprite->setTextureRect(m_spriteData->borders);
-	m_sprite->setScale(m_spriteData->scale);
+	m_sprite->setScale(m_spriteData->size);
 	m_sprite->setRotation(m_spriteData->angle);
 
 	//origin in center
@@ -48,7 +48,8 @@ inline void Picture::addData(std::unique_ptr<ShapeData>& data)
 	switch (m_shapeData->type)
 	{
 	case RECTANGLE:
-		m_rectangle->setSize(m_shapeData->scale);
+		m_rectangle = std::make_unique<RectangleShape>();
+		m_rectangle->setSize(m_shapeData->size);
 		if (m_shapeData->originInCenter)
 			m_rectangle->setOrigin(
 				m_rectangle->getLocalBounds().width / 2,
@@ -121,6 +122,13 @@ void Picture::setRotation(float angle)
 	EIF_CIRC m_circle->setRotation(angle);
 }
 
+void Picture::setScale(Vector2f size)
+{
+	IF_SPRITE m_sprite->setScale(size);
+	EIF_RECT m_rectangle->setScale(size);
+	EIF_CIRC m_circle->setScale(size);
+}
+
 Vector2f Picture::getPosition() const
 {
 	IF_SPRITE return m_sprite->getPosition();
@@ -135,9 +143,22 @@ float Picture::getRotation() const
 	EIF_CIRC return m_circle->getRotation();
 }
 
+Vector2f Picture::getScale() const
+{
+	IF_SPRITE return m_sprite->getScale();
+	EIF_RECT return m_rectangle->getScale();
+	EIF_CIRC return m_circle->getScale();
+}
+
+RectangleShape& Picture::getRectangleShape() const
+{
+	return *m_rectangle;
+}
+
 void Picture::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	IF_SPRITE target.draw(*m_sprite, states);
 	EIF_RECT target.draw(*m_rectangle, states);
 	EIF_CIRC target.draw(*m_circle, states);
 }
+

@@ -40,7 +40,7 @@ void SceneManager::processLogic(float time)
 				break;
 
 			case Scenes::GameScene:
-				setScene(Scenes::GameOver, nullptr);
+				setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_window));
 
 				break;
 

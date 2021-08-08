@@ -6,8 +6,7 @@
 struct StandartData
 {
 	Vector2f position = { 0, 0 };
-	Vector2f scale = { 1, 1 };
-	IntRect borders = { 0, 0, 10, 10 };
+	Vector2f size = { 1, 1 };
 	bool originInCenter = true;
 	float angle = 0;
 	Color color = Color::White;
@@ -22,6 +21,7 @@ enum SpriteType
 struct SpriteData : public StandartData
 {
 	SpriteType type = SpriteType::SNAKE;
+	IntRect borders = { 0, 0, 10, 10 };
 };
 
 enum ShapeType
@@ -58,9 +58,12 @@ public:
 
 	void setPosition(Vector2f);
 	void setRotation(float);
+	void setScale(Vector2f);
 
 	Vector2f getPosition() const;
 	float getRotation() const;
+	Vector2f getScale() const;
+	RectangleShape& getRectangleShape() const;
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
