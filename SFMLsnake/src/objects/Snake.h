@@ -4,6 +4,11 @@
 
 #include "Cell.h"
 
+struct RSnakeData
+{
+	bool isAlive = true;
+};
+
 class Snake
 {
 private:
@@ -14,16 +19,13 @@ public:
 	Snake(std::shared_ptr<RenderWindow>);
 	~Snake();
 
-
-	std::unique_ptr<Cell> &operator[](int);
+	std::unique_ptr<Cell>& operator[](int);
 
 	void processEvent();
-	void processLogic(float time);
+	RSnakeData processLogic(float time);
 	void processDraw();
 
-	void addUnit(Vector2f);
+	void addUnit(Vector2f, float);
 
 	int getSize();
-
 };
-
