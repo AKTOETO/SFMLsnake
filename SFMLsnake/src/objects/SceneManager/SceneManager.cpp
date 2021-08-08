@@ -15,6 +15,7 @@ void SceneManager::setScene(Scenes id_scene, std::unique_ptr<BaseScene> scene)
 	//m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(id_scene, std::move(scene));
 	m_cur_scene.first = id_scene;
 	m_cur_scene.second = std::move(scene);
+	INFO("id new scene " + std::to_string(int(id_scene)))
 }
 
 void SceneManager::processEvent()
@@ -36,12 +37,10 @@ void SceneManager::processLogic(float time)
 			{
 			case Scenes::StartScene:
 				setScene(Scenes::GameScene, std::make_unique<GameScene>(m_window));
-
 				break;
 
 			case Scenes::GameScene:
 				setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_window));
-
 				break;
 
 			default:

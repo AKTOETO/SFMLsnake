@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "../../../Support.h"
+#include "../../../Logger.hpp"
 #include "../../scenes/GameScene.h"
 #include "../../scenes/GameOverScene.h"
 

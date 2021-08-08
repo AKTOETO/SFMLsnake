@@ -17,6 +17,7 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 	data.pos = Vector2f(m_units[1]->getBackPos().x,
 		m_units[1]->getBackPos().y + m_units[1]->getSize().y / 2);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	INFO("constructor")
 }
 
 Snake::~Snake()
@@ -61,8 +62,7 @@ RSnakeData Snake::processLogic(float time)
 			&& i != 1 && i != 2
 			) 
 		{
-			std::cout << m_units.size() - i <<
-				" pieces were eaten (head and tail collision) <Snake.cpp>\n";
+			INFO(std::to_string(m_units.size() - i) + " pieces were eaten")
 			m_units.erase(m_units.begin() + i, m_units.end());
 		}
 	}
@@ -77,8 +77,8 @@ RSnakeData Snake::processLogic(float time)
 		}
 		/*if (i == 1)
 		{
-			std::cout << "rotation: " << rCdata.rotation << " delta X: " <<
-				rCdata.deltaX << " delta Y: " << rCdata.deltaY << std::endl;
+			INFO("rotation: " + rCdata.rotation + " delta X: " +
+				rCdata.deltaX + " delta Y: " + rCdata.deltaY);
 		}*/
 	}
 	return rSdata;

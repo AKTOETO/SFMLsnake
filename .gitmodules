@@ -1,0 +1,3 @@
+[submodule "SFMLsnake/src/third-party/spdlog"]
+	path = SFMLsnake/src/third-party/spdlog
+	url = https://github.com/gabime/spdlog.git

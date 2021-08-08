@@ -96,7 +96,7 @@ RCellData Cell::logic(float time)
 		{
 			m_dir = Direction::STOP;
 			rdata.wallCollision = true;
-			std::cout << "game over (wall collision) <Cell.cpp>\n";
+			INFO("wall collision");
 		}
 
 		//head mooving

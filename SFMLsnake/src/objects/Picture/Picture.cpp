@@ -23,7 +23,7 @@ inline void Picture::addData(std::unique_ptr<SpriteData>& data)
 
 	//load texture
 	if (!m_texture->loadFromFile("assets/textures/" + file))
-		std::cout << "failed to load " << file << " (wrong path) <Picture.cpp>\n";
+		ERROR("failed to load " + file)
 
 	//bind texture to sprite and setting
 	m_sprite->setTexture(*m_texture);
@@ -61,7 +61,7 @@ inline void Picture::addData(std::unique_ptr<ShapeData>& data)
 		break;
 	case CIRCLE:
 		//...
-		std::cout << "circle setting\n";
+		INFO("circle setting")
 		break;
 	}
 }
@@ -69,7 +69,7 @@ inline void Picture::addData(std::unique_ptr<ShapeData>& data)
 template<typename T>
 inline void Picture::addData(std::unique_ptr<T>& data)
 {
-	std::cout << "incorrect type of data () <Picture.cpp>\n";
+	ERROR("incorrect type of data")
 }
 
 Picture::Picture()

@@ -4,9 +4,12 @@
 #include <ctime>
 
 #include "src/objects/SceneManager/SceneManager.h"
+#include "Logger.hpp"
 
 int main()
 {
+	INFO("start game")
+
 	std::shared_ptr<RenderWindow>window =
 		std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
 
@@ -40,6 +43,6 @@ int main()
 		window->display();
 	}
 
-	std::cout << "Bye bye!\n";
+	INFO("Bye bye!")
 	return 0;
 }

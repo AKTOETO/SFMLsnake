@@ -76,7 +76,7 @@ void GameScene::eatingFood()
 	if (SupportFunc::intersectRectShapes((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
 #define CELL(param) (*m_snake)[m_snake->getSize() - param]
-		std::cout << "eat food (head and food collision) <GameScene.cpp>\n";
+		INFO("eat food")
 		if (m_snake->getSize() > 1)
 			m_snake->addUnit(CELL(2)->getBackPos(), CELL(2)->getRotation());
 		else

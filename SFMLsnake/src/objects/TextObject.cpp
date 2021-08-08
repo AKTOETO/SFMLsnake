@@ -5,7 +5,7 @@ TextObject::TextObject(std::unique_ptr<TextData> data)
 {
 	m_data = std::move(data);
 	if (!m_font->loadFromFile("assets/fonts/" + m_data->font))
-		std::cout << "ERROR: can't load: " << m_data->font;
+		ERROR("can't load: "+ m_data->font);
 
 	m_text->setFont(*m_font);
 	m_text->setString(m_data->text);

@@ -2,6 +2,7 @@
 #include <memory>
 #include <iostream>
 #include "../../../Support.h"
+#include "../../../Logger.hpp"
 
 struct StandartData
 {
