@@ -57,15 +57,12 @@ static void highlithing(std::string str, int width)
 	std::cout << "][message: ";\
 	highlithing(str, 0);\
 	std::cout<<"]\n";\
-	for(int i=98;i;i--)\
-		std::cout << "=";\
-	std::cout<<"\n";\
 }
 
 #define INFO(str){\
 	infoSetting();\
 	TEMPLATE(str);\
-	}
+}
 
 #define ERROR(str){\
 	errorSetting();\
