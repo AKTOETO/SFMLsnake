@@ -15,7 +15,8 @@ struct StandartData
 
 enum SpriteType
 {
-	SNAKE = 0,
+	NONE = 0,
+	SNAKE,
 	FOOD,
 };
 
@@ -23,6 +24,7 @@ struct SpriteData : public StandartData
 {
 	SpriteType type = SpriteType::SNAKE;
 	IntRect borders = { 0, 0, 10, 10 };
+	std::shared_ptr<Texture> texture = nullptr;
 };
 
 enum ShapeType
@@ -43,7 +45,7 @@ protected:
 	std::unique_ptr<ShapeData> m_shapeData;
 	
 	std::unique_ptr<Sprite> m_sprite;
-	std::unique_ptr<Texture> m_texture;
+	std::shared_ptr<Texture> m_texture;
 
 	std::unique_ptr<RectangleShape> m_rectangle;
 	std::unique_ptr<CircleShape> m_circle;
@@ -53,8 +55,8 @@ public:
 	void addData(std::unique_ptr<T>&);
 
 	Picture();
-	Picture(std::unique_ptr<SpriteData>);
-	Picture(std::unique_ptr<ShapeData>);
+	Picture(std::unique_ptr<SpriteData>&);
+	Picture(std::unique_ptr<ShapeData>&);
 	~Picture();
 
 	void setPosition(Vector2f);

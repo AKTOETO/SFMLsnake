@@ -13,6 +13,9 @@ inline void Picture::addData(std::unique_ptr<SpriteData>& data)
 	std::string file;
 	switch (m_spriteData->type)
 	{
+	case NONE:
+		file = "none";
+		break;
 	case SNAKE:
 		file = "snake.png";
 		break;
@@ -22,8 +25,13 @@ inline void Picture::addData(std::unique_ptr<SpriteData>& data)
 	}
 
 	//load texture
-	if (!m_texture->loadFromFile("assets/textures/" + file))
+	if (!m_texture->loadFromFile("assets/textures/" + file) && file != "none")
 		ERROR("failed to load " + file)
+	else if(file == "none")
+	{
+		m_texture = std::make_shared<Texture>();
+		m_texture = m_spriteData->texture;
+	}
 
 	//bind texture to sprite and setting
 	m_sprite->setTexture(*m_texture);
@@ -78,13 +86,13 @@ Picture::Picture()
 {
 }
 
-Picture::Picture(std::unique_ptr<SpriteData> data)
+Picture::Picture(std::unique_ptr<SpriteData>& data)
 	:m_shapeData(nullptr), m_rectangle(nullptr), m_circle(nullptr)
 {
 	addData<SpriteData>(data);
 }
 
-Picture::Picture(std::unique_ptr<ShapeData> data)
+Picture::Picture(std::unique_ptr<ShapeData>& data)
 	:m_spriteData(nullptr), m_sprite(nullptr), m_texture(nullptr)
 {
 	addData<ShapeData>(data);
@@ -100,7 +108,7 @@ Picture::~Picture()
 	m_spriteData.reset(nullptr);
 
 	m_sprite.reset(nullptr);
-	m_texture.reset(nullptr);
+	//m_texture.reset(nullptr);
 }
 
 //choose sprite or rectangle or circle
