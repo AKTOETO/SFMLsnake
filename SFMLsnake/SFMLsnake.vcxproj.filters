@@ -42,6 +42,9 @@
     <ClCompile Include="src\scenes\GameOverScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Picture\AnimatedPicture.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,10 +84,18 @@
     <ClInclude Include="src\scenes\GameOverScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\Picture\AnimatedPicture.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\main.ttf">
       <Filter>Файлы заголовков</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\food.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

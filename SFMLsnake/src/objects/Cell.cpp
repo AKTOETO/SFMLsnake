@@ -1,7 +1,7 @@
 #include "Cell.h"
 
 Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
-	:m_window(window), m_sprite(new Picture), m_rect(new Picture)
+	:m_window(window), m_sprite(new StaticPicture), m_rect(new StaticPicture)
 {
 	m_data = move(data);
 
@@ -48,6 +48,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 		);
 
 	m_sprite->addData<SpriteData>(sData);
+	INFO("created new cell")
 }
 
 Cell::~Cell()

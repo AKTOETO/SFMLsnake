@@ -4,7 +4,7 @@
 #include <ctime>
 
 #include "src/objects/SceneManager/SceneManager.h"
-#include "Logger.hpp"
+#include "src/objects/Picture/AnimatedPicture.h"
 
 int main()
 {
@@ -16,8 +16,20 @@ int main()
 	SceneManager sceneManager(window);
 	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 
+	std::unique_ptr<AnimationData> aData(new AnimationData);
+	aData->animType = AnimationType::FOODSTAY;
+	aData->numberOfFrame = 4;
+	aData->data.borders = IntRect(1, 1, 40, 40);
+	aData->data.position = Vector2f(WIDTH / 2, HEIGHT / 2);
+	std::shared_ptr<Texture> texture(new Texture);
+	loadTexture(texture, "food.png");
+	aData->data.texture = texture;
+	aData->data.type = SpriteType::NONE;
+	aData->data.size = Vector2f(10, 10);
+
+	AnimatedPicture aPic(aData);
+
 	Clock clock;
-	long long counter = 0;
 	while (window->isOpen())
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
@@ -36,9 +48,11 @@ int main()
 		sceneManager.processEvent();
 
 		sceneManager.processLogic(time);
+		aPic.processLogic(time);
 
 		//draw
-		window->clear();
+		window->clear(Color::White);
+		window->draw(aPic);
 		sceneManager.processDraw();
 		window->display();
 	}

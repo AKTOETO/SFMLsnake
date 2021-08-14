@@ -49,12 +49,12 @@ static void highlithing(std::string str, int width)
 	std::cout << " (";\
 	curTime();\
 	std::cout << ") [file: ";\
-	highlithing(std::string(__FILE__), 20);\
+	highlithing(std::string(__FILE__), 22);\
 	std::cout << "] [function: ";\
-	highlithing(std::string(__FUNCTION__), 25);\
+	highlithing(std::string(__FUNCTION__), 35);\
 	std::cout<< "] [line: ";\
 	highlithing(std::to_string(__LINE__), 5);\
-	std::cout << "][message: ";\
+	std::cout << "] [message: ";\
 	highlithing(str, 0);\
 	std::cout<<"]\n";\
 }

@@ -19,7 +19,7 @@ private:
 	std::unique_ptr<CellData> m_data;
 
 	std::unique_ptr<Vector2f> m_collisionPoint, m_posBackPoint, m_posFrontPoint;
-	std::unique_ptr<Picture> m_sprite, m_rect;
+	std::unique_ptr<StaticPicture> m_sprite, m_rect;
 
 public:
 	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);

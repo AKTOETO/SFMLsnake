@@ -1,10 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Logger.hpp"
 using namespace sf;
 
 #define WIDTH 800  // 800 1920
 #define HEIGHT 600 // 600 1080
 
+#define ANIMSPEED 0.01
 #define SPEED 0.2 // 0.2
 #define SOCHX 28 
 #define SOCHY 33 
@@ -59,3 +61,13 @@ enum class Direction
 };
 
 // ================
+// =====PICTURE====
+
+static void loadTexture(std::shared_ptr<Texture> texture, std::string file)
+{
+	if (!texture->loadFromFile("assets/textures/" + file))
+		ERROR("failed to load " + file)
+}
+
+// ================
+
