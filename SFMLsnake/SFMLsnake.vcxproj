@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\food.png" />
+    <Image Include="assets\textures\snake.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
