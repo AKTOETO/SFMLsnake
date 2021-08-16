@@ -231,15 +231,10 @@ RCellData Cell::logic(float time)
 void Cell::draw()
 {
 	//hit boxes
-	if (SHB == true)
-	{
+	if (SHB)
 		m_window->draw(*m_rect);
-	}
-	else
-	{
-		//sprite
-		m_window->draw(*m_sprite);
-	}
+	//sprite
+	m_window->draw(*m_sprite);
 }
 
 Vector2f Cell::getCollisionPoint()

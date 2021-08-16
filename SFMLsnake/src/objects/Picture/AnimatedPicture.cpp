@@ -78,6 +78,46 @@ void AnimatedPicture::draw(sf::RenderTarget& target, sf::RenderStates states) co
 	target.draw(m_frames[int(m_currentFrame)], states);
 }
 
+#define ALLFR for (auto& sp : m_frames)
+
+void AnimatedPicture::setPosition(Vector2f pos)
+{
+	ALLFR
+		sp.setPosition(pos);
+}
+
+void AnimatedPicture::setRotation(float angle)
+{
+	ALLFR
+		sp.setRotation(angle);
+}
+
+void AnimatedPicture::setScale(Vector2f scale)
+{
+	ALLFR
+		sp.setScale(scale);
+}
+
+Vector2f AnimatedPicture::getPosition() const
+{
+	return m_frames[0].getPosition();
+}
+
+float AnimatedPicture::getRotation() const
+{
+	return m_frames[0].getRotation();
+}
+
+Vector2f AnimatedPicture::getScale() const
+{
+	return m_frames[0].getScale();
+}
+
+RectangleShape& AnimatedPicture::getRectangleShape() const
+{
+	return m_frames[0].getRectangleShape();
+}
+
 void AnimatedPicture::start()
 {
 	m_isStop = false;
@@ -97,4 +137,10 @@ void AnimatedPicture::stop()
 	m_isStop = true;
 	m_isPause = false;
 	m_isStart = false;
+}
+
+void AnimatedPicture::restart()
+{
+	stop();
+	start();
 }

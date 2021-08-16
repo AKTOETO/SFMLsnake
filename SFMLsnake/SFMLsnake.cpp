@@ -16,19 +16,6 @@ int main()
 	SceneManager sceneManager(window);
 	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 
-	std::unique_ptr<AnimationData> aData(new AnimationData);
-	aData->animType = AnimationType::FOODSTAY;
-	aData->numberOfFrame = 4;
-	aData->data.borders = IntRect(1, 1, 40, 40);
-	aData->data.position = Vector2f(WIDTH / 2, HEIGHT / 2);
-	std::shared_ptr<Texture> texture(new Texture);
-	loadTexture(texture, "food.png");
-	aData->data.texture = texture;
-	aData->data.type = SpriteType::NONE;
-	aData->data.size = Vector2f(10, 10);
-
-	AnimatedPicture aPic(aData);
-
 	Clock clock;
 	while (window->isOpen())
 	{
@@ -47,12 +34,11 @@ int main()
 		}
 		sceneManager.processEvent();
 
+		//logic
 		sceneManager.processLogic(time);
-		aPic.processLogic(time);
 
 		//draw
-		window->clear(Color::White);
-		window->draw(aPic);
+		window->clear();
 		sceneManager.processDraw();
 		window->display();
 	}

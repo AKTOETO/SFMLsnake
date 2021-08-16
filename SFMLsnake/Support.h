@@ -6,6 +6,8 @@ using namespace sf;
 #define WIDTH 800  // 800 1920
 #define HEIGHT 600 // 600 1080
 
+#define CENTER WIDTH / 2 , HEIGHT / 2
+
 #define ANIMSPEED 0.01
 #define SPEED 0.2 // 0.2
 #define SOCHX 28 

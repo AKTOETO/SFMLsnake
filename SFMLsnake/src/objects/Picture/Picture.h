@@ -74,13 +74,13 @@ public:
 	StaticPicture(std::unique_ptr<ShapeData>&);
 	~StaticPicture();
 
-	void setPosition(Vector2f);
-	void setRotation(float);
-	void setScale(Vector2f);
+	virtual void setPosition(Vector2f);
+	virtual void setRotation(float);
+	virtual void setScale(Vector2f);
 
-	Vector2f getPosition() const;
-	float getRotation() const;
-	Vector2f getScale() const;
-	RectangleShape& getRectangleShape() const;
+	virtual Vector2f getPosition() const;
+	virtual float getRotation() const;
+	virtual Vector2f getScale() const;
+	virtual RectangleShape& getRectangleShape() const;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
