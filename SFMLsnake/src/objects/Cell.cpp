@@ -89,8 +89,8 @@ RCellData Cell::logic(float time)
 
 		//collision with wall
 		if (
-			POSG(x) + BOUND(x) / 2 > WIDTH ||
-			POSG(y) + BOUND(y) / 2 > HEIGHT ||
+			POSG(x) + BOUND(x) / 2 > W_WIDTH ||
+			POSG(y) + BOUND(y) / 2 > W_HEIGHT ||
 			POSG(x) - BOUND(x) / 2 < 0 ||
 			POSG(y) - BOUND(y) / 2 < 0
 			)
@@ -118,13 +118,13 @@ RCellData Cell::logic(float time)
 		}
 		else if (m_dir == Direction::RIGHT)
 		{
-			if (POSG(x) + BOUND(x) / 2 < WIDTH)
+			if (POSG(x) + BOUND(x) / 2 < W_WIDTH)
 			{
 				m_rect->setPosition(Vector2f(POSG(x) + SPEED * time, POSG(y)));
 			}
 			else
 			{
-				m_rect->setPosition({ WIDTH - BOUND(x) / 2, POSG(y) });
+				m_rect->setPosition({ W_WIDTH - BOUND(x) / 2, POSG(y) });
 			}
 
 			//temp
@@ -148,13 +148,13 @@ RCellData Cell::logic(float time)
 		}
 		else if (m_dir == Direction::DOWN)
 		{
-			if (POSG(y) + BOUND(x) / 2 < HEIGHT)
+			if (POSG(y) + BOUND(x) / 2 < W_HEIGHT)
 			{
 				m_rect->setPosition(Vector2f(POSG(x), POSG(y) + SPEED * time));
 			}
 			else
 			{
-				m_rect->setPosition({ POSG(x), HEIGHT - BOUND(x) / 2 });
+				m_rect->setPosition({ POSG(x), W_HEIGHT - BOUND(x) / 2 });
 			}
 
 			//temp

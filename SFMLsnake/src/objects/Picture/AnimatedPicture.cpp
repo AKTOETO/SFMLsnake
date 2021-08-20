@@ -1,12 +1,13 @@
 #include "AnimatedPicture.h"
 
 AnimatedPicture::AnimatedPicture()
+	: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
 {
 	INFO("Picture constructor")
 }
 
 AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
-	:m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
+	: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
 {
 	m_data = move(data);
 	m_frames.resize(0);
@@ -15,23 +16,31 @@ AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
 	{
 		std::unique_ptr<SpriteData> sData(new SpriteData(m_data->data));
 
+#define DWIDTH sData->borders.width
+#define DHEIGHT sData->borders.height
+#define DTOP sData->borders.top
+#define DLEFT sData->borders.left
+
 		switch (m_data->offset)
 		{
-
 		case TextureOffset::RIGHT:
-			sData->borders = IntRect( /*sData->borders.left + (sData->borders.width + 1)*i*/
-				1+(sData->borders.left + sData->borders.width) * i,
-				sData->borders.top, sData->borders.width, sData->borders.height);
-			INFO("border: " + std::to_string(sData->borders.left))
+			sData->borders =
+				IntRect(DLEFT + DWIDTH * i + i, DTOP, DWIDTH, DHEIGHT);
 			break;
 
 		case TextureOffset::LEFT:
+			sData->borders =
+				IntRect(DLEFT - DWIDTH * i - i, DTOP, DWIDTH, DHEIGHT);
 			break;
 
 		case TextureOffset::UP:
+			sData->borders =
+				IntRect(DLEFT, DTOP - DWIDTH * i - i, DWIDTH, DHEIGHT);
 			break;
 
 		case TextureOffset::DOWN:
+			sData->borders =
+				IntRect(DLEFT, DTOP + DWIDTH * i + i, DWIDTH, DHEIGHT);
 			break;
 		}
 		m_frames.push_back(StaticPicture(sData));
@@ -50,7 +59,6 @@ void AnimatedPicture::processLogic(float time)
 	if (m_isStart)
 	{
 		m_currentFrame += ANIMSPEED * time;
-		//INFO("m_currentFrame: "+std::to_string(m_currentFrame)+" "+std::to_string(ANIMSPEED * time));
 		m_isPause = false;
 		m_isStop = false;
 	}
@@ -78,68 +86,65 @@ void AnimatedPicture::draw(sf::RenderTarget& target, sf::RenderStates states) co
 	target.draw(m_frames[int(m_currentFrame)], states);
 }
 
-#define ALLFR for (auto& sp : m_frames)
+#define ALLFR for (auto& sp : m_frames)sp.
 
-void AnimatedPicture::setPosition(Vector2f pos)
+inline void AnimatedPicture::setPosition(Vector2f pos)
 {
-	ALLFR
-		sp.setPosition(pos);
+	ALLFR setPosition(pos);
 }
 
-void AnimatedPicture::setRotation(float angle)
+inline void AnimatedPicture::setRotation(float angle)
 {
-	ALLFR
-		sp.setRotation(angle);
+	ALLFR setRotation(angle);
 }
 
-void AnimatedPicture::setScale(Vector2f scale)
+inline void AnimatedPicture::setScale(Vector2f scale)
 {
-	ALLFR
-		sp.setScale(scale);
+	ALLFR setScale(scale);
 }
 
-Vector2f AnimatedPicture::getPosition() const
+inline Vector2f AnimatedPicture::getPosition() const
 {
 	return m_frames[0].getPosition();
 }
 
-float AnimatedPicture::getRotation() const
+inline float AnimatedPicture::getRotation() const
 {
 	return m_frames[0].getRotation();
 }
 
-Vector2f AnimatedPicture::getScale() const
+inline Vector2f AnimatedPicture::getScale() const
 {
 	return m_frames[0].getScale();
 }
 
-RectangleShape& AnimatedPicture::getRectangleShape() const
+inline RectangleShape& AnimatedPicture::getRectangleShape() const
 {
 	return m_frames[0].getRectangleShape();
 }
 
-void AnimatedPicture::start()
+inline void AnimatedPicture::start()
 {
 	m_isStop = false;
 	m_isPause = false;
 	m_isStart = true;
 }
 
-void AnimatedPicture::pause()
+inline void AnimatedPicture::pause()
 {
 	m_isStop = false;
 	m_isPause = true;
 	m_isStart = false;
 }
 
-void AnimatedPicture::stop()
+inline void AnimatedPicture::stop()
 {
 	m_isStop = true;
 	m_isPause = false;
 	m_isStart = false;
 }
 
-void AnimatedPicture::restart()
+inline void AnimatedPicture::restart()
 {
 	stop();
 	start();

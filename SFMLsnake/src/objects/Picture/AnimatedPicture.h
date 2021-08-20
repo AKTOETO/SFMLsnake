@@ -39,6 +39,11 @@ public:
 	AnimatedPicture(std::unique_ptr<AnimationData>& data);
 	~AnimatedPicture();
 
+	void start();
+	void pause();
+	void stop();
+	void restart();
+
 	void processLogic(float time);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -50,10 +55,5 @@ public:
 	float getRotation() const;
 	Vector2f getScale() const;
 	RectangleShape& getRectangleShape() const;
-
-	void start();
-	void pause();
-	void stop();
-	void restart();
 };
 

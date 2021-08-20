@@ -4,7 +4,7 @@ GameOverScene::GameOverScene(std::shared_ptr<RenderWindow> window)
 	:BaseScene(window)
 {
 	TextData tData;
-	tData.pos = { WIDTH / 2, HEIGHT / 2 };
+	tData.pos = { W_WIDTH / 2, W_HEIGHT / 2 };
 	tData.size = 70;
 	tData.originInCeneter = true;
 	tData.color = Color::Yellow;

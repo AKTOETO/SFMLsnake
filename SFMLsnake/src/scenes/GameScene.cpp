@@ -11,8 +11,8 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	FoodData fData;
 	fData.size = Vector2f(20, 20);
 	fData.pos = {
-		float(rand() % (WIDTH - 20 * 2 / 3)) + 20 / 3,
-		float(rand() % (HEIGHT - 20 * 2 / 3) + 20 / 3)
+		float(rand() % (W_WIDTH - 20 * 2 / 3)) + 20 / 3,
+		float(rand() % (W_HEIGHT - 20 * 2 / 3) + 20 / 3)
 	};
 	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(fData));
 
@@ -83,8 +83,8 @@ void GameScene::eatingFood()
 			m_snake->addUnit(CELL(1)->getBackPos(), CELL(1)->getRotation());
 
 		m_food->setPos({
-			float(rand() % (WIDTH - 20 * 2 / 3)) + 20 / 3,
-			float(rand() % (HEIGHT - 20 * 2 / 3)) + 20 / 3
+			float(rand() % (W_WIDTH - 20 * 2 / 3)) + 20 / 3,
+			float(rand() % (W_HEIGHT - 20 * 2 / 3)) + 20 / 3
 			});
 	}
 }
