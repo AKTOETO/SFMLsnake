@@ -15,7 +15,7 @@ Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 
 	//animated picture
 	std::unique_ptr<AnimationData> aData(new AnimationData);
-	aData->animType = AnimationType::FOODSTAY;
+	aData->type = AnimationType::LOOP;
 	aData->numberOfFrame = 4;
 	aData->data.borders = IntRect(1, 1, 40, 40);
 	aData->data.position = Vector2f(m_data->pos);

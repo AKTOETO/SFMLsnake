@@ -8,7 +8,6 @@ using namespace sf;
 
 #define CENTER W_WIDTH / 2 , W_HEIGHT / 2
 
-#define ANIMSPEED 0.01
 #define SPEED 0.2 // 0.2
 #define SOCHX 28 
 #define SOCHY 33 

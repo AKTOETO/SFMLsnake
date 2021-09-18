@@ -5,11 +5,6 @@
 #include "Picture.h"
 #include "../../../Support.h"
 
-enum class AnimationType
-{
-	FOODSTAY = 0,
-};
-
 enum class TextureOffset
 {
 	RIGHT = 0,
@@ -18,17 +13,24 @@ enum class TextureOffset
 	DOWN
 };
 
+enum class AnimationType
+{
+	LOOP = 0,
+	ONCE,
+};
+
 struct AnimationData
 {
-	AnimationType animType;
 	SpriteData data;
 	TextureOffset offset = TextureOffset::RIGHT;
+	AnimationType type = AnimationType::LOOP;
 	int numberOfFrame = 1;
+	float animSpeed = 0.01;
 };
 
 class AnimatedPicture : public StaticPicture
 {
-protected:
+private:
 	std::vector<StaticPicture> m_frames;
 	std::unique_ptr<AnimationData> m_data;
 	float m_currentFrame;
@@ -44,8 +46,7 @@ public:
 	void stop();
 	void restart();
 
-	void processLogic(float time);
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	int processLogic(float time);
 
 	void setPosition(Vector2f);
 	void setRotation(float);
@@ -55,5 +56,7 @@ public:
 	float getRotation() const;
 	Vector2f getScale() const;
 	RectangleShape& getRectangleShape() const;
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 

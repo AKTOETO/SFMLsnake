@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\AnimationManager\AnimationManager.cpp" />
     <ClCompile Include="src\objects\Picture\AnimatedPicture.cpp" />
     <ClCompile Include="src\scenes\GameOverScene.cpp" />
     <ClCompile Include="src\objects\Picture\Picture.cpp" />
@@ -157,6 +158,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\AnimationManager\AnimationManager.h" />
     <ClInclude Include="src\objects\Picture\AnimatedPicture.h" />
     <ClInclude Include="src\scenes\GameOverScene.h" />
     <ClInclude Include="src\objects\Picture\Picture.h" />

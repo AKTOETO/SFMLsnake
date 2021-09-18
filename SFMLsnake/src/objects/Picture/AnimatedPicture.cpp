@@ -54,36 +54,37 @@ AnimatedPicture::~AnimatedPicture()
 	m_data.reset(nullptr);
 }
 
-void AnimatedPicture::processLogic(float time)
+int AnimatedPicture::processLogic(float time)
 {
 	if (m_isStart)
 	{
-		m_currentFrame += ANIMSPEED * time;
+		m_currentFrame += m_data->animSpeed * time;
 		m_isPause = false;
 		m_isStop = false;
 	}
 
 	else if (m_isPause)
 	{
-		m_currentFrame += 0;
+		//m_currentFrame += 0;
 		m_isStart = false;
 		m_isStop = false;
 	}
 
 	else if (m_isStop)
 	{
-		m_currentFrame = 0;
+		m_currentFrame = m_data->numberOfFrame - 1;
 		m_isStart = false;
 		m_isPause = false;
 	}
 
-	if (m_currentFrame >= m_data->numberOfFrame)
+	if (m_currentFrame >= m_data->numberOfFrame && m_data->type == AnimationType::LOOP)
 		m_currentFrame = 0;
-}
-
-void AnimatedPicture::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(m_frames[int(m_currentFrame)], states);
+	else if(m_currentFrame >= m_data->numberOfFrame && m_data->type == AnimationType::ONCE)
+	{
+		stop();
+		return 1;
+	}
+	return 0;
 }
 
 #define ALLFR for (auto& sp : m_frames)sp.
@@ -123,7 +124,7 @@ inline RectangleShape& AnimatedPicture::getRectangleShape() const
 	return m_frames[0].getRectangleShape();
 }
 
-inline void AnimatedPicture::start()
+void AnimatedPicture::start()
 {
 	m_isStop = false;
 	m_isPause = false;
@@ -148,4 +149,9 @@ inline void AnimatedPicture::restart()
 {
 	stop();
 	start();
+}
+
+void AnimatedPicture::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(m_frames[int(m_currentFrame)], states);
 }
