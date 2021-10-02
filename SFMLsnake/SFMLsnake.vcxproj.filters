@@ -107,4 +107,7 @@
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="log\log.txt" />
+  </ItemGroup>
 </Project>

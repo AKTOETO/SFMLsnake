@@ -179,6 +179,9 @@
     <Image Include="assets\textures\food.png" />
     <Image Include="assets\textures\snake.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="log\log.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\sfml_graphics.redist.2.5.1\build\native\sfml_graphics.redist.targets" Condition="Exists('..\packages\sfml_graphics.redist.2.5.1\build\native\sfml_graphics.redist.targets')" />

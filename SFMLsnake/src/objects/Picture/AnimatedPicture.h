@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 #include "Picture.h"
 #include "../../../Support.h"
 
@@ -28,7 +29,7 @@ struct AnimationData
 	float animSpeed = 0.01;
 };
 
-class AnimatedPicture : public StaticPicture
+class AnimatedPicture :public Drawable
 {
 private:
 	std::vector<StaticPicture> m_frames;

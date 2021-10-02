@@ -3,6 +3,7 @@
 GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	:BaseScene(window)
 {
+	INFO("game constructor")
 	//snake
 	m_snake = std::make_unique<Snake>(m_window);
 
@@ -28,6 +29,7 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 
 GameScene::~GameScene()
 {
+	INFO("game destructor")
 	deactivate();
 }
 
@@ -75,8 +77,8 @@ void GameScene::eatingFood()
 {
 	if (SupportFunc::intersectRectShapes((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
-#define CELL(param) (*m_snake)[m_snake->getSize() - param]
 		INFO("eat food")
+#define CELL(param) (*m_snake)[m_snake->getSize() - param]
 		if (m_snake->getSize() > 1)
 			m_snake->addUnit(CELL(2)->getBackPos(), CELL(2)->getRotation());
 		else

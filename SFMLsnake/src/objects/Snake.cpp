@@ -2,6 +2,7 @@
 
 Snake::Snake(std::shared_ptr<RenderWindow> window)
 {
+	INFO("snake constructor")
 	m_window = window;
 	CellData data;
 	data.head = true;
@@ -17,11 +18,11 @@ Snake::Snake(std::shared_ptr<RenderWindow> window)
 	data.pos = Vector2f(m_units[1]->getBackPos().x,
 		m_units[1]->getBackPos().y + m_units[1]->getSize().y / 2);
 	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
-	INFO("constructor")
 }
 
 Snake::~Snake()
 {
+	INFO("snake destructor")
 	m_units.clear();
 }
 
@@ -75,11 +76,6 @@ RSnakeData Snake::processLogic(float time)
 		{
 			rSdata.isAlive = false;
 		}
-		/*if (i == 1)
-		{
-			INFO("rotation: " + rCdata.rotation + " delta X: " +
-				rCdata.deltaX + " delta Y: " + rCdata.deltaY);
-		}*/
 	}
 	return rSdata;
 }
@@ -95,6 +91,7 @@ void Snake::processDraw()
 
 void Snake::addUnit(Vector2f pos, float rotation)
 {
+	INFO("added unit")
 	CellData data;
 	data.color = Color::Red;
 	data.size = { 12, 40 };

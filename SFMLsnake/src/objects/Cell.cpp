@@ -3,9 +3,12 @@
 Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	:m_window(window), m_rect(new StaticPicture)
 {
+	INFO("\tcell constructor")
+
 	m_data = move(data);
 
 	// ===== RECT DATA & RECT OBJECT =====
+	INFO("\trect data")
 	std::unique_ptr<ShapeData> shData(new ShapeData);
 	shData->size = m_data->size;
 	shData->position = m_data->pos;
@@ -15,43 +18,34 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	m_rect->addData<ShapeData>(shData);
 	// =====================
 
-	// ===== SPRITE DATA =====
-	//std::unique_ptr<SpriteData> sData(new SpriteData); //sData - sprite Data
-	//sData->position = { m_rect->getPosition() };
-	// ===================
-	// 
 	//===== LOAD TEXTURE =====
+	INFO("\tload texture")
 	std::shared_ptr<Texture> texture(new Texture);
 	loadTexture(texture, "snake.png");
 	// ===================
 
 	// ===== MOVE ANIMATION DATA =====
+	INFO("\tmove anim data")
 	std::unique_ptr<AnimationData> animDataMove(new AnimationData);
 	animDataMove->offset = TextureOffset::RIGHT;
 	animDataMove->numberOfFrame = 4;
 	animDataMove->data.position = { m_rect->getPosition() };
-
 	animDataMove->data.texture = texture;
 	animDataMove->data.type = SpriteType::NONE;
 	animDataMove->data.size = Vector2f(1, 1);
 	// ==================
 
 	// ===== DIE ANIMATION DATA =====
+	INFO("\tdie anim data")
 	std::unique_ptr<AnimationData> animDataDie(new AnimationData);
 	animDataDie->offset = TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
 	animDataDie->data.position = { m_rect->getPosition() };
-
 	animDataDie->type = AnimationType::ONCE;
 	animDataDie->data.texture = texture;
 	animDataDie->data.type = SpriteType::NONE;
 	animDataDie->data.size = Vector2f(1, 1);
 	// ==================
-
-
-	// ===== COLLISION RECT DATA =====
-	std::unique_ptr<ShapeData> crData(new ShapeData); //crData - collision rectangle Data
-	// ===================
 
 	//==========HEAD==========
 	if (m_data->head == true)
@@ -59,15 +53,12 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 #define POSG(param) m_rect->getPosition().param
 
 		m_collisionPoint = std::make_unique<Vector2f>(POSG(x), POSG(y) - m_data->size.y / 2);
-
-		//sData->borders = { 1, 1, 40, 40 };
 		animDataMove->data.borders = IntRect(1, 1, 40, 40);
 		animDataDie->data.borders = { 165, 1, 40 ,40 };
 	}
 	else
 	{
 		//==========BODY==========
-		//sData->borders = { 1, 42, 40, 40 };
 		animDataMove->data.borders = IntRect(1, 42, 40, 40);
 		animDataDie->data.borders = IntRect(165, 42, 40, 40);
 	}
@@ -83,21 +74,27 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	//m_sprite->addData<SpriteData>(sData);
 
 	// ===== ANIMATIONS =====
+	INFO("\tcreate anim")
 	std::unique_ptr<AnimatedPicture>animMove(new AnimatedPicture(animDataMove));
+	INFO("\tanim's created")
+	INFO("\tcreate anim")
 	std::unique_ptr<AnimatedPicture>animDie(new AnimatedPicture(animDataDie));
+	INFO("\tanim's created")
 	// ===================
-	// 
+
+
 	// ===== ANIM MANAGER DATA =====
+	INFO("\tanim manager add sc. & use sc.")
 	m_animManager = std::make_unique<AnimationManager>();
 	m_animManager->addAnim(AnimType::MOVE, animMove);
 	m_animManager->addAnim(AnimType::DIE, animDie);
 	m_animManager->useAnim(AnimType::MOVE);
 	// ===================
-	INFO("created new cell")
 }
 
 Cell::~Cell()
 {
+	INFO("destructor")
 	m_data.reset(nullptr);
 
 	m_collisionPoint.reset(nullptr);
@@ -130,8 +127,7 @@ RCellData Cell::logic(float time)
 	if (m_data->head == true)
 	{
 #define POSG(param) m_rect->getPosition().param
-#define BOUND(param) float(m_rect->getScale().param)
-
+#define BOUND(param) float(m_rect->getRectangleShape().getSize().param)
 		//collision with wall
 		if (
 			POSG(x) + BOUND(x) / 2 > W_WIDTH ||
@@ -158,8 +154,6 @@ RCellData Cell::logic(float time)
 				m_rect->setPosition({ BOUND(x) / 2, POSG(y) });
 			}
 
-			//temp
-			//m_sprite->setRotation(270);
 			m_animManager->getAnimation(AnimType::MOVE)->setRotation(270);
 			m_rect->setRotation(270);
 		}
@@ -174,8 +168,6 @@ RCellData Cell::logic(float time)
 				m_rect->setPosition({ W_WIDTH - BOUND(x) / 2, POSG(y) });
 			}
 
-			//temp
-			//m_sprite->setRotation(90);
 			m_animManager->getAnimation(AnimType::MOVE)->setRotation(90);
 			m_rect->setRotation(90);
 		}
@@ -190,8 +182,6 @@ RCellData Cell::logic(float time)
 				m_rect->setPosition({ POSG(x), BOUND(x) / 2 });
 			}
 
-			//temp
-			//m_sprite->setRotation(0);
 			m_animManager->getAnimation(AnimType::MOVE)->setRotation(0);
 			m_rect->setRotation(0);
 		}
@@ -206,8 +196,6 @@ RCellData Cell::logic(float time)
 				m_rect->setPosition({ POSG(x), W_HEIGHT - BOUND(x) / 2 });
 			}
 
-			//temp
-			//m_sprite->setRotation(180);
 			m_animManager->getAnimation(AnimType::MOVE)->setRotation(180);
 			m_rect->setRotation(180);
 		}
@@ -273,8 +261,6 @@ RCellData Cell::logic(float time)
 		-cos(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(y)
 		);
 
-	//temp
-	//m_sprite->setPosition(m_rect->getPosition());
 	m_animManager->getAnimation(AnimType::MOVE)->setPosition(m_rect->getPosition());
 	if (m_animManager->processLogic(time) == 1)
 	{
