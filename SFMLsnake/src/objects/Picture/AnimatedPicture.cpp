@@ -11,7 +11,7 @@ AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
 {
 	INFO("\t\tmoving data")
 	m_data = move(data);
-	m_frames.resize(4);
+	m_frames.resize(m_data->numberOfFrame);
 
 	for (int i = 0; i < m_data->numberOfFrame; i++)
 	{
