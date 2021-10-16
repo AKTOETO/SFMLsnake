@@ -3,6 +3,7 @@
 Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 	:m_window(window)
 {
+	INFO("food constructor")
 	m_data = std::move(data);
 
 	//collision shape
@@ -29,6 +30,7 @@ Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 
 Food::~Food()
 {
+	INFO("food destructor")
 }
 
 void Food::processEvent()

@@ -3,17 +3,19 @@
 AnimatedPicture::AnimatedPicture()
 	: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
 {
-	INFO("Picture constructor")
+	INFO("\t\tPicture constructor")
 }
 
 AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
 	: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
 {
+	INFO("\t\tmoving data")
 	m_data = move(data);
-	m_frames.resize(0);
+	m_frames.resize(m_data->numberOfFrame);
 
 	for (int i = 0; i < m_data->numberOfFrame; i++)
 	{
+		INFO("\t\tcreating "+std::to_string(i)+" frame")
 		std::unique_ptr<SpriteData> sData(new SpriteData(m_data->data));
 
 #define DWIDTH sData->borders.width
@@ -43,9 +45,11 @@ AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
 				IntRect(DLEFT, DTOP + DWIDTH * i + i, DWIDTH, DHEIGHT);
 			break;
 		}
-		m_frames.push_back(StaticPicture(sData));
+		m_frames.erase(m_frames.begin());
+		m_frames.emplace_back(sData);
 		INFO("added new frame")
 	}
+	INFO("frame vec. size:" + std::to_string(m_frames.size()));
 }
 
 AnimatedPicture::~AnimatedPicture()
@@ -89,37 +93,37 @@ int AnimatedPicture::processLogic(float time)
 
 #define ALLFR for (auto& sp : m_frames)sp.
 
-inline void AnimatedPicture::setPosition(Vector2f pos)
+void AnimatedPicture::setPosition(Vector2f pos)
 {
 	ALLFR setPosition(pos);
 }
 
-inline void AnimatedPicture::setRotation(float angle)
+void AnimatedPicture::setRotation(float angle)
 {
 	ALLFR setRotation(angle);
 }
 
-inline void AnimatedPicture::setScale(Vector2f scale)
+void AnimatedPicture::setScale(Vector2f scale)
 {
 	ALLFR setScale(scale);
 }
 
-inline Vector2f AnimatedPicture::getPosition() const
+Vector2f AnimatedPicture::getPosition() const
 {
 	return m_frames[0].getPosition();
 }
 
-inline float AnimatedPicture::getRotation() const
+float AnimatedPicture::getRotation() const
 {
 	return m_frames[0].getRotation();
 }
 
-inline Vector2f AnimatedPicture::getScale() const
+Vector2f AnimatedPicture::getScale() const
 {
 	return m_frames[0].getScale();
 }
 
-inline RectangleShape& AnimatedPicture::getRectangleShape() const
+RectangleShape& AnimatedPicture::getRectangleShape() const
 {
 	return m_frames[0].getRectangleShape();
 }
@@ -131,21 +135,21 @@ void AnimatedPicture::start()
 	m_isStart = true;
 }
 
-inline void AnimatedPicture::pause()
+void AnimatedPicture::pause()
 {
 	m_isStop = false;
 	m_isPause = true;
 	m_isStart = false;
 }
 
-inline void AnimatedPicture::stop()
+void AnimatedPicture::stop()
 {
 	m_isStop = true;
 	m_isPause = false;
 	m_isStart = false;
 }
 
-inline void AnimatedPicture::restart()
+void AnimatedPicture::restart()
 {
 	stop();
 	start();

@@ -69,10 +69,14 @@ public:
 	void addData(std::unique_ptr<T>&);
 
 	StaticPicture();
-	StaticPicture(const StaticPicture&);
+	StaticPicture(const StaticPicture&); //copy const
+	StaticPicture(StaticPicture&&) noexcept; //move constr
+	StaticPicture& operator=(StaticPicture&&) noexcept;
+
 	StaticPicture(std::unique_ptr<SpriteData>&);
 	StaticPicture(std::unique_ptr<ShapeData>&);
 	~StaticPicture();
+	void destruct();
 
 	virtual void setPosition(Vector2f);
 	virtual void setRotation(float);

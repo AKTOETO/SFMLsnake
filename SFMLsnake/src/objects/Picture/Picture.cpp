@@ -3,7 +3,8 @@
 template<>
 void StaticPicture::addData(std::unique_ptr<SpriteData>& data)
 {
-	m_spriteData = std::move(data);
+	INFO("\t\t\tpic add info")
+		m_spriteData = std::move(data);
 
 	//create sprite, texture
 	m_sprite = std::make_unique<Sprite>();
@@ -34,6 +35,7 @@ void StaticPicture::addData(std::unique_ptr<SpriteData>& data)
 		loadTexture(m_texture, file);
 
 
+	INFO("\t\t\tsetting up the st. picture")
 	//bind texture to sprite and setting
 	m_sprite->setTexture(*m_texture);
 	m_sprite->setPosition(m_spriteData->position);
@@ -52,7 +54,8 @@ void StaticPicture::addData(std::unique_ptr<SpriteData>& data)
 template<>
 void StaticPicture::addData(std::unique_ptr<ShapeData>& data)
 {
-	m_shapeData = std::move(data);
+	INFO("\t\tshape add info")
+		m_shapeData = std::move(data);
 
 	switch (m_shapeData->type)
 	{
@@ -89,23 +92,55 @@ StaticPicture::StaticPicture()
 	m_spriteData(nullptr),
 	m_texture(nullptr)
 {
+	INFO("\t\t\tnull stat. pic. const.")
 }
 
 StaticPicture::StaticPicture(const StaticPicture& pic)
 {
+	INFO("\t\t\tstat. pic. copy const.")
 #define NOTNULLCOPY(mem, obj) if(pic.mem != nullptr) mem = std::make_unique<obj>(*pic.mem);
-	NOTNULLCOPY(m_circle, CircleShape)
-	NOTNULLCOPY(m_rectangle, RectangleShape)
-	NOTNULLCOPY(m_shapeData, ShapeData)
-	NOTNULLCOPY(m_sprite, Sprite)
-	NOTNULLCOPY(m_spriteData, SpriteData)
-	NOTNULLCOPY(m_texture, Texture)
+		NOTNULLCOPY(m_circle, CircleShape)
+		NOTNULLCOPY(m_rectangle, RectangleShape)
+		NOTNULLCOPY(m_shapeData, ShapeData)
+		NOTNULLCOPY(m_sprite, Sprite)
+		NOTNULLCOPY(m_spriteData, SpriteData)
+		NOTNULLCOPY(m_texture, Texture)
+}
+
+StaticPicture::StaticPicture(StaticPicture&& pic) noexcept
+{
+	INFO("\t\t\tstat. pic. move const.")
+#define MOVE(mem) mem = std::move(pic.mem);
+		MOVE(m_circle)
+		MOVE(m_rectangle)
+		MOVE(m_shapeData)
+		MOVE(m_sprite)
+		MOVE(m_spriteData)
+		MOVE(m_texture)
+}
+
+StaticPicture& StaticPicture::operator=(StaticPicture&& pic) noexcept
+{
+	if (this != &pic)
+	{
+		NOTNULLCOPY(m_circle, CircleShape)
+		NOTNULLCOPY(m_rectangle, RectangleShape)
+		NOTNULLCOPY(m_shapeData, ShapeData)
+		NOTNULLCOPY(m_sprite, Sprite)
+		NOTNULLCOPY(m_spriteData, SpriteData)
+		NOTNULLCOPY(m_texture, Texture)
+
+		pic.destruct();
+	}
+	return *this;
 }
 
 StaticPicture::StaticPicture(std::unique_ptr<SpriteData>& data)
 	: m_shapeData(nullptr), m_rectangle(nullptr), m_circle(nullptr)
 {
+	INFO("\t\t\tstat. pic. const. START")
 	addData<SpriteData>(data);
+	INFO("\t\t\tstat. pic. const. END")
 }
 
 StaticPicture::StaticPicture(std::unique_ptr<ShapeData>& data)
@@ -116,6 +151,12 @@ StaticPicture::StaticPicture(std::unique_ptr<ShapeData>& data)
 
 StaticPicture::~StaticPicture()
 {
+	destruct();
+	INFO("\t\t\tst. pic. destructor")
+}
+
+void StaticPicture::destruct()
+{
 	m_circle.reset(nullptr);
 	m_rectangle.reset(nullptr);
 
@@ -123,8 +164,8 @@ StaticPicture::~StaticPicture()
 	m_spriteData.reset(nullptr);
 
 	m_sprite.reset(nullptr);
+
 	//m_texture.reset(nullptr);
-	INFO("destructor StaticPicture")
 }
 
 //choose sprite or rectangle or circle

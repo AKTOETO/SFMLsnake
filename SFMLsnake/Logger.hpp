@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 #include <ctime>
 
@@ -23,6 +24,8 @@ static void curTime()
 #define FW std::setfill('0') << std::setw(2)
 	std::cout << FW << timeinfo->tm_hour << ':' << FW << timeinfo->tm_min << ':' << FW << timeinfo->tm_sec;
 }
+
+static std::ofstream cout("log/log.txt", std::ios::out);
 
 static void infoSetting()
 {
@@ -51,7 +54,7 @@ static void highlithing(std::string str, int width)
 	std::cout << ") [file: ";\
 	highlithing(std::string(__FILE__), 22);\
 	std::cout << "] [function: ";\
-	highlithing(std::string(__FUNCTION__), 35);\
+	highlithing(std::string(__FUNCTION__), 37);\
 	std::cout<< "] [line: ";\
 	highlithing(std::to_string(__LINE__), 5);\
 	std::cout << "] [message: ";\
