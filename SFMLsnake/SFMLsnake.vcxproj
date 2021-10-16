@@ -138,6 +138,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\bogda\source\repos\SFMLsnake\packages\sfml_graphics.2.5.1\build\native\lib\x64\v141\Release\dynamic;C:\Users\bogda\source\repos\SFMLsnake\packages\sfml_system.2.5.1\build\native\lib\x64\v141\Release\dynamic;C:\Users\bogda\source\repos\SFMLsnake\packages\sfml_window.2.5.1\build\native\lib\x64\v141\Release\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
