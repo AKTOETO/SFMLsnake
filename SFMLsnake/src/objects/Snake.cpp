@@ -71,15 +71,12 @@ RSnakeData Snake::processLogic(float time)
 	{
 		RCellData rCdata;
 		rCdata = m_units[i]->logic(time);
-		if (i == 0 && rCdata.wallCollision == true)
+
+		rSdata.isAlive = false;
+		if (rCdata.wallCollision == false)
 		{
-			rSdata.isAlive = false;
+			rSdata.isAlive = true;
 		}
-		/*if (i == 1)
-		{
-			std::cout << "rotation: " << rCdata.rotation << " delta X: " <<
-				rCdata.deltaX << " delta Y: " << rCdata.deltaY << std::endl;
-		}*/
 	}
 	return rSdata;
 }

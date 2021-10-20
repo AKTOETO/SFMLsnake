@@ -262,7 +262,7 @@ RCellData Cell::logic(float time)
 		);
 
 	m_animManager->getAnimation(AnimType::MOVE)->setPosition(m_rect->getPosition());
-	if (m_animManager->processLogic(time) == 1)
+	if (m_animManager->processLogic(time) == 1) // if the animation is over
 	{
 		rdata.wallCollision = true;
 	}
