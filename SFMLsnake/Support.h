@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Logger.hpp"
 using namespace sf;
 
-#define WIDTH 800  // 800 1920
-#define HEIGHT 600 // 600 1080
+#define W_WIDTH 800  // 800 1920
+#define W_HEIGHT 600 // 600 1080
+
+#define CENTER W_WIDTH / 2 , W_HEIGHT / 2
 
 #define SPEED 0.2 // 0.2
 #define SOCHX 28 
@@ -33,7 +36,7 @@ namespace SupportFunc
 
 struct CellData
 {
-	Vector2f pos = { WIDTH / 2, HEIGHT / 2 },
+	Vector2f pos = { W_WIDTH / 2, W_HEIGHT / 2 },
 		size = { SOCHX, SOCHY };
 	Color color = Color::Green;
 	bool head = false;
@@ -59,3 +62,13 @@ enum class Direction
 };
 
 // ================
+// =====PICTURE====
+
+static void loadTexture(std::shared_ptr<Texture> texture, std::string file)
+{
+	if (!texture->loadFromFile("assets/textures/" + file))
+		ERROR("failed to load " + file)
+}
+
+// ================
+

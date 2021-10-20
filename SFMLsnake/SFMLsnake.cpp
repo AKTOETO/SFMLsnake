@@ -4,23 +4,24 @@
 #include <ctime>
 
 #include "src/objects/SceneManager/SceneManager.h"
+#include "src/objects/Picture/AnimatedPicture.h"
 
 int main()
 {
-	std::shared_ptr<RenderWindow>window =
-		std::make_shared<RenderWindow>(VideoMode(WIDTH, HEIGHT), "Snake");
+	INFO("start game")
+
+	std::shared_ptr<RenderWindow>window(new RenderWindow(VideoMode(W_WIDTH, W_HEIGHT), "Snake"));
 
 	SceneManager sceneManager(window);
 	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
 
 	Clock clock;
-	long long counter = 0;
 	while (window->isOpen())
 	{
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 		time /= 800;
-		
+
 		//events
 		Event event;
 		while (window->pollEvent(event))
@@ -32,6 +33,7 @@ int main()
 		}
 		sceneManager.processEvent();
 
+		//logic
 		sceneManager.processLogic(time);
 
 		//draw
@@ -40,6 +42,6 @@ int main()
 		window->display();
 	}
 
-	std::cout << "Bye bye!\n";
-	return 0;
+	INFO("Bye bye!")
+		return 0;
 }

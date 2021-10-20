@@ -2,6 +2,7 @@
 #include <memory>
 #include <iostream>
 #include "../../../Support.h"
+#include "../../../Logger.hpp"
 
 struct StandartData
 {
@@ -12,9 +13,10 @@ struct StandartData
 	Color color = Color::White;
 };
 
-enum SpriteType
+enum class SpriteType
 {
-	SNAKE = 0,
+	NONE = 0,
+	SNAKE,
 	FOOD,
 };
 
@@ -22,9 +24,24 @@ struct SpriteData : public StandartData
 {
 	SpriteType type = SpriteType::SNAKE;
 	IntRect borders = { 0, 0, 10, 10 };
+	std::shared_ptr<Texture> texture = nullptr;
+
+	SpriteData() {};
+
+	SpriteData(const SpriteData& data)
+		:type(data.type),
+		borders(data.borders),
+		texture(data.texture)
+	{
+		position = data.position;
+		size = data.size;
+		originInCenter = data.originInCenter;
+		angle = data.angle;
+		color = data.color;
+	}
 };
 
-enum ShapeType
+enum class ShapeType
 {
 	RECTANGLE = 0,
 	CIRCLE,
@@ -35,14 +52,14 @@ struct ShapeData : public StandartData
 	ShapeType type = ShapeType::RECTANGLE;
 };
 
-class Picture : public Drawable
+class StaticPicture : public Drawable
 {
 protected:
 	std::unique_ptr<SpriteData> m_spriteData;
 	std::unique_ptr<ShapeData> m_shapeData;
 	
 	std::unique_ptr<Sprite> m_sprite;
-	std::unique_ptr<Texture> m_texture;
+	std::shared_ptr<Texture> m_texture;
 
 	std::unique_ptr<RectangleShape> m_rectangle;
 	std::unique_ptr<CircleShape> m_circle;
@@ -51,19 +68,23 @@ public:
 	template<typename T>
 	void addData(std::unique_ptr<T>&);
 
-	Picture();
-	Picture(std::unique_ptr<SpriteData>);
-	Picture(std::unique_ptr<ShapeData>);
-	~Picture();
+	StaticPicture();
+	StaticPicture(const StaticPicture&); //copy const
+	StaticPicture(StaticPicture&&) noexcept; //move constr
+	StaticPicture& operator=(StaticPicture&&) noexcept;
 
-	void setPosition(Vector2f);
-	void setRotation(float);
-	void setScale(Vector2f);
+	StaticPicture(std::unique_ptr<SpriteData>&);
+	StaticPicture(std::unique_ptr<ShapeData>&);
+	~StaticPicture();
+	void destruct();
 
-	Vector2f getPosition() const;
-	float getRotation() const;
-	Vector2f getScale() const;
-	RectangleShape& getRectangleShape() const;
+	virtual void setPosition(Vector2f);
+	virtual void setRotation(float);
+	virtual void setScale(Vector2f);
 
+	virtual Vector2f getPosition() const;
+	virtual float getRotation() const;
+	virtual Vector2f getScale() const;
+	virtual RectangleShape& getRectangleShape() const;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

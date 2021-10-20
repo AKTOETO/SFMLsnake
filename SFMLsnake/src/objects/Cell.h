@@ -5,7 +5,7 @@
 #include <cmath>
 
 #include "../../Support.h"
-#include "Picture/Picture.h"
+#include "AnimationManager/AnimationManager.h"
 
 using namespace sf;
 
@@ -19,11 +19,12 @@ private:
 	std::unique_ptr<CellData> m_data;
 
 	std::unique_ptr<Vector2f> m_collisionPoint, m_posBackPoint, m_posFrontPoint;
-	std::unique_ptr<Picture> m_sprite, m_rect;
+	std::unique_ptr<StaticPicture> m_rect;
 
 public:
 	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
 	~Cell();
+	std::unique_ptr<AnimationManager> m_animManager;
 
 	void event();
 	RCellData logic(float time);
