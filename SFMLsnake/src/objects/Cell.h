@@ -25,6 +25,7 @@ private:
 public:
 	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
 	~Cell();
+	std::unique_ptr<AnimationManager> m_animManager;
 
 	void event();
 	RCellData logic(float time);
