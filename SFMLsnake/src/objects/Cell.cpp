@@ -33,6 +33,8 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	animDataMove->data.texture = texture;
 	animDataMove->data.type = SpriteType::NONE;
 	animDataMove->data.size = Vector2f(1, 1);
+
+	//animDataMove->animSpeed = 0.0005;
 	// ==================
 
 	// ===== DIE ANIMATION DATA =====
@@ -45,6 +47,8 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 	animDataDie->data.texture = texture;
 	animDataDie->data.type = SpriteType::NONE;
 	animDataDie->data.size = Vector2f(1, 1);
+
+	//animDataDie->animSpeed = 0.0005;
 	// ==================
 
 	//==========HEAD==========
@@ -53,14 +57,14 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 #define POSG(param) m_rect->getPosition().param
 
 		m_collisionPoint = std::make_unique<Vector2f>(POSG(x), POSG(y) - m_data->size.y / 2);
-		animDataMove->data.borders = IntRect(1, 1, 40, 40);
-		animDataDie->data.borders = { 165, 1, 40 ,40 };
+		animDataMove->data.borders = { 1, 1, 40, 40 }; //{ 1, 83, 40, 40 };
+		animDataDie->data.borders = { 165, 1, 40, 40 }; //{ 165, 83, 40 ,40 };
 	}
 	else
 	{
 		//==========BODY==========
-		animDataMove->data.borders = IntRect(1, 42, 40, 40);
-		animDataDie->data.borders = IntRect(165, 42, 40, 40);
+		animDataMove->data.borders = { 1, 42, 40, 40 }; //{ 1, 124, 40, 40 }; 
+		animDataDie->data.borders = { 165, 42, 40, 40 }; //{ 165, 124, 40, 40 }; 
 	}
 	m_posBackPoint = std::make_unique<Vector2f>(
 		sin(-m_rect->getRotation()) * m_data->size.x / 2 + POSG(x),
@@ -71,7 +75,6 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 		-cos(-m_rect->getRotation()) * m_data->size.y / 2 + POSG(y)
 		);
 
-	//m_sprite->addData<SpriteData>(sData);
 
 	// ===== ANIMATIONS =====
 	INFO("\tcreate anim")

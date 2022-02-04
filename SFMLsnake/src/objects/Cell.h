@@ -20,11 +20,11 @@ private:
 
 	std::unique_ptr<Vector2f> m_collisionPoint, m_posBackPoint, m_posFrontPoint;
 	std::unique_ptr<StaticPicture> m_rect;
+	std::unique_ptr<AnimationManager> m_animManager;
 
 public:
 	Cell(std::shared_ptr<RenderWindow>, std::unique_ptr<CellData>);
 	~Cell();
-	std::unique_ptr<AnimationManager> m_animManager;
 
 	void event();
 	RCellData logic(float time);
