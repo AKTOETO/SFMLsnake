@@ -4,7 +4,6 @@
 #include <ctime>
 
 #include "src/objects/SceneManager/SceneManager.h"
-#include "src/objects/Picture/AnimatedPicture.h"
 
 int main()
 {

@@ -78,10 +78,10 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 
 	// ===== ANIMATIONS =====
 	INFO("\tcreate anim")
-	std::unique_ptr<AnimatedPicture>animMove(new AnimatedPicture(animDataMove));
+	std::unique_ptr<AnimatedPicture> animMove(new AnimatedPicture(animDataMove));
 	INFO("\tanim's created")
 	INFO("\tcreate anim")
-	std::unique_ptr<AnimatedPicture>animDie(new AnimatedPicture(animDataDie));
+	std::unique_ptr<AnimatedPicture> animDie(new AnimatedPicture(animDataDie));
 	INFO("\tanim's created")
 	// ===================
 

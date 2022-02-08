@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../../Support.h"
-#include "Picture/AnimatedPicture.h"
+#include "AnimationManager/AnimationManager.h"
 
 using namespace sf;
 
@@ -19,8 +19,8 @@ private:
 	std::shared_ptr<RenderWindow> m_window;
 	std::unique_ptr<FoodData> m_data;
 
-	std::unique_ptr<AnimatedPicture> m_animSprite;
 	std::unique_ptr<StaticPicture> m_collisRect;
+	std::unique_ptr<AnimationManager> m_animManager;
 
 public:
 	Food(std::shared_ptr<RenderWindow>, std::unique_ptr<FoodData>);

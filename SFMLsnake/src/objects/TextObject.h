@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "../../Support.h"
-#include "../../Logger.hpp"
 
 struct TextData
 {

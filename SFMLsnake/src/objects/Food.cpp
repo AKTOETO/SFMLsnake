@@ -25,7 +25,11 @@ Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 	aData->data.texture = texture;
 	aData->data.type = SpriteType::NONE;
 
-	m_animSprite = std::make_unique<AnimatedPicture>(aData);
+	std::unique_ptr<AnimatedPicture> animStay(new AnimatedPicture(aData));
+
+	m_animManager = std::make_unique<AnimationManager>();
+	m_animManager->addAnim(AnimType::STAY, animStay);
+	m_animManager->useAnim(AnimType::STAY);
 }
 
 Food::~Food()
@@ -39,12 +43,12 @@ void Food::processEvent()
 
 void Food::processLogic(float time)
 {
-	m_animSprite->processLogic(time);
+	m_animManager->processLogic(time);
 }
 
 void Food::processDraw()
 {
-	m_window->draw(*m_animSprite);
+	m_window->draw(*m_animManager);
 	if(SHB)
 		m_window->draw(*m_collisRect);
 }
@@ -52,7 +56,7 @@ void Food::processDraw()
 void Food::setPos(Vector2f pos)
 {
 	m_collisRect->setPosition(pos);
-	m_animSprite->setPosition(pos);
+	m_animManager->getAnimation(AnimType::STAY)->setPosition(pos);
 }
 
 RectangleShape& Food::getRectangleShape()
