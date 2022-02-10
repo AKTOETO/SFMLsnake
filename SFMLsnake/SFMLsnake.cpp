@@ -12,7 +12,7 @@ int main()
 	std::shared_ptr<RenderWindow>window(new RenderWindow(VideoMode(W_WIDTH, W_HEIGHT), "Snake"));
 
 	SceneManager sceneManager(window);
-	sceneManager.setScene(Scenes::GameScene, std::make_unique<GameScene>(window));
+	sceneManager.setScene(Scenes::Game, std::make_unique<GameScene>(window));
 
 	Clock clock;
 	while (window->isOpen())

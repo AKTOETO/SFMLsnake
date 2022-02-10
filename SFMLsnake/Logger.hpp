@@ -81,6 +81,7 @@ std::cout << " (";\
 #define ERROR(str){\
 	errorSetting();\
 	TEMPLATE(str);\
+	std::exit(1);\
 }
 #else
 #define INFO(str) ;

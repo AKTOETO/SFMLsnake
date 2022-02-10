@@ -74,7 +74,7 @@ void StaticPicture::addData(std::unique_ptr<ShapeData>& data)
 	case ShapeType::CIRCLE:
 		//...
 		INFO("circle setting")
-			break;
+		break;
 	}
 }
 

@@ -4,16 +4,11 @@
 
 #include "Cell.h"
 
-struct RSnakeData
-{
-	bool isAlive = true;
-};
-
-class Snake
+class Snake : public BaseObject
 {
 private:
-	std::shared_ptr<RenderWindow> m_window;
 	std::vector<std::unique_ptr<Cell>> m_units;
+	bool m_isAlive = true;
 
 public:
 	Snake(std::shared_ptr<RenderWindow>);
@@ -21,11 +16,12 @@ public:
 
 	std::unique_ptr<Cell>& operator[](int);
 
-	void processEvent();
-	RSnakeData processLogic(float time);
-	void processDraw();
+	virtual void processEvent() override;
+	virtual int processLogic(float time) override;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
 
 	void addUnit(Vector2f, float);
 
 	int getSize();
+	bool getAlive();
 };

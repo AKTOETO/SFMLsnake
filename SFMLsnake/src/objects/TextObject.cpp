@@ -31,8 +31,9 @@ void TextObject::processEvent()
 {
 }
 
-void TextObject::processLogic(float time)
+int TextObject::processLogic(float time)
 {
+	return 0;
 }
 
 void TextObject::draw(sf::RenderTarget& target, sf::RenderStates states) const

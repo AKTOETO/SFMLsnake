@@ -68,7 +68,7 @@ public:
 	void addData(std::unique_ptr<T>&);
 
 	StaticPicture();
-	StaticPicture(const StaticPicture&); //copy const
+	StaticPicture(const StaticPicture&); //copy constr
 	StaticPicture(StaticPicture&&) noexcept; //move constr
 	StaticPicture& operator=(StaticPicture&&) noexcept;
 

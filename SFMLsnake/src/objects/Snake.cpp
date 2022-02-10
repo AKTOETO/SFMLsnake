@@ -3,21 +3,20 @@
 Snake::Snake(std::shared_ptr<RenderWindow> window)
 {
 	INFO("snake constructor")
-	m_window = window;
 	CellData data;
 	data.head = true;
-	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
 
 	data.color = Color::Red;
 	data.size = { 12, 40 };
 	data.head = false;
 	data.pos = Vector2f(m_units[0]->getBackPos().x,
 		m_units[0]->getBackPos().y + m_units[0]->getSize().y / 2);
-	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
 
 	data.pos = Vector2f(m_units[1]->getBackPos().x,
 		m_units[1]->getBackPos().y + m_units[1]->getSize().y / 2);
-	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
 }
 
 Snake::~Snake()
@@ -35,13 +34,12 @@ void Snake::processEvent()
 {
 	for (int i = 0; i < m_units.size(); i++)
 	{
-		m_units[i]->event();
+		m_units[i]->processEvent();
 	}
 }
 
-RSnakeData Snake::processLogic(float time)
+int Snake::processLogic(float time)
 {
-	RSnakeData rSdata;
 	for (int i = m_units.size() - 1; i > 0; i--)
 	{
 		//should the tail move
@@ -70,25 +68,25 @@ RSnakeData Snake::processLogic(float time)
 
 	for (int i = m_units.size() - 1; i >= 0; i--)
 	{
-		RCellData rCdata;
-		rCdata = m_units[i]->logic(time);
+		m_units[i]->processLogic(time);
+		//эта информация должна получаться из Cell через метод getStatus
 
-		rSdata.isAlive = false;
-		if (rCdata.wallCollision == false)
+		//эта информация должна возвращаться через метод getStatus
+		if (m_units[i]->getWallCollision() == true)
 		{
-			rSdata.isAlive = true;
+			m_isAlive = false;
 		}
 	}
-	return rSdata;
+	return 0;
 }
 
-void Snake::processDraw()
+void Snake::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	for (int i = m_units.size() - 1; i >= 0; i--)
 	{
-		m_units[i]->draw();
+		target.draw(*m_units[i]);
 	}
-	m_units[0]->draw();
+	target.draw(*m_units[0]);
 }
 
 void Snake::addUnit(Vector2f pos, float rotation)
@@ -100,10 +98,15 @@ void Snake::addUnit(Vector2f pos, float rotation)
 	data.head = false;
 	data.pos = std::move(pos);
 	data.rotation = rotation;
-	m_units.push_back(std::make_unique<Cell>(m_window, std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
 }
 
 int Snake::getSize()
 {
 	return m_units.size();
+}
+
+bool Snake::getAlive()
+{
+	return m_isAlive;
 }

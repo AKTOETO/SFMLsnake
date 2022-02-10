@@ -1,7 +1,6 @@
 #include "Food.h"
 
 Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
-	:m_window(window)
 {
 	INFO("food constructor")
 	m_data = std::move(data);
@@ -41,16 +40,16 @@ void Food::processEvent()
 {
 }
 
-void Food::processLogic(float time)
+int Food::processLogic(float time)
 {
 	m_animManager->processLogic(time);
+	return 0;
 }
 
-void Food::processDraw()
+void Food::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	m_window->draw(*m_animManager);
-	if(SHB)
-		m_window->draw(*m_collisRect);
+	target.draw(*m_animManager);
+	if(SHB) target.draw(*m_collisRect);
 }
 
 void Food::setPos(Vector2f pos)

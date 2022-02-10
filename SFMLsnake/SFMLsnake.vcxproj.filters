@@ -93,6 +93,9 @@
     <ClInclude Include="src\objects\AnimationManager\AnimationManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\BaseObject.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\main.ttf">

@@ -2,7 +2,6 @@
 #include <map>
 #include <memory>
 #include "../Picture/AnimatedPicture.h"
-#include "../../../Support.h"
 
 enum class AnimType
 {

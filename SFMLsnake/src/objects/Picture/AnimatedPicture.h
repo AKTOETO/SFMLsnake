@@ -4,7 +4,6 @@
 #include <iostream>
 #include <algorithm>
 #include "Picture.h"
-#include "../../../Support.h"
 
 enum class TextureOffset
 {

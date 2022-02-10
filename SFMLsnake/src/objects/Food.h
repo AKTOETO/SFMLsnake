@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "../../Support.h"
 #include "AnimationManager/AnimationManager.h"
+#include "BaseObject.h"
 
 using namespace sf;
 
@@ -13,10 +13,9 @@ struct FoodData
 	Vector2f size;
 };
 
-class Food
+class Food : public BaseObject
 {
 private:
-	std::shared_ptr<RenderWindow> m_window;
 	std::unique_ptr<FoodData> m_data;
 
 	std::unique_ptr<StaticPicture> m_collisRect;
@@ -26,9 +25,9 @@ public:
 	Food(std::shared_ptr<RenderWindow>, std::unique_ptr<FoodData>);
 	~Food();
 
-	void processEvent();
-	void processLogic(float time);
-	void processDraw();
+	virtual void processEvent() override;
+	virtual int processLogic(float time) override;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setPos(Vector2f);
 

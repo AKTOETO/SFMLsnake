@@ -2,7 +2,7 @@
 #include <memory>
 #include <iostream>
 
-#include "../../Support.h"
+#include "BaseObject.h"
 
 struct TextData
 {
@@ -15,7 +15,7 @@ struct TextData
 	bool originInCeneter = false;
 };
 
-class TextObject : public Drawable
+class TextObject : public BaseObject
 {
 protected:
 	std::unique_ptr<Text> m_text;
@@ -26,8 +26,8 @@ public:
 	TextObject(std::unique_ptr<TextData> data);
 	~TextObject();
 
-	void processEvent();
-	void processLogic(float time);
+	virtual void processEvent() override;
+	virtual int processLogic(float time) override;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 	void setString(std::string);

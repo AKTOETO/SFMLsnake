@@ -1,15 +1,15 @@
 #include "Cell.h"
 
-Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
-	:m_window(window), m_rect(new StaticPicture)
+Cell::Cell(std::unique_ptr<CellData> data)
+	:m_rect(new StaticPicture)
 {
 	INFO("\tcell constructor")
 
-	m_data = move(data);
+		m_data = move(data);
 
 	// ===== RECT DATA & RECT OBJECT =====
 	INFO("\trect data")
-	std::unique_ptr<ShapeData> shData(new ShapeData);
+		std::unique_ptr<ShapeData> shData(new ShapeData);
 	shData->size = m_data->size;
 	shData->position = m_data->pos;
 	shData->color = m_data->color;
@@ -20,13 +20,13 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 
 	//===== LOAD TEXTURE =====
 	INFO("\tload texture")
-	std::shared_ptr<Texture> texture(new Texture);
+		std::shared_ptr<Texture> texture(new Texture);
 	loadTexture(texture, "snake.png");
 	// ===================
 
 	// ===== MOVE ANIMATION DATA =====
 	INFO("\tmove anim data")
-	std::unique_ptr<AnimationData> animDataMove(new AnimationData);
+		std::unique_ptr<AnimationData> animDataMove(new AnimationData);
 	animDataMove->offset = TextureOffset::RIGHT;
 	animDataMove->numberOfFrame = 4;
 	animDataMove->data.position = { m_rect->getPosition() };
@@ -39,7 +39,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 
 	// ===== DIE ANIMATION DATA =====
 	INFO("\tdie anim data")
-	std::unique_ptr<AnimationData> animDataDie(new AnimationData);
+		std::unique_ptr<AnimationData> animDataDie(new AnimationData);
 	animDataDie->offset = TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
 	animDataDie->data.position = { m_rect->getPosition() };
@@ -78,17 +78,15 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 
 	// ===== ANIMATIONS =====
 	INFO("\tcreate anim")
-	std::unique_ptr<AnimatedPicture> animMove(new AnimatedPicture(animDataMove));
-	INFO("\tanim's created")
-	INFO("\tcreate anim")
+		std::unique_ptr<AnimatedPicture> animMove(new AnimatedPicture(animDataMove));
 	std::unique_ptr<AnimatedPicture> animDie(new AnimatedPicture(animDataDie));
-	INFO("\tanim's created")
-	// ===================
+	INFO("\tanim created")
+		// ===================
 
 
-	// ===== ANIM MANAGER DATA =====
-	INFO("\tanim manager add sc. & use sc.")
-	m_animManager = std::make_unique<AnimationManager>();
+		// ===== ANIM MANAGER DATA =====
+		INFO("\tanim manager add sc. & use sc.")
+		m_animManager = std::make_unique<AnimationManager>();
 	m_animManager->addAnim(AnimType::MOVE, animMove);
 	m_animManager->addAnim(AnimType::DIE, animDie);
 	m_animManager->useAnim(AnimType::MOVE);
@@ -98,7 +96,7 @@ Cell::Cell(std::shared_ptr<RenderWindow> window, std::unique_ptr<CellData> data)
 Cell::~Cell()
 {
 	INFO("destructor")
-	m_data.reset(nullptr);
+		m_data.reset(nullptr);
 
 	m_collisionPoint.reset(nullptr);
 	m_posBackPoint.reset(nullptr);
@@ -108,7 +106,7 @@ Cell::~Cell()
 	m_rect.reset(nullptr);
 }
 
-void Cell::event()
+void Cell::processEvent()
 {
 #define PRESS(param) Keyboard::isKeyPressed(Keyboard::param)
 	if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)
@@ -121,9 +119,8 @@ void Cell::event()
 		m_dir = Direction::DOWN;
 }
 
-RCellData Cell::logic(float time)
+int Cell::processLogic(float time)
 {
-	RCellData rdata;
 
 #define POSFG(param) m_posFrontPoint->param
 	//==========HEAD==========
@@ -232,10 +229,11 @@ RCellData Cell::logic(float time)
 				POSG(y) + ((m_newPos.y - POSFG(y)) * SPEED * time * k)
 			));
 
-			rdata.deltaX = (m_newPos.x - POSG(x));
-			rdata.deltaY = (m_newPos.y - POSG(y));
+			m_deltaX = (m_newPos.x - POSG(x));
+			m_deltaY = (m_newPos.y - POSG(y));
 
-			if ((rdata.deltaX <= 0 and rdata.deltaY >= 0) or (rdata.deltaX >= 0 and rdata.deltaY >= 0))
+			if ((m_newPos.x - POSG(x) <= 0 and m_newPos.y - POSG(y) >= 0) or
+				(m_newPos.x - POSG(x) >= 0 and m_newPos.y - POSG(y) >= 0))
 			{
 				m_rect->setRotation(
 					(-std::atan((m_newPos.x - POSG(x)) / (m_newPos.y - POSG(y))) + PI) * 180 / PI
@@ -248,10 +246,9 @@ RCellData Cell::logic(float time)
 				);
 			}
 
-			rdata.rotation = m_rect->getRotation();
+			m_rotation = m_rect->getRotation();
 
 			//temp
-			//m_sprite->setRotation(m_rect->getRotation());
 			m_animManager->getAnimation(AnimType::MOVE)->setRotation(m_rect->getRotation());
 		}
 	}
@@ -265,21 +262,19 @@ RCellData Cell::logic(float time)
 		);
 
 	m_animManager->getAnimation(AnimType::MOVE)->setPosition(m_rect->getPosition());
+	
 	if (m_animManager->processLogic(time) == 1)
 	{
-		rdata.wallCollision = true;
+		m_wallCollision = true;
 	}
 
-	return rdata;
+	return 0;
 }
 
-void Cell::draw()
+void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	//sprite
-	m_window->draw(*m_animManager);
-	//hit boxes
-	if (SHB)
-		m_window->draw(*m_rect);
+	target.draw(*m_animManager);
+	if (SHB)target.draw(*m_rect);
 }
 
 Vector2f Cell::getCollisionPoint()
@@ -287,22 +282,22 @@ Vector2f Cell::getCollisionPoint()
 	return *m_collisionPoint;
 }
 
-Vector2f Cell::getSize()
+Vector2f Cell::getSize() const
 {
 	return m_data->size;
 }
 
-Vector2f Cell::getBackPos()
+Vector2f Cell::getBackPos() const
 {
 	return *m_posBackPoint;
 }
 
-Vector2f Cell::getCenterPos()
+Vector2f Cell::getCenterPos() const
 {
 	return m_rect->getPosition();
 }
 
-Vector2f Cell::getFrontPos()
+Vector2f Cell::getFrontPos() const
 {
 	return *m_posFrontPoint;
 }
@@ -320,14 +315,29 @@ void Cell::setRotation(float rotation)
 	m_rect->setRotation(rotation);
 }
 
-Direction Cell::getDirection()
+Direction Cell::getDirection() const
 {
 	return m_dir;
 }
 
-float Cell::getRotation()
+float Cell::getRotation() const
 {
 	return m_rect->getRotation();
+}
+
+float Cell::getDeltaX() const
+{
+	return m_deltaX;
+}
+
+float Cell::getDeltaY() const
+{
+	return m_deltaY;
+}
+
+bool Cell::getWallCollision() const
+{
+	return m_wallCollision;
 }
 
 void Cell::setPos(Vector2f newPos)

@@ -29,9 +29,9 @@ void GameOverScene::processEvent()
 	m_text->processEvent();
 }
 
-RSceneData GameOverScene::processLogic(float)
+int GameOverScene::processLogic(float)
 {
-	return RSceneData();
+	return 0;
 }
 
 void GameOverScene::processDraw()

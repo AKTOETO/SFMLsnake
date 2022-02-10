@@ -3,7 +3,6 @@
 
 #include "BaseScene.h"
 #include "../objects/TextObject.h"
-#include "../../Support.h"
 
 class GameOverScene : public BaseScene
 {
@@ -14,11 +13,11 @@ public:
 	GameOverScene(std::shared_ptr<RenderWindow>);
 	~GameOverScene() override;
 
-	void activate() override;
-	void deactivate() override;
+	virtual void activate() override;
+	virtual void deactivate() override;
 
-	void processEvent() override;
-	RSceneData processLogic(float) override;
-	void processDraw() override;
+	virtual void processEvent() override;
+	virtual int processLogic(float) override;
+	virtual void processDraw() override;
 };
 

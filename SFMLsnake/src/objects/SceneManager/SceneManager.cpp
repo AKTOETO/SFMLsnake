@@ -4,7 +4,7 @@ SceneManager::SceneManager(std::shared_ptr<RenderWindow> window)
 	:m_window(window)
 {
 	INFO("sc manager constructor")
-	m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::StartScene, nullptr);
+	m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::Start, nullptr);
 }
 
 SceneManager::~SceneManager()
@@ -32,17 +32,17 @@ void SceneManager::processLogic(float time)
 {
 	if (m_cur_scene.second != nullptr)
 	{
-		RSceneData rscene = m_cur_scene.second->processLogic(time);
-		if (rscene.need_to_switch == true)
+		m_cur_scene.second->processLogic(time);
+		if (m_cur_scene.second->getNeedToSwitch() == true)
 		{
 			switch (m_cur_scene.first)
 			{
 				INFO("switch scene")
-			case Scenes::StartScene:
-				setScene(Scenes::GameScene, std::make_unique<GameScene>(m_window));
+			case Scenes::Start:
+				setScene(Scenes::Game, std::make_unique<GameScene>(m_window));
 				break;
 
-			case Scenes::GameScene:
+			case Scenes::Game:
 				setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_window));
 				break;
 
@@ -50,6 +50,10 @@ void SceneManager::processLogic(float time)
 				break;
 			}
 		}
+	}
+	else
+	{
+		ERROR("the scene does not exist")
 	}
 }
 

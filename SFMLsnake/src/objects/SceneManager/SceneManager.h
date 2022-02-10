@@ -2,14 +2,13 @@
 #include <map>
 #include <memory>
 
-#include "../../../Support.h"
 #include "../../scenes/GameScene.h"
 #include "../../scenes/GameOverScene.h"
 
 enum class Scenes
 {
-	StartScene = 0,
-	GameScene,
+	Start = 0,
+	Game,
 	GameOver,
 };
 

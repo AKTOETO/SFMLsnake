@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects\AnimationManager\AnimationManager.h" />
+    <ClInclude Include="src\objects\BaseObject.h" />
     <ClInclude Include="src\objects\Picture\AnimatedPicture.h" />
     <ClInclude Include="src\scenes\GameOverScene.h" />
     <ClInclude Include="src\objects\Picture\Picture.h" />
