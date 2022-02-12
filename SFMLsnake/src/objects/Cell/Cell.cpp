@@ -3,12 +3,12 @@
 Cell::Cell(std::unique_ptr<CellData> data)
 	:m_rect(new StaticPicture)
 {
-	INFO("\tcell constructor")
+	//INFO("\tcell constructor")
 
 		m_data = move(data);
 
 	// ===== RECT DATA & RECT OBJECT =====
-	INFO("\trect data")
+	//INFO("\trect data")
 		std::unique_ptr<ShapeData> shData(new ShapeData);
 	shData->size = m_data->size;
 	shData->position = m_data->pos;
@@ -19,13 +19,13 @@ Cell::Cell(std::unique_ptr<CellData> data)
 	// =====================
 
 	//===== LOAD TEXTURE =====
-	INFO("\tload texture")
+	//INFO("\tload texture")
 		std::shared_ptr<Texture> texture(new Texture);
 	loadTexture(texture, "snake.png");
 	// ===================
 
 	// ===== MOVE ANIMATION DATA =====
-	INFO("\tmove anim data")
+	//INFO("\tmove anim data")
 		std::unique_ptr<AnimationData> animDataMove(new AnimationData);
 	animDataMove->offset = TextureOffset::RIGHT;
 	animDataMove->numberOfFrame = 4;
@@ -38,7 +38,7 @@ Cell::Cell(std::unique_ptr<CellData> data)
 	// ==================
 
 	// ===== DIE ANIMATION DATA =====
-	INFO("\tdie anim data")
+	//INFO("\tdie anim data")
 		std::unique_ptr<AnimationData> animDataDie(new AnimationData);
 	animDataDie->offset = TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
@@ -77,16 +77,16 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 
 	// ===== ANIMATIONS =====
-	INFO("\tcreate anim")
+	//INFO("\tcreate anim")
 		std::unique_ptr<AnimatedPicture> animMove(new AnimatedPicture(animDataMove));
 	std::unique_ptr<AnimatedPicture> animDie(new AnimatedPicture(animDataDie));
-	INFO("\tanim created")
+	//INFO("\tanim created")
 		// ===================
 
 
 		// ===== ANIM MANAGER DATA =====
-		INFO("\tanim manager add sc. & use sc.")
-		m_animManager = std::make_unique<AnimationManager>();
+		//INFO("\tanim manager add sc. & use sc.")
+	m_animManager = std::make_unique<AnimationManager>();
 	m_animManager->addAnim(AnimType::MOVE, animMove);
 	m_animManager->addAnim(AnimType::DIE, animDie);
 	m_animManager->useAnim(AnimType::MOVE);
@@ -95,8 +95,8 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 Cell::~Cell()
 {
-	INFO("destructor")
-		m_data.reset(nullptr);
+	//INFO("destructor")
+	m_data.reset(nullptr);
 
 	m_collisionPoint.reset(nullptr);
 	m_posBackPoint.reset(nullptr);
@@ -138,7 +138,7 @@ int Cell::processLogic(float time)
 		{
 			m_dir = Direction::STOP;
 			m_animManager->useAnim(AnimType::DIE);
-			INFO("wall collision");
+			//INFO("wall collision");
 		}
 
 

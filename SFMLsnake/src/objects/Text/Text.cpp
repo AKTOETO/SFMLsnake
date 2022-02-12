@@ -1,4 +1,4 @@
-#include "TextObject.h"
+#include "Text.h"
 
 TextObject::TextObject(std::unique_ptr<TextData> data)
 	:m_font(new Font), m_text(new Text)

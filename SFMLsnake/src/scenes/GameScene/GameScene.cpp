@@ -3,7 +3,7 @@
 GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	:BaseScene(window)
 {
-	INFO("game constructor")
+	INFO("game scene const")
 	//snake
 	m_snake = std::make_unique<Snake>(m_window);
 
@@ -26,56 +26,21 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 
 	m_text = std::make_unique<TextObject>(std::make_unique<TextData>(tData));
 
-	m_objects.push_back(m_snake);
+	m_objectList.push_back(m_snake);
+	m_objectList.push_back(m_food);
+	m_objectList.push_back(m_text);
 }
 
-GameScene::~GameScene()
+int GameScene::processLogic(float time) 
 {
-	INFO("game destructor")
-	deactivate();
-}
-
-void GameScene::activate()
-{
-}
-
-void GameScene::deactivate()
-{
-	m_snake.reset();
-	m_food.reset();
-	m_text.reset();
-	for (auto n : m_objects)
-	{
-		n.reset();
-	}
-}
-
-void GameScene::processEvent()
-{
-	m_snake->processEvent();
-	m_food->processEvent();
-	m_text->processEvent();
-}
-
-int GameScene::processLogic(float time)
-{
-	m_snake->processLogic(time);
+	BaseScene::processLogic(time);
 	if (m_snake->getAlive() == false)
 	{
 		need_to_switch = true;
 	}
-	m_food->processLogic(time);
-	m_text->processLogic(time);
 	m_text->setString("score: " + std::to_string(m_snake->getSize()));
 	eatingFood();
 	return 0;
-}
-
-void GameScene::processDraw()
-{
-	m_window->draw(*m_text);
-	m_window->draw(*m_food);
-	m_window->draw(*m_snake);
 }
 
 void GameScene::eatingFood()

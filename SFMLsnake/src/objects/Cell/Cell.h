@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "BaseObject.h"
-#include "AnimationManager/AnimationManager.h"
+#include "../BaseObject.h"
+#include "../../managers/AnimationManager/AnimationManager.h"
 
 using namespace sf;
 

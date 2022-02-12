@@ -2,7 +2,7 @@
 #include <memory>
 #include <iostream>
 
-#include "BaseObject.h"
+#include "../BaseObject.h"
 
 struct TextData
 {
@@ -13,6 +13,7 @@ struct TextData
 	Uint32 styles = sf::Text::Bold;
 	Vector2f pos = { 10, 10 };
 	bool originInCeneter = false;
+
 };
 
 class TextObject : public BaseObject

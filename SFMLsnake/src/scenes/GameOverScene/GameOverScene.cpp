@@ -10,31 +10,6 @@ GameOverScene::GameOverScene(std::shared_ptr<RenderWindow> window)
 	tData.color = Color::Yellow;
 	tData.text = "game over";
 	m_text = std::make_unique<TextObject>(std::make_unique<TextData>(tData));
-}
 
-GameOverScene::~GameOverScene()
-{
-}
-
-void GameOverScene::activate()
-{
-}
-
-void GameOverScene::deactivate()
-{
-}
-
-void GameOverScene::processEvent()
-{
-	m_text->processEvent();
-}
-
-int GameOverScene::processLogic(float)
-{
-	return 0;
-}
-
-void GameOverScene::processDraw()
-{
-	m_window->draw(*m_text);
+	m_objectList.push_back(m_text);
 }

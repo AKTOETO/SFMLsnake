@@ -18,34 +18,37 @@
     <ClCompile Include="SFMLsnake.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameScene.cpp">
+    <ClCompile Include="src\scenes\GameScene\GameScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Snake.cpp">
+    <ClCompile Include="src\objects\Snake\Snake.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Food.cpp">
+    <ClCompile Include="src\objects\Food\Food.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Cell.cpp">
+    <ClCompile Include="src\objects\Cell\Cell.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\TextObject.cpp">
+    <ClCompile Include="src\objects\Text\Text.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\SceneManager\SceneManager.cpp">
+    <ClCompile Include="src\managers\SceneManager\SceneManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\Picture\Picture.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\GameOverScene.cpp">
+    <ClCompile Include="src\scenes\GameOverScene\GameOverScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Picture\AnimatedPicture.cpp">
+    <ClCompile Include="src\objects\AnimatedPicture\AnimatedPicture.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\AnimationManager\AnimationManager.cpp">
+    <ClCompile Include="src\managers\AnimationManager\AnimationManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\BaseScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,37 +63,37 @@
     <ClInclude Include="Support.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameScene.h">
+    <ClInclude Include="src\scenes\GameScene\GameScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\BaseScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Snake.h">
+    <ClInclude Include="src\objects\Snake\Snake.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Food.h">
+    <ClInclude Include="src\objects\Food\Food.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Cell.h">
+    <ClInclude Include="src\objects\Cell\Cell.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\TextObject.h">
+    <ClInclude Include="src\objects\Text\Text.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\SceneManager\SceneManager.h">
+    <ClInclude Include="src\managers\SceneManager\SceneManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\Picture\Picture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\GameOverScene.h">
+    <ClInclude Include="src\scenes\GameOverScene\GameOverScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Picture\AnimatedPicture.h">
+    <ClInclude Include="src\objects\AnimatedPicture\AnimatedPicture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\AnimationManager\AnimationManager.h">
+    <ClInclude Include="src\managers\AnimationManager\AnimationManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\BaseObject.h">

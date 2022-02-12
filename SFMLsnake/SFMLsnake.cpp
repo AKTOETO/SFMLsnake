@@ -3,14 +3,16 @@
 #include <vector>
 #include <ctime>
 
-#include "src/objects/SceneManager/SceneManager.h"
+#include "src/managers/SceneManager/SceneManager.h"
 
 int main()
 {
 	INFO("start game")
 
+	// creating a window
 	std::shared_ptr<RenderWindow>window(new RenderWindow(VideoMode(W_WIDTH, W_HEIGHT), "Snake"));
 
+	// creating a scene Manager
 	SceneManager sceneManager(window);
 	sceneManager.setScene(Scenes::Game, std::make_unique<GameScene>(window));
 

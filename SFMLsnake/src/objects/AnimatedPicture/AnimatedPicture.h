@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "Picture.h"
+#include "../Picture/Picture.h"
 
 enum class TextureOffset
 {

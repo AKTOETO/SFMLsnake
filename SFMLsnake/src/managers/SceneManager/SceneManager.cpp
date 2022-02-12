@@ -26,6 +26,10 @@ void SceneManager::processEvent()
 	{
 		m_cur_scene.second->processEvent();
 	}
+	else
+	{
+		ERROR("the scene does not exist")
+	}
 }
 
 void SceneManager::processLogic(float time)
@@ -42,7 +46,8 @@ void SceneManager::processLogic(float time)
 				setScene(Scenes::Game, std::make_unique<GameScene>(m_window));
 				break;
 
-			case Scenes::Game:
+			case Scenes::Game:				
+				//setScene(Scenes::Start, std::make_unique<GameScene>(m_window));
 				setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_window));
 				break;
 

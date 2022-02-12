@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <memory>
-#include "../Picture/AnimatedPicture.h"
+#include "../../objects/AnimatedPicture/AnimatedPicture.h"
 
 enum class AnimType
 {

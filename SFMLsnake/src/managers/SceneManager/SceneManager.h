@@ -2,8 +2,8 @@
 #include <map>
 #include <memory>
 
-#include "../../scenes/GameScene.h"
-#include "../../scenes/GameOverScene.h"
+#include "../../scenes/GameScene/GameScene.h"
+#include "../../scenes/GameOverScene/GameOverScene.h"
 
 enum class Scenes
 {

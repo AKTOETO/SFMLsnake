@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Cell.h"
+#include "../Cell/Cell.h"
 
 class Snake : public BaseObject
 {

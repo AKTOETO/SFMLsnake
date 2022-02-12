@@ -1,8 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include "AnimationManager/AnimationManager.h"
-#include "BaseObject.h"
+#include "../../managers/AnimationManager/AnimationManager.h"
+#include "../BaseObject.h"
 
 using namespace sf;
 
