@@ -18,13 +18,13 @@ GameScene::GameScene(std::shared_ptr<RenderWindow> window)
 	m_food = std::make_unique<Food>(window, std::make_unique<FoodData>(fData));
 
 	//text
-	TextData tData;
+	Engine::TextData tData;
 	tData.pos = { 10, 0 };
 	tData.size = 50;
 	tData.originInCeneter = false;
 	tData.text = "score:";
 
-	m_text = std::make_unique<TextObject>(std::make_unique<TextData>(tData));
+	m_text = std::make_unique<Engine::TextObject>(std::make_unique<Engine::TextData>(tData));
 
 	m_objectList.push_back(m_snake);
 	m_objectList.push_back(m_food);
@@ -45,7 +45,8 @@ int GameScene::processLogic(float time)
 
 void GameScene::eatingFood()
 {
-	if (SupportFunc::intersectRectShapes((*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
+	if (Engine::SupportFunc::intersectRectShapes(
+		(*m_snake)[0]->getRectangleShape(), m_food->getRectangleShape()))
 	{
 		INFO("eat food")
 #define CELL(param) (*m_snake)[m_snake->getSize() - param]

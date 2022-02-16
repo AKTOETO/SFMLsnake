@@ -1,7 +1,7 @@
 #include "Cell.h"
 
 Cell::Cell(std::unique_ptr<CellData> data)
-	:m_rect(new StaticPicture)
+	:m_rect(new Engine::StaticPicture)
 {
 	//INFO("\tcell constructor")
 
@@ -9,29 +9,29 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== RECT DATA & RECT OBJECT =====
 	//INFO("\trect data")
-		std::unique_ptr<ShapeData> shData(new ShapeData);
+		std::unique_ptr<Engine::ShapeData> shData(new Engine::ShapeData);
 	shData->size = m_data->size;
 	shData->position = m_data->pos;
 	shData->color = m_data->color;
 	shData->angle = m_data->rotation;
 
-	m_rect->addData<ShapeData>(shData);
+	m_rect->addData<Engine::ShapeData>(shData);
 	// =====================
 
 	//===== LOAD TEXTURE =====
 	//INFO("\tload texture")
-		std::shared_ptr<Texture> texture(new Texture);
-	loadTexture(texture, "snake.png");
+	std::shared_ptr<Texture> texture(new Texture);
+	Engine::SupportFunc::loadTexture(texture, "snake.png");
 	// ===================
 
 	// ===== MOVE ANIMATION DATA =====
 	//INFO("\tmove anim data")
-		std::unique_ptr<AnimationData> animDataMove(new AnimationData);
-	animDataMove->offset = TextureOffset::RIGHT;
+		std::unique_ptr<Engine::AnimationData> animDataMove(new Engine::AnimationData);
+	animDataMove->offset = Engine::TextureOffset::RIGHT;
 	animDataMove->numberOfFrame = 4;
 	animDataMove->data.position = { m_rect->getPosition() };
 	animDataMove->data.texture = texture;
-	animDataMove->data.type = SpriteType::NONE;
+	animDataMove->data.type = Engine::SpriteType::NONE;
 	animDataMove->data.size = Vector2f(1, 1);
 
 	//animDataMove->animSpeed = 0.0005;
@@ -39,13 +39,13 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== DIE ANIMATION DATA =====
 	//INFO("\tdie anim data")
-		std::unique_ptr<AnimationData> animDataDie(new AnimationData);
-	animDataDie->offset = TextureOffset::RIGHT;
+		std::unique_ptr<Engine::AnimationData> animDataDie(new Engine::AnimationData);
+	animDataDie->offset = Engine::TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
 	animDataDie->data.position = { m_rect->getPosition() };
-	animDataDie->type = AnimationType::ONCE;
+	animDataDie->type = Engine::AnimationType::ONCE;
 	animDataDie->data.texture = texture;
-	animDataDie->data.type = SpriteType::NONE;
+	animDataDie->data.type = Engine::SpriteType::NONE;
 	animDataDie->data.size = Vector2f(1, 1);
 
 	//animDataDie->animSpeed = 0.0005;
@@ -78,18 +78,18 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== ANIMATIONS =====
 	//INFO("\tcreate anim")
-		std::unique_ptr<AnimatedPicture> animMove(new AnimatedPicture(animDataMove));
-	std::unique_ptr<AnimatedPicture> animDie(new AnimatedPicture(animDataDie));
+	std::unique_ptr<Engine::AnimatedPicture> animMove(new Engine::AnimatedPicture(animDataMove));
+	std::unique_ptr<Engine::AnimatedPicture> animDie(new Engine::AnimatedPicture(animDataDie));
 	//INFO("\tanim created")
 		// ===================
 
 
 		// ===== ANIM MANAGER DATA =====
 		//INFO("\tanim manager add sc. & use sc.")
-	m_animManager = std::make_unique<AnimationManager>();
-	m_animManager->addAnim(AnimType::MOVE, animMove);
-	m_animManager->addAnim(AnimType::DIE, animDie);
-	m_animManager->useAnim(AnimType::MOVE);
+	m_animManager = std::make_unique<Engine::AnimationManager>();
+	m_animManager->addAnim(Engine::AnimType::MOVE, animMove);
+	m_animManager->addAnim(Engine::AnimType::DIE, animDie);
+	m_animManager->useAnim(Engine::AnimType::MOVE);
 	// ===================
 }
 
@@ -109,14 +109,14 @@ Cell::~Cell()
 void Cell::processEvent()
 {
 #define PRESS(param) Keyboard::isKeyPressed(Keyboard::param)
-	if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Direction::RIGHT)
-		m_dir = Direction::LEFT;
-	else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Direction::DOWN)
-		m_dir = Direction::UP;
-	else if (m_data->head == true && (PRESS(D) || PRESS(Right)) && m_dir != Direction::LEFT)
-		m_dir = Direction::RIGHT;
-	else if (m_data->head == true && (PRESS(S) || PRESS(Down)) && m_dir != Direction::UP)
-		m_dir = Direction::DOWN;
+	if (m_data->head == true && (PRESS(A) || PRESS(Left)) && m_dir != Engine::Direction::RIGHT)
+		m_dir = Engine::Direction::LEFT;
+	else if (m_data->head == true && (PRESS(W) || PRESS(Up)) && m_dir != Engine::Direction::DOWN)
+		m_dir = Engine::Direction::UP;
+	else if (m_data->head == true && (PRESS(D) || PRESS(Right)) && m_dir != Engine::Direction::LEFT)
+		m_dir = Engine::Direction::RIGHT;
+	else if (m_data->head == true && (PRESS(S) || PRESS(Down)) && m_dir != Engine::Direction::UP)
+		m_dir = Engine::Direction::DOWN;
 }
 
 int Cell::processLogic(float time)
@@ -136,14 +136,13 @@ int Cell::processLogic(float time)
 			POSG(y) - BOUND(y) / 2 < 0
 			)
 		{
-			m_dir = Direction::STOP;
-			m_animManager->useAnim(AnimType::DIE);
+			m_dir = Engine::Direction::STOP;
+			m_animManager->useAnim(Engine::AnimType::DIE);
 			//INFO("wall collision");
 		}
 
-
 		//head mooving
-		if (m_dir == Direction::LEFT)
+		if (m_dir == Engine::Direction::LEFT)
 		{
 			if (POSG(x) - BOUND(x) / 2 > 0)
 			{
@@ -154,10 +153,10 @@ int Cell::processLogic(float time)
 				m_rect->setPosition({ BOUND(x) / 2, POSG(y) });
 			}
 
-			m_animManager->getAnimation(AnimType::MOVE)->setRotation(270);
+			m_animManager->getAnimation(Engine::AnimType::MOVE)->setRotation(270);
 			m_rect->setRotation(270);
 		}
-		else if (m_dir == Direction::RIGHT)
+		else if (m_dir == Engine::Direction::RIGHT)
 		{
 			if (POSG(x) + BOUND(x) / 2 < W_WIDTH)
 			{
@@ -168,10 +167,10 @@ int Cell::processLogic(float time)
 				m_rect->setPosition({ W_WIDTH - BOUND(x) / 2, POSG(y) });
 			}
 
-			m_animManager->getAnimation(AnimType::MOVE)->setRotation(90);
+			m_animManager->getAnimation(Engine::AnimType::MOVE)->setRotation(90);
 			m_rect->setRotation(90);
 		}
-		else if (m_dir == Direction::UP)
+		else if (m_dir == Engine::Direction::UP)
 		{
 			if (POSG(y) - BOUND(x) / 2 > 0)
 			{
@@ -182,10 +181,10 @@ int Cell::processLogic(float time)
 				m_rect->setPosition({ POSG(x), BOUND(x) / 2 });
 			}
 
-			m_animManager->getAnimation(AnimType::MOVE)->setRotation(0);
+			m_animManager->getAnimation(Engine::AnimType::MOVE)->setRotation(0);
 			m_rect->setRotation(0);
 		}
-		else if (m_dir == Direction::DOWN)
+		else if (m_dir == Engine::Direction::DOWN)
 		{
 			if (POSG(y) + BOUND(x) / 2 < W_HEIGHT)
 			{
@@ -196,23 +195,23 @@ int Cell::processLogic(float time)
 				m_rect->setPosition({ POSG(x), W_HEIGHT - BOUND(x) / 2 });
 			}
 
-			m_animManager->getAnimation(AnimType::MOVE)->setRotation(180);
+			m_animManager->getAnimation(Engine::AnimType::MOVE)->setRotation(180);
 			m_rect->setRotation(180);
 		}
 
 		//collision rectangle logic
 		switch (m_dir)
 		{
-		case Direction::UP:
+		case Engine::Direction::UP:
 			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x), POSG(y) - BOUND(y) / 2));
 			break;
-		case Direction::DOWN:
+		case Engine::Direction::DOWN:
 			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x), POSG(y) + BOUND(y) / 2));
 			break;
-		case Direction::LEFT:
+		case Engine::Direction::LEFT:
 			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x) - BOUND(y) / 2, POSG(y)));
 			break;
-		case Direction::RIGHT:
+		case Engine::Direction::RIGHT:
 			m_collisionPoint = std::make_unique<Vector2f>(Vector2f(POSG(x) + BOUND(y) / 2, POSG(y)));
 			break;
 		}
@@ -220,7 +219,7 @@ int Cell::processLogic(float time)
 	//==========BODY==========
 	else
 	{
-		if (m_dir != Direction::STOP)
+		if (m_dir != Engine::Direction::STOP)
 		{
 			float k = 0.06; // smoothness of movement //0.1
 
@@ -249,7 +248,7 @@ int Cell::processLogic(float time)
 			m_rotation = m_rect->getRotation();
 
 			//temp
-			m_animManager->getAnimation(AnimType::MOVE)->setRotation(m_rect->getRotation());
+			m_animManager->getAnimation(Engine::AnimType::MOVE)->setRotation(m_rect->getRotation());
 		}
 	}
 	m_posBackPoint = std::make_unique<Vector2f>(
@@ -261,7 +260,7 @@ int Cell::processLogic(float time)
 		-cos(-m_rect->getRotation() * PI / 180) * (m_data->size.y / 2 - 10) + POSG(y)
 		);
 
-	m_animManager->getAnimation(AnimType::MOVE)->setPosition(m_rect->getPosition());
+	m_animManager->getAnimation(Engine::AnimType::MOVE)->setPosition(m_rect->getPosition());
 	
 	if (m_animManager->processLogic(time) == 1)
 	{
@@ -271,7 +270,7 @@ int Cell::processLogic(float time)
 	return 0;
 }
 
-void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Cell::draw(RenderTarget& target, RenderStates states) const
 {
 	target.draw(*m_animManager);
 	if (SHB)target.draw(*m_rect);
@@ -302,11 +301,11 @@ Vector2f Cell::getFrontPos() const
 	return *m_posFrontPoint;
 }
 
-void Cell::setDirection(Direction dir)
+void Cell::setDirection(Engine::Direction dir)
 {
 	//body die
-	if (m_dir != Direction::STOP && dir == Direction::STOP)
-		m_animManager->useAnim(AnimType::DIE);
+	if (m_dir != Engine::Direction::STOP && dir == Engine::Direction::STOP)
+		m_animManager->useAnim(Engine::AnimType::DIE);
 	m_dir = dir;
 }
 
@@ -315,7 +314,7 @@ void Cell::setRotation(float rotation)
 	m_rect->setRotation(rotation);
 }
 
-Direction Cell::getDirection() const
+Engine::Direction Cell::getDirection() const
 {
 	return m_dir;
 }

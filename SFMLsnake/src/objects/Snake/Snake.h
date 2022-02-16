@@ -4,7 +4,7 @@
 
 #include "../Cell/Cell.h"
 
-class Snake : public BaseObject
+class Snake : public Engine::BaseObject
 {
 private:
 	std::vector<std::unique_ptr<Cell>> m_units;
@@ -16,9 +16,9 @@ public:
 
 	std::unique_ptr<Cell>& operator[](int);
 
-	virtual void processEvent() override;
-	virtual int processLogic(float time) override;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const override;
+	void processEvent() override;
+	int processLogic(float time) override;
+	void draw(RenderTarget& target, RenderStates states)const override;
 
 	void addUnit(Vector2f, float);
 

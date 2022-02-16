@@ -55,7 +55,7 @@ int Snake::processLogic(float time)
 			m_units[i]->setPos(m_units[i - 1]->getBackPos());
 
 		if (
-			SupportFunc::intersectRectShapePoint(
+			Engine::SupportFunc::intersectRectShapePoint(
 				m_units[0]->getCollisionPoint(), m_units[i]->getRectangleShape()
 			)
 			&& i != 1 && i != 2
@@ -80,7 +80,7 @@ int Snake::processLogic(float time)
 	return 0;
 }
 
-void Snake::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void Snake::draw(RenderTarget& target, RenderStates states) const
 {
 	for (int i = m_units.size() - 1; i >= 0; i--)
 	{

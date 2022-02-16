@@ -4,10 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "../BaseObject.h"
-#include "../../managers/AnimationManager/AnimationManager.h"
-
-using namespace sf;
+#include "../../Engine/baseScene/BaseScene.h"
+#include "../../Engine/managers/AnimationManager/AnimationManager.h"
 
 struct CellData
 {
@@ -18,17 +16,17 @@ struct CellData
 	float rotation = 0;
 };
 
-class Cell : public BaseObject
+class Cell : public Engine::BaseObject
 {
 private:
-	Direction m_dir;
+	Engine::Direction m_dir;
 	Vector2f m_newPos;
 
 	std::unique_ptr<CellData> m_data;
 
 	std::unique_ptr<Vector2f> m_collisionPoint, m_posBackPoint, m_posFrontPoint;
-	std::unique_ptr<StaticPicture> m_rect;
-	std::unique_ptr<AnimationManager> m_animManager;
+	std::unique_ptr<Engine::StaticPicture> m_rect;
+	std::unique_ptr<Engine::AnimationManager> m_animManager;
 
 	bool m_wallCollision;
 	float m_rotation = 0;
@@ -39,13 +37,13 @@ public:
 	Cell(std::unique_ptr<CellData>);
 	~Cell();
 
-	virtual void processEvent() override;
-	virtual int processLogic(float time) override;
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	void processEvent() override;
+	int processLogic(float time) override;
+	void draw(RenderTarget& target, RenderStates states) const override;
 
 	void setPos(Vector2f);
 	void setSize(Vector2f);
-	void setDirection(Direction);
+	void setDirection(Engine::Direction);
 	void setRotation(float);
 
 	Vector2f getCollisionPoint();
@@ -54,7 +52,7 @@ public:
 	Vector2f getBackPos() const;
 	Vector2f getCenterPos() const;
 	Vector2f getFrontPos() const;
-	Direction getDirection() const;
+	Engine::Direction getDirection() const;
 	float getRotation() const;
 	float getDeltaX() const;
 	float getDeltaY() const;

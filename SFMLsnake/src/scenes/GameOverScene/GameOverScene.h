@@ -1,13 +1,14 @@
 #pragma once
 #include <memory>
 
-#include "../BaseScene.h"
-#include "../../objects/Text/Text.h"
+#include "../../Engine/baseScene/BaseScene.h"
+#include "../../Engine/objects/Text/Text.h"
 
-class GameOverScene : public BaseScene
+
+class GameOverScene : public Engine::BaseScene
 {
 private:
-	std::shared_ptr<TextObject> m_text;
+	std::shared_ptr<Engine::TextObject> m_text;
 
 public:
 	GameOverScene(std::shared_ptr<RenderWindow>);
