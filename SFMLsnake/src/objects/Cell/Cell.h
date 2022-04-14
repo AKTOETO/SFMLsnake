@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-#include "../../Engine/baseScene/BaseScene.h"
+#include "../../Engine/objects/BaseObject.h"
 #include "../../Engine/managers/AnimationManager/AnimationManager.h"
 
 struct CellData
@@ -34,7 +34,7 @@ private:
 	float m_deltaY = 0;
 
 public:
-	Cell(std::unique_ptr<CellData>);
+	Cell(std::shared_ptr<Engine::Context>, std::unique_ptr<CellData>);
 	~Cell();
 
 	void processEvent() override;

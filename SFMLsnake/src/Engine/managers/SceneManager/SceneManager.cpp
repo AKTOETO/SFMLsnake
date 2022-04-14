@@ -45,12 +45,12 @@ namespace Engine
 				{
 					INFO("switch scene")
 				case Scenes::Start:
-					setScene(Scenes::Game, std::make_unique<GameScene>(m_context->m_window));
+					setScene(Scenes::Game, std::make_unique<GameScene>(m_context));
 					break;
 
 				case Scenes::Game:				
 					//setScene(Scenes::Start, std::make_unique<GameScene>(m_window));
-					setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_context->m_window));
+					setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_context));
 					break;
 
 				default:

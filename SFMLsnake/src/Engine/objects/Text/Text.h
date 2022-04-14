@@ -26,7 +26,7 @@ namespace Engine
 		std::unique_ptr<TextData> m_data;
 
 	public:
-		TextObject(std::unique_ptr<TextData> data);
+		TextObject(std::shared_ptr<Engine::Context>, std::unique_ptr<TextData> data);
 		~TextObject();
 
 		void processEvent() override;

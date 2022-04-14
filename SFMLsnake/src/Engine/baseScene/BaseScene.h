@@ -4,17 +4,18 @@
 #include <memory>
 #include "../objects/BaseObject.h"
 
+
 namespace Engine
 {
 	class BaseScene
 	{
 	protected:
-		std::shared_ptr<RenderWindow> m_window;
+		std::shared_ptr<Context> m_context;
 		std::list<std::shared_ptr<BaseObject>> m_objectList;
 		bool need_to_switch = false;
 
 	public:
-		BaseScene(std::shared_ptr<RenderWindow> window);
+		BaseScene(std::shared_ptr<Context>);
 		virtual ~BaseScene();
 
 		virtual void activate();

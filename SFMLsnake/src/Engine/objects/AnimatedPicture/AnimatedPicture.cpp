@@ -7,17 +7,17 @@ namespace Engine
 		INFO("\t\tPicture constructor")
 	}
 
-	AnimatedPicture::AnimatedPicture(std::unique_ptr<AnimationData>& data)
-		: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
+	AnimatedPicture::AnimatedPicture(std::shared_ptr<Engine::Context> context, std::unique_ptr<AnimationData>& data)
+		:BaseObject(context), m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
 	{
 		INFO("\t\tmoving data")
-			m_data = move(data);
+		m_data = move(data);
 		m_frames.resize(m_data->numberOfFrame);
 
 		for (int i = 0; i < m_data->numberOfFrame; i++)
 		{
 			INFO("\t\tcreating " + std::to_string(i) + " frame")
-				std::unique_ptr<SpriteData> sData(new SpriteData(m_data->data));
+			std::unique_ptr<SpriteData> sData(new SpriteData(m_data->data));
 
 #define DWIDTH sData->borders.width
 #define DHEIGHT sData->borders.height
@@ -47,7 +47,7 @@ namespace Engine
 				break;
 			}
 			m_frames.erase(m_frames.begin());
-			m_frames.emplace_back(sData);
+			m_frames.emplace_back(m_context, sData);
 			INFO("added new frame")
 		}
 		INFO("frame vec. size:" + std::to_string(m_frames.size()));

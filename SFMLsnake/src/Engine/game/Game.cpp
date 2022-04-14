@@ -3,7 +3,7 @@
 namespace Engine
 {
 	Game::Game()
-		:m_context(std::make_shared<Engine::Context>())
+		:m_context(new Engine::Context)
 	{
 		// creating window object
 		m_context->m_window = std::make_shared<RenderWindow>(VideoMode(W_WIDTH, W_HEIGHT), "Snake");
@@ -12,7 +12,7 @@ namespace Engine
 		m_sceneManager = std::make_unique<SceneManager>(m_context);
 
 		// setting the scene
-		m_sceneManager->setScene(Scenes::Game, std::make_unique<GameScene>(m_context->m_window));
+		m_sceneManager->setScene(Scenes::Game, std::make_unique<GameScene>(m_context));
 	}
 
 	Game::~Game()

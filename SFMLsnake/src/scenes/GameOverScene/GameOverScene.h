@@ -7,10 +7,10 @@
 
 class GameOverScene : public Engine::BaseScene
 {
-private:
+private:	
 	std::shared_ptr<Engine::TextObject> m_text;
 
 public:
-	GameOverScene(std::shared_ptr<RenderWindow>);
+	GameOverScene(std::shared_ptr<Engine::Context>);
 };
 

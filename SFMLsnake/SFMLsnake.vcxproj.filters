@@ -36,7 +36,7 @@
     <ClCompile Include="src\Engine\managers\SceneManager\SceneManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\objects\Picture\Picture.cpp">
+    <ClCompile Include="src\Engine\objects\StaticPicture\StaticPicture.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\scenes\GameOverScene\GameOverScene.cpp">
@@ -87,7 +87,7 @@
     <ClInclude Include="src\Engine\managers\SceneManager\SceneManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\objects\Picture\Picture.h">
+    <ClInclude Include="src\Engine\objects\StaticPicture\StaticPicture.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\scenes\GameOverScene\GameOverScene.h">

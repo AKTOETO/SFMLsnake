@@ -1,8 +1,14 @@
-#include "Picture.h"
+#include "StaticPicture.h"
 namespace Engine
 {
+	template<class T>
+	void StaticPicture::addData(std::unique_ptr<T>& data)
+	{
+		ERROR("incorrect type of data")
+	}
+	
 	template<>
-	void StaticPicture::addData(std::unique_ptr<SpriteData>& data)
+	void StaticPicture::addData<SpriteData>(std::unique_ptr<SpriteData>& data)
 	{
 		INFO("\t\t\tpic add info")
 		m_spriteData = std::move(data);
@@ -53,7 +59,7 @@ namespace Engine
 	}
 
 	template<>
-	void StaticPicture::addData(std::unique_ptr<ShapeData>& data)
+	void StaticPicture::addData<ShapeData>(std::unique_ptr<ShapeData>& data)
 	{
 		INFO("\t\tshape add info")
 			m_shapeData = std::move(data);
@@ -79,14 +85,14 @@ namespace Engine
 		}
 	}
 
-	template<typename T>
-	inline void StaticPicture::addData(std::unique_ptr<T>& data)
-	{
-		ERROR("incorrect type of data")
-	}
-
 	StaticPicture::StaticPicture()
-		:m_shapeData(nullptr),
+	{
+
+	};
+
+	StaticPicture::StaticPicture(std::shared_ptr<Engine::Context> context)
+		:BaseObject(context),
+		m_shapeData(nullptr),
 		m_circle(nullptr),
 		m_rectangle(nullptr),
 		m_sprite(nullptr),
@@ -100,12 +106,12 @@ namespace Engine
 	{
 		INFO("\t\t\tstat. pic. copy const.")
 #define NOTNULLCOPY(mem, obj) if(pic.mem != nullptr) mem = std::make_unique<obj>(*pic.mem);
-			NOTNULLCOPY(m_circle, CircleShape)
-			NOTNULLCOPY(m_rectangle, RectangleShape)
-			NOTNULLCOPY(m_shapeData, ShapeData)
-			NOTNULLCOPY(m_sprite, Sprite)
-			NOTNULLCOPY(m_spriteData, SpriteData)
-			NOTNULLCOPY(m_texture, Texture)
+		NOTNULLCOPY(m_circle, CircleShape)
+		NOTNULLCOPY(m_rectangle, RectangleShape)
+		NOTNULLCOPY(m_shapeData, ShapeData)
+		NOTNULLCOPY(m_sprite, Sprite)
+		NOTNULLCOPY(m_spriteData, SpriteData)
+		NOTNULLCOPY(m_texture, Texture)
 	}
 
 	StaticPicture::StaticPicture(StaticPicture&& pic) noexcept
@@ -125,27 +131,27 @@ namespace Engine
 		if (this != &pic)
 		{
 			NOTNULLCOPY(m_circle, CircleShape)
-				NOTNULLCOPY(m_rectangle, RectangleShape)
-				NOTNULLCOPY(m_shapeData, ShapeData)
-				NOTNULLCOPY(m_sprite, Sprite)
-				NOTNULLCOPY(m_spriteData, SpriteData)
-				NOTNULLCOPY(m_texture, Texture)
+			NOTNULLCOPY(m_rectangle, RectangleShape)
+			NOTNULLCOPY(m_shapeData, ShapeData)
+			NOTNULLCOPY(m_sprite, Sprite)
+			NOTNULLCOPY(m_spriteData, SpriteData)
+			NOTNULLCOPY(m_texture, Texture)
 
-				pic.destruct();
+			pic.destruct();
 		}
 		return *this;
 	}
 
-	StaticPicture::StaticPicture(std::unique_ptr<SpriteData>& data)
-		: m_shapeData(nullptr), m_rectangle(nullptr), m_circle(nullptr)
+	StaticPicture::StaticPicture(std::shared_ptr<Engine::Context> context, std::unique_ptr<SpriteData>& data)
+		:BaseObject(context), m_shapeData(nullptr), m_rectangle(nullptr), m_circle(nullptr)
 	{
 		INFO("\t\t\tstat. pic. const. START")
 			addData<SpriteData>(data);
 		INFO("\t\t\tstat. pic. const. END")
 	}
 
-	StaticPicture::StaticPicture(std::unique_ptr<ShapeData>& data)
-		: m_spriteData(nullptr), m_sprite(nullptr), m_texture(nullptr)
+	StaticPicture::StaticPicture(std::shared_ptr<Engine::Context> context, std::unique_ptr<ShapeData>& data)
+		:BaseObject(context), m_spriteData(nullptr), m_sprite(nullptr), m_texture(nullptr)
 	{
 		addData<ShapeData>(data);
 	}

@@ -11,7 +11,7 @@ private:
 	bool m_isAlive = true;
 
 public:
-	Snake(std::shared_ptr<RenderWindow>);
+	Snake(std::shared_ptr<Engine::Context>);
 	~Snake();
 
 	std::unique_ptr<Cell>& operator[](int);

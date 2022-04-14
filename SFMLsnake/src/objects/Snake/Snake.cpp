@@ -1,22 +1,23 @@
 #include "Snake.h"
 
-Snake::Snake(std::shared_ptr<RenderWindow> window)
+Snake::Snake(std::shared_ptr<Engine::Context> context)
+	:BaseObject(context)
 {
 	INFO("snake constructor")
 	CellData data;
 	data.head = true;
-	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(context, std::make_unique<CellData>(data)));
 
 	data.color = Color::Red;
 	data.size = { 12, 40 };
 	data.head = false;
 	data.pos = Vector2f(m_units[0]->getBackPos().x,
 		m_units[0]->getBackPos().y + m_units[0]->getSize().y / 2);
-	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(context, std::make_unique<CellData>(data)));
 
 	data.pos = Vector2f(m_units[1]->getBackPos().x,
 		m_units[1]->getBackPos().y + m_units[1]->getSize().y / 2);
-	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
+	m_units.push_back(std::make_unique<Cell>(context, std::make_unique<CellData>(data)));
 }
 
 Snake::~Snake()
@@ -98,7 +99,10 @@ void Snake::addUnit(Vector2f pos, float rotation)
 	data.head = false;
 	data.pos = std::move(pos);
 	data.rotation = rotation;
-	m_units.push_back(std::make_unique<Cell>(std::make_unique<CellData>(data)));
+											// в m_context может быть ошибка,
+											// связанная с конструктором BaseObject
+											// возможно он не так вызывается
+	m_units.push_back(std::make_unique<Cell>(m_context, std::make_unique<CellData>(data)));
 }
 
 int Snake::getSize()

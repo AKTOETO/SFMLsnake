@@ -2,8 +2,8 @@
 
 namespace Engine
 {
-	TextObject::TextObject(std::unique_ptr<TextData> data)
-		:m_font(new Font), m_text(new Text)
+	TextObject::TextObject(std::shared_ptr<Engine::Context> context, std::unique_ptr<TextData> data)
+		:BaseObject(context), m_font(new Font), m_text(new Text)
 	{
 		m_data = std::move(data);
 		if (!m_font->loadFromFile("assets/fonts/" + m_data->font))

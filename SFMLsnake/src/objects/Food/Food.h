@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../../Engine/managers/AnimationManager/AnimationManager.h"
-#include "../../Engine/baseScene/BaseScene.h"
+#include "../../Engine/objects/BaseObject.h"
 
 struct FoodData
 {
@@ -20,7 +20,7 @@ private:
 	std::unique_ptr<Engine::AnimationManager> m_animManager;
 
 public:
-	Food(std::shared_ptr<RenderWindow>, std::unique_ptr<FoodData>);
+	Food(std::shared_ptr<Engine::Context>, std::unique_ptr<FoodData>);
 	~Food();
 
 	void processEvent() override;

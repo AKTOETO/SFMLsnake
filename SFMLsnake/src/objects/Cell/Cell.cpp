@@ -1,15 +1,15 @@
 #include "Cell.h"
 
-Cell::Cell(std::unique_ptr<CellData> data)
-	:m_rect(new Engine::StaticPicture)
+Cell::Cell(std::shared_ptr<Engine::Context> context, std::unique_ptr<CellData> data)
+	:BaseObject(context), m_rect(std::make_unique<Engine::StaticPicture>(context))
 {
 	//INFO("\tcell constructor")
 
-		m_data = move(data);
+	m_data = move(data);
 
 	// ===== RECT DATA & RECT OBJECT =====
 	//INFO("\trect data")
-		std::unique_ptr<Engine::ShapeData> shData(new Engine::ShapeData);
+	std::unique_ptr<Engine::ShapeData> shData(new Engine::ShapeData);
 	shData->size = m_data->size;
 	shData->position = m_data->pos;
 	shData->color = m_data->color;
@@ -26,7 +26,7 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== MOVE ANIMATION DATA =====
 	//INFO("\tmove anim data")
-		std::unique_ptr<Engine::AnimationData> animDataMove(new Engine::AnimationData);
+	std::unique_ptr<Engine::AnimationData> animDataMove(new Engine::AnimationData);
 	animDataMove->offset = Engine::TextureOffset::RIGHT;
 	animDataMove->numberOfFrame = 4;
 	animDataMove->data.position = { m_rect->getPosition() };
@@ -39,7 +39,7 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== DIE ANIMATION DATA =====
 	//INFO("\tdie anim data")
-		std::unique_ptr<Engine::AnimationData> animDataDie(new Engine::AnimationData);
+	std::unique_ptr<Engine::AnimationData> animDataDie(new Engine::AnimationData);
 	animDataDie->offset = Engine::TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
 	animDataDie->data.position = { m_rect->getPosition() };
@@ -78,8 +78,8 @@ Cell::Cell(std::unique_ptr<CellData> data)
 
 	// ===== ANIMATIONS =====
 	//INFO("\tcreate anim")
-	std::unique_ptr<Engine::AnimatedPicture> animMove(new Engine::AnimatedPicture(animDataMove));
-	std::unique_ptr<Engine::AnimatedPicture> animDie(new Engine::AnimatedPicture(animDataDie));
+	std::unique_ptr<Engine::AnimatedPicture> animMove(new Engine::AnimatedPicture(m_context, animDataMove));
+	std::unique_ptr<Engine::AnimatedPicture> animDie(new Engine::AnimatedPicture(m_context, animDataDie));
 	//INFO("\tanim created")
 		// ===================
 
@@ -261,7 +261,7 @@ int Cell::processLogic(float time)
 		);
 
 	m_animManager->getAnimation(Engine::AnimType::MOVE)->setPosition(m_rect->getPosition());
-	
+
 	if (m_animManager->processLogic(time) == 1)
 	{
 		m_wallCollision = true;

@@ -152,7 +152,7 @@
     <ClCompile Include="src\Engine\objects\AnimatedPicture\AnimatedPicture.cpp" />
     <ClCompile Include="src\Engine\baseScene\BaseScene.cpp" />
     <ClCompile Include="src\scenes\GameOverScene\GameOverScene.cpp" />
-    <ClCompile Include="src\Engine\objects\Picture\Picture.cpp" />
+    <ClCompile Include="src\Engine\objects\StaticPicture\StaticPicture.cpp" />
     <ClCompile Include="src\Engine\managers\SceneManager\SceneManager.cpp" />
     <ClCompile Include="SFMLsnake.cpp" />
     <ClCompile Include="src\objects\Cell\Cell.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="src\Engine\objects\BaseObject.h" />
     <ClInclude Include="src\Engine\objects\AnimatedPicture\AnimatedPicture.h" />
     <ClInclude Include="src\scenes\GameOverScene\GameOverScene.h" />
-    <ClInclude Include="src\Engine\objects\Picture\Picture.h" />
+    <ClInclude Include="src\Engine\objects\StaticPicture\StaticPicture.h" />
     <ClInclude Include="src\Engine\managers\SceneManager\SceneManager.h" />
     <ClInclude Include="src\objects\Cell\Cell.h" />
     <ClInclude Include="src\objects\Food\Food.h" />

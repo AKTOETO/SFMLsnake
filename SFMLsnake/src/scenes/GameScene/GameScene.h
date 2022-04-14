@@ -15,7 +15,7 @@ private:
 	std::shared_ptr<Engine::TextObject> m_text;
 
 public:
-	GameScene(std::shared_ptr<RenderWindow>);
+	GameScene(std::shared_ptr<Engine::Context>);
 
 	int processLogic(float) override;
 

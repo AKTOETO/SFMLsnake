@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <iostream>
-#include "../../Support.h"
+#include "../BaseObject.h"
 
 namespace Engine
 {
@@ -53,7 +53,7 @@ namespace Engine
 		ShapeType type = ShapeType::RECTANGLE;
 	};
 
-	class StaticPicture : public Drawable
+	class StaticPicture : public Engine::BaseObject
 	{
 	protected:
 		std::unique_ptr<SpriteData> m_spriteData;
@@ -66,18 +66,20 @@ namespace Engine
 		std::unique_ptr<CircleShape> m_circle;
 
 	public:
-		template<typename T>
-		void addData(std::unique_ptr<T>&);
 
 		StaticPicture();
+		StaticPicture(std::shared_ptr<Engine::Context>);
 		StaticPicture(const StaticPicture&); //copy constr
 		StaticPicture(StaticPicture&&) noexcept; //move constr
 		StaticPicture& operator=(StaticPicture&&) noexcept;
 
-		StaticPicture(std::unique_ptr<SpriteData>&);
-		StaticPicture(std::unique_ptr<ShapeData>&);
+		StaticPicture(std::shared_ptr<Engine::Context>, std::unique_ptr<SpriteData>&);
+		StaticPicture(std::shared_ptr<Engine::Context>, std::unique_ptr<ShapeData>&);
 		~StaticPicture();
 		void destruct();
+
+		template<class T>
+		void addData(std::unique_ptr<T>&);
 
 		void setPosition(Vector2f);
 		void setRotation(float);
@@ -87,6 +89,9 @@ namespace Engine
 		float getRotation() const;
 		Vector2f getScale() const;
 		RectangleShape& getRectangleShape() const;
+
+		void processEvent() override {};
+		int processLogic(float time) override { return 0; }
 		void draw(RenderTarget& target, RenderStates states) const override;
 	};
 }

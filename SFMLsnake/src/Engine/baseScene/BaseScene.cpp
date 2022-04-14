@@ -2,17 +2,17 @@
 #pragma once
 namespace Engine
 {
-	BaseScene::BaseScene(std::shared_ptr<RenderWindow> window)
-		:m_window(window)
+	BaseScene::BaseScene(std::shared_ptr<Context> context)
+		:m_context(context)
 	{
 	}
 
+#define FORALL for (auto it = m_objectList.begin(); it != m_objectList.end(); it++)
+
 	BaseScene::~BaseScene()
 	{
-		for (auto it = m_objectList.begin(); it != m_objectList.end(); it++)
-		{
-			(*it).reset();
-		}
+		FORALL
+		(*it).reset();
 		INFO("base scene destructor")
 	}
 
@@ -23,26 +23,20 @@ namespace Engine
 
 	void BaseScene::processEvent()
 	{
-		for (auto it = m_objectList.begin(); it != m_objectList.end(); it++)
-		{
-			(*it)->processEvent();
-		}
+		FORALL
+		(*it)->processEvent();
 	}
 
 	int BaseScene::processLogic(float time)
 	{
-		for (auto it = m_objectList.begin(); it != m_objectList.end(); it++)
-		{
-			(*it)->processLogic(time);
-		}
+		FORALL
+		(*it)->processLogic(time);
 		return 0;
 	}
 
 	void BaseScene::processDraw()
 	{
-		for (auto it = m_objectList.begin(); it != m_objectList.end(); it++)
-		{
-			m_window->draw(*(*it));
-		}
+		FORALL
+		m_context->m_window->draw(*(*it));
 	}
 }

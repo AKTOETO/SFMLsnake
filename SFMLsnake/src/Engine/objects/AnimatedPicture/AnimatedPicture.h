@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "../Picture/Picture.h"
+#include "../StaticPicture/StaticPicture.h"
 
 namespace Engine
 {
@@ -30,7 +30,7 @@ namespace Engine
 		float animSpeed = 0.01;
 	};
 
-	class AnimatedPicture :public Drawable
+	class AnimatedPicture :public BaseObject
 	{
 	private:
 		std::vector<StaticPicture> m_frames;
@@ -40,7 +40,7 @@ namespace Engine
 
 	public:
 		AnimatedPicture();
-		AnimatedPicture(std::unique_ptr<AnimationData>& data);
+		AnimatedPicture(std::shared_ptr<Engine::Context>, std::unique_ptr<AnimationData>& data);
 		~AnimatedPicture();
 
 		void start();
@@ -48,6 +48,7 @@ namespace Engine
 		void stop();
 		void restart();
 
+		void processEvent() {};
 		int processLogic(float time);
 
 		void setPosition(Vector2f);

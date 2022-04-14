@@ -1,6 +1,7 @@
 #include "Food.h"
 
-Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
+Food::Food(std::shared_ptr<Engine::Context> context, std::unique_ptr<FoodData> data)
+	:BaseObject(context)
 {
 	INFO("food constructor")
 	m_data = std::move(data);
@@ -11,7 +12,7 @@ Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 	shData->position = m_data->pos;
 	shData->type = Engine::ShapeType::RECTANGLE;
 
-	m_collisRect = std::make_unique<Engine::StaticPicture>(shData);
+	m_collisRect = std::make_unique<Engine::StaticPicture>(m_context, shData);
 
 	//animated picture
 	std::unique_ptr<Engine::AnimationData> aData(new Engine::AnimationData);
@@ -24,7 +25,7 @@ Food::Food(std::shared_ptr<RenderWindow> window, std::unique_ptr<FoodData> data)
 	aData->data.texture = texture;
 	aData->data.type = Engine::SpriteType::NONE;
 
-	std::unique_ptr<Engine::AnimatedPicture> animStay(new Engine::AnimatedPicture(aData));
+	std::unique_ptr<Engine::AnimatedPicture> animStay(new Engine::AnimatedPicture(m_context, aData));
 
 	m_animManager = std::make_unique<Engine::AnimationManager>();
 	m_animManager->addAnim(Engine::AnimType::STAY, animStay);

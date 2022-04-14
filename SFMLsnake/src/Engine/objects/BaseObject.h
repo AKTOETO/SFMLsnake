@@ -6,9 +6,11 @@ namespace Engine
 	class BaseObject : public Drawable
 	{
 	protected:
+		std::shared_ptr<Engine::Context> m_context;
 
 	public:
 		BaseObject() {};
+		BaseObject(std::shared_ptr<Engine::Context> obj): m_context(obj) {};
 		~BaseObject() {};
 
 		virtual void processEvent() = 0;
