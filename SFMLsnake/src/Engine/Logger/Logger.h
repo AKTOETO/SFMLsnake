@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <Windows.h>
 #include <iostream>
 #include <iomanip>
@@ -7,17 +7,17 @@
 
 namespace Engine
 {
-	// handle консоли
+	// handle РєРѕРЅСЃРѕР»Рё
 	const static HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	// цвета для консоли
-	// черный
+	// С†РІРµС‚Р° РґР»СЏ РєРѕРЅСЃРѕР»Рё
+	// С‡РµСЂРЅС‹Р№
 #define STDCOLOR SetConsoleTextAttribute(h, ((0 << 4) | 7));
-	// желтый
+	// Р¶РµР»С‚С‹Р№
 #define INFOCOLOR SetConsoleTextAttribute(h, ((0 << 4) | 6));
-	// красный
+	// РєСЂР°СЃРЅС‹Р№
 #define ERRORCOLOR SetConsoleTextAttribute(h, ((0 << 4) | 4));
-	// зеленый
+	// Р·РµР»РµРЅС‹Р№
 #define HIGHLITER SetConsoleTextAttribute(h, ((0 << 4) | 2));
 
 	class Logger
@@ -27,25 +27,25 @@ namespace Engine
 	public:
 
 #define TSTR(arg) std::to_string(arg)
-		// информация о функции, вызывающей логгер.
-		// msg - сообщение для вывода
+		// РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ С„СѓРЅРєС†РёРё, РІС‹Р·С‹РІР°СЋС‰РµР№ Р»РѕРіРіРµСЂ.
+		// msg - СЃРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РІС‹РІРѕРґР°
 #define FINFO(msg) __FILE__+ std::string(";")+__FUNCTION__+ std::string(";")+TSTR(__LINE__)+ std::string(";")+msg//TSTR(__FILE__+";"+TSTR(__FUNCTION__) +";"+TSTR(__LINE__)+";"+msg)
 
 		/// <summary>
-		/// конструктор, изначально длеает черный фон консоли
+		/// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, РёР·РЅР°С‡Р°Р»СЊРЅРѕ РґР»РµР°РµС‚ С‡РµСЂРЅС‹Р№ С„РѕРЅ РєРѕРЅСЃРѕР»Рё
 		/// </summary>
 		Logger();
 
 		/// <summary>
-		/// Вывод информации в консоль
+		/// Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё РІ РєРѕРЅСЃРѕР»СЊ
 		/// </summary>
-		/// <param name="data"> - принимает FINFO</param>
+		/// <param name="data"> - РїСЂРёРЅРёРјР°РµС‚ FINFO</param>
 		void info(std::string data);
 
 		/// <summary>
-		/// Вывод критической ошибки в консоль
+		/// Р’С‹РІРѕРґ РєСЂРёС‚РёС‡РµСЃРєРѕР№ РѕС€РёР±РєРё РІ РєРѕРЅСЃРѕР»СЊ
 		/// </summary>
-		/// <param name="data"> - принимает FINFO </param>
+		/// <param name="data"> - РїСЂРёРЅРёРјР°РµС‚ FINFO </param>
 		void crit(std::string data);
 
 	};		
