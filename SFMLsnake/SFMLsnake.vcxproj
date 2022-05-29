@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Logger\Logger.cpp" />
     <ClCompile Include="src\Engine\game\Game.cpp" />
     <ClCompile Include="src\Engine\managers\AnimationManager\AnimationManager.cpp" />
     <ClCompile Include="src\Engine\objects\AnimatedPicture\AnimatedPicture.cpp" />
@@ -166,6 +167,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Base.h" />
+    <ClInclude Include="src\Engine\Logger\Logger.h" />
     <ClInclude Include="src\Engine\game\Game.h" />
     <ClInclude Include="src\Engine\managers\AnimationManager\AnimationManager.h" />
     <ClInclude Include="src\Engine\objects\BaseObject.h" />
@@ -179,7 +182,6 @@
     <ClInclude Include="src\Engine\baseScene\BaseScene.h" />
     <ClInclude Include="src\scenes\GameScene\GameScene.h" />
     <ClInclude Include="src\Engine\Support.h" />
-    <ClInclude Include="src\Engine\Logger.hpp" />
     <ClInclude Include="src\Engine\objects\Text\Text.h" />
   </ItemGroup>
   <ItemGroup>

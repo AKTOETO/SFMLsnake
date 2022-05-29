@@ -27,7 +27,7 @@ Food::Food(std::shared_ptr<Engine::Context> context, std::unique_ptr<FoodData> d
 
 	std::unique_ptr<Engine::AnimatedPicture> animStay(new Engine::AnimatedPicture(m_context, aData));
 
-	m_animManager = std::make_unique<Engine::AnimationManager>();
+	m_animManager = std::make_unique<Engine::AnimationManager>(m_context);
 	m_animManager->addAnim(Engine::AnimType::STAY, animStay);
 	m_animManager->useAnim(Engine::AnimType::STAY);
 }

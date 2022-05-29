@@ -2,6 +2,7 @@
 #include <map>
 #include <memory>
 #include "../../objects/AnimatedPicture/AnimatedPicture.h"
+#include "../../Base.h"
 namespace Engine
 {
 	enum class AnimType
@@ -12,14 +13,14 @@ namespace Engine
 		DIE,
 	};
 
-	class AnimationManager : public Drawable
+	class AnimationManager : public Base
 	{
 	private:
 		std::map<AnimType, std::unique_ptr<AnimatedPicture>> m_animList;
 		AnimType m_curAnim;
 
 	public:
-		AnimationManager();
+		AnimationManager(std::shared_ptr<Engine::Context> context);
 		~AnimationManager();
 
 		int addAnim(AnimType, std::unique_ptr<AnimatedPicture>&);

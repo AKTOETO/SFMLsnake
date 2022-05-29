@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Logger.hpp"
+#include <fstream>
+#include "Logger/Logger.h"
+
 using namespace sf;
 
 #define W_WIDTH 800  // 800 1920
@@ -20,21 +22,29 @@ using namespace sf;
 
 #define SHB false //show hit boxes
 
+#define INFO(msg) m_context->m_logger->info(FINFO(msg));
+#define ERROR(msg) m_context->m_logger->crit(FINFO(msg));
+
 namespace Engine
 {
 	struct Context
 	{
 		std::shared_ptr<RenderWindow> m_window;
+		std::shared_ptr<Logger> m_logger;
 
-		Context() {};
+		Context() {
+			m_logger = std::make_shared<Logger>();
+		};
 		Context(std::shared_ptr<RenderWindow> window)
 		{
 			m_window = std::move(window);
+			m_logger = std::make_shared<Logger>();
 		}
 
 		~Context()
 		{
 			m_window.reset();
+			m_logger.reset();
 		}
 	};
 
@@ -53,7 +63,8 @@ namespace Engine
 		static void loadTexture(std::shared_ptr<Texture> texture, std::string file)
 		{
 			if (!texture->loadFromFile("assets/textures/" + file))
-				ERROR("failed to load " + file)
+				// ERROR("failed to load " + file)
+				std::cout << "cringe 70str in support.h\n";
 		}
 
 		// ================

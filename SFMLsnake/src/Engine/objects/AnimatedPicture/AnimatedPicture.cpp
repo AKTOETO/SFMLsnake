@@ -12,7 +12,7 @@ namespace Engine
 	{
 		INFO("\t\tmoving data")
 		m_data = move(data);
-		m_frames.resize(m_data->numberOfFrame);
+		//m_frames.resize(m_data->numberOfFrame);
 
 		for (int i = 0; i < m_data->numberOfFrame; i++)
 		{
@@ -46,8 +46,9 @@ namespace Engine
 					IntRect(DLEFT, DTOP + DWIDTH * i + i, DWIDTH, DHEIGHT);
 				break;
 			}
-			m_frames.erase(m_frames.begin());
-			m_frames.emplace_back(m_context, sData);
+			m_frames.push_back(StaticPicture(m_context, sData));
+			//m_frames.erase(m_frames.begin());
+			//m_frames.emplace_back(m_context, sData);
 			INFO("added new frame")
 		}
 		INFO("frame vec. size:" + std::to_string(m_frames.size()));

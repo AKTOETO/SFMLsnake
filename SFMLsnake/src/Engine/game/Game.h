@@ -5,6 +5,7 @@
 #include <ctime>
 
 #include "../managers/SceneManager/SceneManager.h"
+#include "../Logger/Logger.h"
 
 namespace Engine
 {

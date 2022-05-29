@@ -39,7 +39,7 @@ int GameScene::processLogic(float time)
 	{
 		need_to_switch = true;
 	}
-	m_text->setString("score: " + std::to_string(m_snake->getSize()));
+	m_text->setString("score: " + std::to_string(m_snake->getSize() - 3));
 	eatingFood();
 	return 0;
 }

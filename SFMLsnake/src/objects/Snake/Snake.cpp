@@ -63,6 +63,7 @@ int Snake::processLogic(float time)
 			) 
 		{
 			INFO(std::to_string(m_units.size() - i) + " pieces were eaten")
+
 			m_units.erase(m_units.begin() + i, m_units.end());
 		}
 	}

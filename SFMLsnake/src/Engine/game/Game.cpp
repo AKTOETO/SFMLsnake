@@ -8,6 +8,8 @@ namespace Engine
 		// creating window object
 		m_context->m_window = std::make_shared<RenderWindow>(VideoMode(W_WIDTH, W_HEIGHT), "Snake");
 
+		// TODO creating logger object
+
 		// creating scene manager object
 		m_sceneManager = std::make_unique<SceneManager>(m_context);
 

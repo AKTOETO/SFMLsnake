@@ -1,10 +1,11 @@
 #include "AnimationManager.h"
 namespace Engine
 {
-	AnimationManager::AnimationManager()
-		:m_curAnim(AnimType::STAY)
+	AnimationManager::AnimationManager(std::shared_ptr<Engine::Context> context)
+		:m_curAnim(AnimType::STAY), Base(context)
 	{
 		INFO("AnimationManager constructor")
+		//m_context->m_logger->info(FINFO("AnimationManager constructor"));
 	}
 
 	AnimationManager::~AnimationManager()
@@ -36,8 +37,8 @@ namespace Engine
 		startAnim(m_curAnim);
 	}
 
-	#define IFNONE if(type == AnimType::NONE) m_animList[type]-> //checking for none animation
-	#define ENONE m_animList[m_curAnim]->
+#define IFNONE if(type == AnimType::NONE) m_animList[type]-> //checking for none animation
+#define ENONE m_animList[m_curAnim]->
 
 	inline void AnimationManager::startAnim(AnimType type)
 	{

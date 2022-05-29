@@ -49,8 +49,8 @@ namespace Engine
 					break;
 
 				case Scenes::Game:				
-					//setScene(Scenes::Start, std::make_unique<GameScene>(m_window));
-					setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_context));
+					setScene(Scenes::Start, std::make_unique<GameScene>(m_context));
+					//setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_context));
 					break;
 
 				default:

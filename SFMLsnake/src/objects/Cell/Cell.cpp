@@ -86,7 +86,7 @@ Cell::Cell(std::shared_ptr<Engine::Context> context, std::unique_ptr<CellData> d
 
 		// ===== ANIM MANAGER DATA =====
 		//INFO("\tanim manager add sc. & use sc.")
-	m_animManager = std::make_unique<Engine::AnimationManager>();
+	m_animManager = std::make_unique<Engine::AnimationManager>(context);
 	m_animManager->addAnim(Engine::AnimType::MOVE, animMove);
 	m_animManager->addAnim(Engine::AnimType::DIE, animDie);
 	m_animManager->useAnim(Engine::AnimType::MOVE);

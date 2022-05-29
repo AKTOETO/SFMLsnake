@@ -115,6 +115,7 @@ namespace Engine
 	}
 
 	StaticPicture::StaticPicture(StaticPicture&& pic) noexcept
+		:BaseObject(pic.m_context)
 	{
 		INFO("\t\t\tstat. pic. move const.")
 #define MOVE(mem) mem = std::move(pic.mem);
