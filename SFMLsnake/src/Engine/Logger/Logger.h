@@ -22,14 +22,12 @@ namespace Engine
 
 	class Logger
 	{
-	private:
-
 	public:
 
 #define TSTR(arg) std::to_string(arg)
 		// информация о функции, вызывающей логгер.
 		// msg - сообщение для вывода
-#define FINFO(msg) __FILE__+ std::string(";")+__FUNCTION__+ std::string(";")+TSTR(__LINE__)+ std::string(";")+msg//TSTR(__FILE__+";"+TSTR(__FUNCTION__) +";"+TSTR(__LINE__)+";"+msg)
+#define FINFO(msg) __FILE__+ std::string(";")+__FUNCTION__+ std::string(";")+TSTR(__LINE__)+ std::string(";")+msg
 
 		/// <summary>
 		/// конструктор, изначально длеает черный фон консоли

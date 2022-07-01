@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="src\Engine\Logger\Logger.cpp" />
     <ClCompile Include="src\Engine\game\Game.cpp" />
     <ClCompile Include="src\Engine\managers\AnimationManager\AnimationManager.cpp" />

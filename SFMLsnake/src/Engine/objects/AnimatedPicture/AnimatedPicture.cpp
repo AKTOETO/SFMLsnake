@@ -1,11 +1,6 @@
 #include "AnimatedPicture.h"
 namespace Engine
 {
-	AnimatedPicture::AnimatedPicture()
-		: m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
-	{
-		INFO("\t\tPicture constructor")
-	}
 
 	AnimatedPicture::AnimatedPicture(std::shared_ptr<Engine::Context> context, std::unique_ptr<AnimationData>& data)
 		:BaseObject(context), m_currentFrame(0), m_isStart(true), m_isPause(false), m_isStop(false)
@@ -46,7 +41,7 @@ namespace Engine
 					IntRect(DLEFT, DTOP + DWIDTH * i + i, DWIDTH, DHEIGHT);
 				break;
 			}
-			m_frames.push_back(StaticPicture(m_context, sData));
+			m_frames.push_back(new StaticPicture(m_context, sData));
 			//m_frames.erase(m_frames.begin());
 			//m_frames.emplace_back(m_context, sData);
 			INFO("added new frame")
@@ -93,7 +88,7 @@ namespace Engine
 		return 0;
 	}
 
-#define ALLFR for (auto& sp : m_frames)sp.
+#define ALLFR for (auto& sp : m_frames)(*sp).
 
 	void AnimatedPicture::setPosition(Vector2f pos)
 	{
@@ -112,22 +107,22 @@ namespace Engine
 
 	Vector2f AnimatedPicture::getPosition() const
 	{
-		return m_frames[0].getPosition();
+		return (* m_frames[0]).getPosition();
 	}
 
 	float AnimatedPicture::getRotation() const
 	{
-		return m_frames[0].getRotation();
+		return (*m_frames[0]).getRotation();
 	}
 
 	Vector2f AnimatedPicture::getScale() const
 	{
-		return m_frames[0].getScale();
+		return (*m_frames[0]).getScale();
 	}
 
 	RectangleShape& AnimatedPicture::getRectangleShape() const
 	{
-		return m_frames[0].getRectangleShape();
+		return (*m_frames[0]).getRectangleShape();
 	}
 
 	void AnimatedPicture::start()
@@ -159,6 +154,6 @@ namespace Engine
 
 	void AnimatedPicture::draw(RenderTarget& target, RenderStates states) const
 	{
-		target.draw(m_frames[int(m_currentFrame)], states);
+		target.draw(*m_frames[int(m_currentFrame)], states);
 	}
 }

@@ -67,7 +67,6 @@ namespace Engine
 
 	public:
 
-		StaticPicture();
 		StaticPicture(std::shared_ptr<Engine::Context>);
 		StaticPicture(const StaticPicture&); //copy constr
 		StaticPicture(StaticPicture&&) noexcept; //move constr

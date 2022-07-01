@@ -3,7 +3,7 @@
 namespace Engine
 {
 	BaseScene::BaseScene(std::shared_ptr<Context> context)
-		:m_context(context)
+		:Base(context)
 	{
 	}
 

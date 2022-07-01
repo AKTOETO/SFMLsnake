@@ -15,14 +15,13 @@ namespace Engine
 		GameOver,
 	};
 
-	class SceneManager
+	class SceneManager : public Base
 	{
-		std::shared_ptr<Context> m_context;
 		std::pair<Scenes, std::unique_ptr<BaseScene>> m_cur_scene;
 
 	public:
 		//SceneManager(std::shared_ptr<RenderWindow> window);
-		SceneManager(std::shared_ptr<Context>);
+		SceneManager(std::shared_ptr<Engine::Context>);
 		~SceneManager();
 
 		void setScene(Scenes, std::unique_ptr<BaseScene>);

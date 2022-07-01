@@ -85,11 +85,6 @@ namespace Engine
 		}
 	}
 
-	StaticPicture::StaticPicture()
-	{
-
-	};
-
 	StaticPicture::StaticPicture(std::shared_ptr<Engine::Context> context)
 		:BaseObject(context),
 		m_shapeData(nullptr),
@@ -103,6 +98,7 @@ namespace Engine
 	}
 
 	StaticPicture::StaticPicture(const StaticPicture& pic)
+		:BaseObject(pic.m_context)
 	{
 		INFO("\t\t\tstat. pic. copy const.")
 #define NOTNULLCOPY(mem, obj) if(pic.mem != nullptr) mem = std::make_unique<obj>(*pic.mem);

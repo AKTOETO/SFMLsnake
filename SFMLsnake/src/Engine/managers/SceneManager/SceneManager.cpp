@@ -3,7 +3,7 @@
 namespace Engine
 {
 	SceneManager::SceneManager(std::shared_ptr<Context> context)
-		:m_context(context)
+		:Base(context)
 	{
 		INFO("sc manager constructor")
 		m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::Start, nullptr);

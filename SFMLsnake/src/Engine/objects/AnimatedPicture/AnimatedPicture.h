@@ -30,16 +30,15 @@ namespace Engine
 		float animSpeed = 0.01;
 	};
 
-	class AnimatedPicture :public BaseObject
+	class AnimatedPicture : public BaseObject
 	{
 	private:
-		std::vector<StaticPicture> m_frames;
+		std::vector<StaticPicture*> m_frames;
 		std::unique_ptr<AnimationData> m_data;
 		float m_currentFrame;
 		bool m_isStart, m_isPause, m_isStop;
 
 	public:
-		AnimatedPicture();
 		AnimatedPicture(std::shared_ptr<Engine::Context>, std::unique_ptr<AnimationData>& data);
 		~AnimatedPicture();
 

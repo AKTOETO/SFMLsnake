@@ -1,8 +1,12 @@
 #include "Cell.h"
 
+
+
 Cell::Cell(std::shared_ptr<Engine::Context> context, std::unique_ptr<CellData> data)
-	:BaseObject(context), m_rect(std::make_unique<Engine::StaticPicture>(context))
+	:BaseObject(context)
 {
+	m_rect = std::make_unique<Engine::StaticPicture>(context);
+
 	//INFO("\tcell constructor")
 
 	m_data = move(data);
@@ -43,7 +47,7 @@ Cell::Cell(std::shared_ptr<Engine::Context> context, std::unique_ptr<CellData> d
 	animDataDie->offset = Engine::TextureOffset::RIGHT;
 	animDataDie->numberOfFrame = 7;
 	animDataDie->data.position = { m_rect->getPosition() };
-	animDataDie->type = Engine::AnimationType::ONCE;
+	animDataDie->type = Engine::AnimationType::ONCE;//Engine::AnimationType::ONCE
 	animDataDie->data.texture = texture;
 	animDataDie->data.type = Engine::SpriteType::NONE;
 	animDataDie->data.size = Vector2f(1, 1);
