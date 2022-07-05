@@ -1,8 +1,7 @@
 #pragma once
 #include <memory>
 
-
-#include "../BaseScene.h"
+#include "../../Engine/baseScene/BaseScene.h"
 #include "../../Engine/objects/Text/Text.h"
 #include "../../objects/Snake/Snake.h"
 #include "../../objects/Food/Food.h"

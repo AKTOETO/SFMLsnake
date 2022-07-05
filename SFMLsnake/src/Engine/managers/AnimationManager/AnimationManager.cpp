@@ -29,6 +29,11 @@ namespace Engine
 		return m_animList[m_curAnim]->processLogic(time);
 	}
 
+	void AnimationManager::processDraw()
+	{
+		m_context->m_window->draw(*m_animList.find(m_curAnim)->second);
+	}
+
 	void AnimationManager::useAnim(AnimType type)
 	{
 		m_animList[type]->setPosition(m_animList[m_curAnim]->getPosition());
@@ -56,10 +61,5 @@ namespace Engine
 	{
 		IFNONE stop();
 		ENONE stop();
-	}
-
-	void AnimationManager::draw(RenderTarget& target, RenderStates states) const
-	{
-		target.draw(*m_animList.find(m_curAnim)->second, states);
 	}
 }

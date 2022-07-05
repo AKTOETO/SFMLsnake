@@ -48,7 +48,7 @@
     <ClCompile Include="src\Engine\managers\AnimationManager\AnimationManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\scenes\BaseScene.cpp">
+    <ClCompile Include="src\Engine\baseScene\BaseScene.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\game\Game.cpp">
@@ -69,7 +69,7 @@
     <ClInclude Include="src\scenes\GameScene\GameScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\scenes\BaseScene.h">
+    <ClInclude Include="src\Engine\baseScene\BaseScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\Snake\Snake.h">
@@ -108,7 +108,10 @@
     <ClInclude Include="src\Engine\Logger\Logger.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Base.h">
+    <ClInclude Include="src\Engine\base\Base.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\baseDrawable\BaseDrawable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -151,7 +151,7 @@
     <ClCompile Include="src\Engine\game\Game.cpp" />
     <ClCompile Include="src\Engine\managers\AnimationManager\AnimationManager.cpp" />
     <ClCompile Include="src\Engine\objects\AnimatedPicture\AnimatedPicture.cpp" />
-    <ClCompile Include="src\scenes\BaseScene.cpp" />
+    <ClCompile Include="src\Engine\baseScene\BaseScene.cpp" />
     <ClCompile Include="src\scenes\GameOverScene\GameOverScene.cpp" />
     <ClCompile Include="src\Engine\objects\StaticPicture\StaticPicture.cpp" />
     <ClCompile Include="src\Engine\managers\SceneManager\SceneManager.cpp" />
@@ -167,7 +167,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Base.h" />
+    <ClInclude Include="src\Engine\base\Base.h" />
+    <ClInclude Include="src\Engine\baseDrawable\BaseDrawable.h" />
     <ClInclude Include="src\Engine\Logger\Logger.h" />
     <ClInclude Include="src\Engine\game\Game.h" />
     <ClInclude Include="src\Engine\managers\AnimationManager\AnimationManager.h" />
@@ -179,7 +180,7 @@
     <ClInclude Include="src\objects\Cell\Cell.h" />
     <ClInclude Include="src\objects\Food\Food.h" />
     <ClInclude Include="src\objects\Snake\Snake.h" />
-    <ClInclude Include="src\scenes\BaseScene.h" />
+    <ClInclude Include="src\Engine\baseScene\BaseScene.h" />
     <ClInclude Include="src\scenes\GameScene\GameScene.h" />
     <ClInclude Include="src\Engine\Support.h" />
     <ClInclude Include="src\Engine\objects\Text\Text.h" />

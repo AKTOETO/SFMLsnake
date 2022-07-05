@@ -1,23 +1,22 @@
 #pragma once
 //#include "../Support.h"
-#include "../Base.h"
+#include "../baseDrawable/BaseDrawable.h"
 
 namespace Engine
 {
 	// Базовый класс объекта,
-	// которые должны отрисовываться на сцене
-	class BaseObject : public Base
+	// который должен отрисовываться на сцене
+	class BaseObject : public BaseDrawable
 	{
 	public:
 		/// <summary>
 		/// Конструктор, вызывающий конструктор класса Base
 		/// </summary>
 		/// <param name="context"> - контекст, передаваемый в конструктор Base</param>
-		BaseObject(std::shared_ptr<Engine::Context> context): Base(context) {};
+		BaseObject(std::shared_ptr<Engine::Context> context): BaseDrawable(context) {};
 		// Деструктор
 		~BaseObject() {};
 
-		// Три самые важные функции
 		// процесс получения событий
 		virtual void processEvent() = 0;
 		// процесс обработки логики

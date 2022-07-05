@@ -2,7 +2,8 @@
 #include <map>
 #include <memory>
 #include "../../objects/AnimatedPicture/AnimatedPicture.h"
-#include "../../Base.h"
+#include "../../base/Base.h"
+
 namespace Engine
 {
 	enum class AnimType
@@ -27,12 +28,11 @@ namespace Engine
 		std::unique_ptr<AnimatedPicture>& getAnimation(AnimType);
 
 		int processLogic(float time);
+		void processDraw();
 
 		void useAnim(AnimType);
 		void startAnim(AnimType = AnimType::NONE);
-		inline void pauseAnim(AnimType = AnimType::NONE);
-		inline void stopAnim(AnimType = AnimType::NONE);
-
-		virtual void draw(RenderTarget& target, RenderStates states) const override;
+		void pauseAnim(AnimType = AnimType::NONE);
+		void stopAnim(AnimType = AnimType::NONE);
 	};
 }

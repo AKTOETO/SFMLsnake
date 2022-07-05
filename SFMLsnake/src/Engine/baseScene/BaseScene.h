@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <memory>
-#include "../Engine/objects/BaseObject.h"
+#include "../objects/BaseObject.h"
 
 
 namespace Engine
