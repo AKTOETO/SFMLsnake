@@ -64,7 +64,7 @@ namespace Engine
 		{
 			if (!texture->loadFromFile("assets/textures/" + file))
 				// ERROR("failed to load " + file)
-				std::cout << "cringe 70str in support.h\n";
+				std::cout << "cringe on "<<__LINE__<<" line in support.h\n";
 		}
 
 		// ================
