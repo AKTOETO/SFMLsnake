@@ -41,7 +41,7 @@ namespace Engine
 	/// <summary>
 	/// Функция определяет текущее время
 	/// </summary>
-	/// <returns> Возваращает текущее время hh:mm::ss</returns>
+	/// <returns> Возвращает текущее время hh:mm::ss</returns>
 	std::string currTime()
 	{
 #ifdef _DEBUG

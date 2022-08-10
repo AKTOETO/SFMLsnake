@@ -172,6 +172,7 @@
     <ClInclude Include="src\Engine\Logger\Logger.h" />
     <ClInclude Include="src\Engine\game\Game.h" />
     <ClInclude Include="src\Engine\managers\AnimationManager\AnimationManager.h" />
+    <ClInclude Include="src\Engine\managers\BaseManager.h" />
     <ClInclude Include="src\Engine\objects\BaseObject.h" />
     <ClInclude Include="src\Engine\objects\AnimatedPicture\AnimatedPicture.h" />
     <ClInclude Include="src\scenes\GameOverScene\GameOverScene.h" />

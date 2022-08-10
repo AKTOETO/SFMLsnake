@@ -47,7 +47,7 @@ namespace Engine
 
 			//draw
 			m_context->m_window->clear();
-			m_sceneManager->processDraw();
+			m_sceneManager->getCurScene().processDraw();
 			m_context->m_window->display();
 		}
 	}

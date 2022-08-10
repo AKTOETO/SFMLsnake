@@ -277,7 +277,8 @@ int Cell::processLogic(float time)
 void Cell::draw(RenderTarget& target, RenderStates states) const
 {
 	//target.draw(*m_animManager);
-	m_animManager->processDraw();
+	//m_animManager->processDraw();
+	target.draw(m_animManager->getCurFrame());
 	if (SHB)target.draw(*m_rect);
 }
 

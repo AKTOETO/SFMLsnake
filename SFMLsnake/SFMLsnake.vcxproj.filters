@@ -114,6 +114,9 @@
     <ClInclude Include="src\Engine\baseDrawable\BaseDrawable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\managers\BaseManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\main.ttf">

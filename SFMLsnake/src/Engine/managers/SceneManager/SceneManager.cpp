@@ -3,10 +3,10 @@
 namespace Engine
 {
 	SceneManager::SceneManager(std::shared_ptr<Context> context)
-		:Base(context)
+		:BaseManager(context)
 	{
 		INFO("sc manager constructor")
-		m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::Start, nullptr);
+			m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(Scenes::Start, nullptr);
 	}
 
 	SceneManager::~SceneManager()
@@ -17,8 +17,8 @@ namespace Engine
 	void SceneManager::setScene(Scenes id_scene, std::unique_ptr<BaseScene> scene)
 	{
 		INFO("id new scene " + std::to_string(int(id_scene)))
-		//m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(id_scene, std::move(scene));
-		m_cur_scene.first = id_scene;
+			//m_cur_scene = std::make_pair<Scenes, std::unique_ptr<BaseScene>>(id_scene, std::move(scene));
+			m_cur_scene.first = id_scene;
 		m_cur_scene.second = std::move(scene);
 	}
 
@@ -34,7 +34,7 @@ namespace Engine
 		}
 	}
 
-	void SceneManager::processLogic(float time)
+	int SceneManager::processLogic(float time)
 	{
 		if (m_cur_scene.second != nullptr)
 		{
@@ -48,7 +48,7 @@ namespace Engine
 					setScene(Scenes::Game, std::make_unique<GameScene>(m_context));
 					break;
 
-				case Scenes::Game:				
+				case Scenes::Game:
 					setScene(Scenes::Start, std::make_unique<GameScene>(m_context));
 					//setScene(Scenes::GameOver, std::make_unique<GameOverScene>(m_context));
 					break;
@@ -60,15 +60,16 @@ namespace Engine
 		}
 		else
 		{
-			ERROR("the scene does not exist")
+			ERROR("the scene does not exist");
+			return 1;
 		}
+		return 0;
 	}
-
-	void SceneManager::processDraw()
+	BaseScene& SceneManager::getCurScene() const
 	{
 		if (m_cur_scene.second != nullptr)
 		{
-			m_cur_scene.second->processDraw();
+			return *m_cur_scene.second;
 		}
 	}
 }

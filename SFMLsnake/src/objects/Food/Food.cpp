@@ -49,7 +49,8 @@ int Food::processLogic(float time)
 
 void Food::draw(RenderTarget& target, RenderStates states) const
 {
-	m_animManager->processDraw();
+	//m_animManager->processDraw();
+	target.draw(m_animManager->getCurFrame());
 	if(SHB) target.draw(*m_collisRect);
 }
 

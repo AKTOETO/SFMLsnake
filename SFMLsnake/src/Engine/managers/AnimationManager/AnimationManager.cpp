@@ -2,7 +2,7 @@
 namespace Engine
 {
 	AnimationManager::AnimationManager(std::shared_ptr<Engine::Context> context)
-		:m_curAnim(AnimType::STAY), Base(context)
+		:m_curAnim(AnimType::STAY), BaseManager(context)
 	{
 		INFO("AnimationManager constructor")
 		//m_context->m_logger->info(FINFO("AnimationManager constructor"));
@@ -29,11 +29,6 @@ namespace Engine
 		return m_animList[m_curAnim]->processLogic(time);
 	}
 
-	void AnimationManager::processDraw()
-	{
-		m_context->m_window->draw(*m_animList.find(m_curAnim)->second);
-	}
-
 	void AnimationManager::useAnim(AnimType type)
 	{
 		m_animList[type]->setPosition(m_animList[m_curAnim]->getPosition());
@@ -45,21 +40,25 @@ namespace Engine
 #define IFNONE if(type == AnimType::NONE) m_animList[type]-> //checking for none animation
 #define ENONE m_animList[m_curAnim]->
 
-	inline void AnimationManager::startAnim(AnimType type)
+	void AnimationManager::startAnim(AnimType type)
 	{
 		IFNONE start();
 		ENONE start();
 	}
 
-	inline void AnimationManager::pauseAnim(AnimType type)
+	void AnimationManager::pauseAnim(AnimType type)
 	{
 		IFNONE pause();
 		ENONE pause();
 	}
 
-	inline void AnimationManager::stopAnim(AnimType type)
+	void AnimationManager::stopAnim(AnimType type)
 	{
 		IFNONE stop();
 		ENONE stop();
+	}
+	AnimatedPicture& AnimationManager::getCurFrame() const
+	{
+		return *m_animList.find(m_curAnim)->second;
 	}
 }

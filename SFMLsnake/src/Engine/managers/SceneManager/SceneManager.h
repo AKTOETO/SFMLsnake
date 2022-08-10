@@ -6,6 +6,8 @@
 #include "../../../scenes/GameScene/GameScene.h"
 #include "../../../scenes/GameOverScene/GameOverScene.h"
 
+#include "../BaseManager.h"
+
 namespace Engine
 {
 	enum class Scenes
@@ -15,7 +17,7 @@ namespace Engine
 		GameOver,
 	};
 
-	class SceneManager : public Base
+	class SceneManager : public BaseManager
 	{
 		std::pair<Scenes, std::unique_ptr<BaseScene>> m_cur_scene;
 
@@ -26,8 +28,9 @@ namespace Engine
 
 		void setScene(Scenes, std::unique_ptr<BaseScene>);
 		void processEvent();
-		void processLogic(float);
-		void processDraw();
+		int processLogic(float) override;
+
+		BaseScene& getCurScene() const;
 	};
 }
 
